@@ -1,0 +1,249 @@
+:root {
+    --uffs-verde-principal: #004A2F;
+    --uffs-amarelo-destaque: #FFB81C;
+    --uffs-azul-institucional: #003366;
+    --uffs-cinza-texto: #333333;
+    --uffs-cinza-fundo: #F5F7F6;
+    --uffs-cinza-borda: #CCCCCC;
+    --uffs-branco: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+body { background-color: var(--uffs-cinza-fundo); color: var(--uffs-cinza-texto); line-height: 1.4; }
+
+/* Cabeçalho Web */
+.header-uffs { 
+    background-color: var(--uffs-verde-principal); 
+    color: var(--uffs-branco); 
+    padding: 20px 0;
+    border-bottom: 5px solid var(--uffs-amarelo-destaque);
+}
+.header-container { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+.brand-area { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+.logo-box { 
+    background-color: var(--uffs-branco); 
+    color: var(--uffs-verde-principal); 
+    padding: 6px 14px; 
+    border-radius: 4px; 
+    font-weight: 900; 
+    font-size: 1.3rem; 
+    letter-spacing: 2px;
+}
+.institution-title h1 { font-size: 1.2rem; font-weight: bold; }
+.institution-title p { font-size: 0.85rem; opacity: 0.9; }
+.doc-title { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; margin-top: 8px; }
+.doc-title h2 { font-size: 1.05rem; }
+.doc-title span { font-size: 0.8rem; opacity: 0.85; }
+
+/* Form Web */
+.main-container { max-width: 920px; margin: 20px auto; padding: 0 15px; }
+.card { 
+    background: var(--uffs-branco); 
+    border-radius: 6px; 
+    padding: 18px; 
+    margin-bottom: 18px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
+    border-top: 4px solid var(--uffs-verde-principal); 
+}
+.modalidade-card { border-top-color: var(--uffs-azul-institucional); }
+.card-header { 
+    color: var(--uffs-verde-principal); 
+    font-size: 1.05rem; 
+    margin-bottom: 12px; 
+    border-bottom: 2px solid var(--uffs-cinza-fundo); 
+    padding-bottom: 4px; 
+}
+
+.radio-group { display: flex; gap: 15px; margin-top: 8px; flex-wrap: wrap; }
+.radio-option { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    background: var(--uffs-cinza-fundo); 
+    padding: 10px 14px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    flex: 1; 
+    border: 1px solid transparent;
+}
+.radio-option:has(input:checked) {
+    border-color: var(--uffs-verde-principal);
+    background-color: #EBF4F0;
+}
+.radio-option input[type="radio"] { accent-color: var(--uffs-verde-principal); width: 16px; height: 16px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; }
+.full-width { grid-column: span 2; }
+label { font-weight: bold; margin-bottom: 4px; font-size: 0.85rem; color: #444; }
+input[type="text"], input[type="number"], textarea { 
+    padding: 8px; 
+    border: 1px solid var(--uffs-cinza-borda); 
+    border-radius: 4px; 
+    font-size: 0.9rem; 
+}
+
+.scale-info { 
+    background: #E8F1EC; 
+    border-left: 4px solid var(--uffs-amarelo-destaque); 
+    padding: 8px 12px; 
+    font-size: 0.85rem; 
+    margin-bottom: 12px; 
+    color: var(--uffs-verde-principal);
+}
+.dimensao-block { background: var(--uffs-cinza-fundo); padding: 12px; border-radius: 4px; margin-bottom: 12px; }
+.dimensao-block h4 { color: var(--uffs-verde-principal); margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+.question-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 10px; }
+.question-item label { font-weight: normal; font-size: 0.85rem; flex: 1; }
+.score-input { width: 70px; text-align: center; font-weight: bold; }
+
+.actions-area { text-align: center; margin: 25px 0; }
+.btn-primary { 
+    background-color: var(--uffs-verde-principal); 
+    color: white; 
+    border: none; 
+    padding: 12px 28px; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+.btn-primary:hover { background-color: #003622; }
+
+/* ==========================================================================
+   ESTILO DO PDF (TABELA 100% LARGURA COM QUEBRA AUTOMÁTICA DE TEXTO)
+   ========================================================================== */
+
+#pdfRenderWrapper {
+    display: none;
+}
+
+.pdf-container { 
+    background: #ffffff; 
+    padding: 10px; 
+    color: #000000; 
+    font-size: 8pt; 
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.print-header { 
+    text-align: center; 
+    margin-bottom: 10px; 
+}
+
+.pdf-brand-bar { 
+    background: #000000; 
+    color: #ffffff; 
+    padding: 5px; 
+    margin-bottom: 6px; 
+}
+
+.pdf-brand-bar h2 { 
+    font-size: 10pt; 
+    font-weight: bold;
+}
+
+.print-header h3 { 
+    font-size: 8.5pt; 
+    margin: 2px 0; 
+    color: #000000; 
+    font-weight: bold;
+}
+
+.badge-modalidade { 
+    display: inline-block; 
+    padding: 2px 8px; 
+    background: #FFFFFF; 
+    color: #000000; 
+    font-weight: bold; 
+    font-size: 7.5pt; 
+    border: 1px solid #000000;
+}
+
+/* REGRA DE LARGURA 100% E QUEBRA AUTOMÁTICA DE TEXTO */
+.print-table { 
+    width: 100% !important; 
+    max-width: 100% !important;
+    border-collapse: collapse; 
+    margin-bottom: 8px; 
+    table-layout: fixed !important; /* Obriga o navegador a respeitar as larguras definidas */
+}
+
+.print-table tr {
+    page-break-inside: avoid;
+}
+
+.print-table td, .print-table th { 
+    border: 1px solid #000000; 
+    padding: 4px 6px; 
+    font-size: 7.5pt; 
+    color: #000000;
+    line-height: 1.25;
+    vertical-align: middle;
+    white-space: normal !important; /* Permite a quebra de linha normal */
+    word-wrap: break-word !important; /* Quebra palavras se estourarem */
+    overflow-wrap: break-word !important;
+}
+
+.cell-desc {
+    width: 85% !important;
+    text-align: left;
+}
+
+.cell-nota {
+    width: 15% !important;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-section-title { 
+    background-color: #000000; 
+    color: #ffffff !important; 
+    text-align: left; 
+    font-size: 8pt; 
+    padding: 4px 6px; 
+    font-weight: bold;
+}
+
+.sub-dim-title { 
+    background-color: #E6E6E6; 
+    font-weight: bold; 
+    color: #000000; 
+    text-align: left;
+}
+
+.table-total-row { 
+    background-color: #E6E6E6; 
+}
+
+.print-obs { 
+    border: 1px solid #000000; 
+    padding: 6px; 
+    min-height: 40px; 
+    font-size: 7.5pt; 
+    color: #000000;
+    page-break-inside: avoid;
+}
+
+.signatures-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 30px; 
+    page-break-inside: avoid; 
+}
+
+.signature-box { 
+    width: 60%; 
+    text-align: center; 
+    font-size: 8pt; 
+    color: #000000;
+}
+
+.signature-box .line { 
+    border-top: 1px solid #000000; 
+    margin-bottom: 6px; 
+}
