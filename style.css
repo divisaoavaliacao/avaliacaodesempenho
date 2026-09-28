@@ -1,60 +1,6 @@
-/* Estilos para o Cabeçalho (Header) */
-.header-uffs {
-    background-color: #006437; /* Verde padrão da UFFS */
-    padding: 20px 30px;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.brand-area {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Espaço entre o logo e o título */
-}
-
-/* Caixa branca em volta do logo e controle de tamanho */
-.logo-box {
-    background-color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    width: 200px; /* Aqui limitamos o tamanho do logo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Controle de tamanho do logo sem a caixa branca */
-.logo-box {
-    width: 240px; /* Você pode aumentar ou diminuir este valor para ajustar o tamanho do logo */
-    display: flex;
-    align-items: center;
-}
-
-/* Faz a imagem obedecer o limite de tamanho e remove bordas soltas */
-.logo-box img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.institution-title h1 {
-    margin: 0;
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
-.institution-title p {
-    margin: 5px 0 0 0;
-    font-size: 0.9rem;
-}
-
-/* Camada institucional UFFS */
+/* =========================================
+   1. CAMADA INSTITUCIONAL UFFS (VARIÁVEIS)
+   ========================================= */
 :root {
     --uffs-green: #008037;
     --uffs-green-dark: #00652c;
@@ -67,66 +13,268 @@
     --uffs-shadow: 0 22px 55px rgba(7, 32, 19, .08);
     --card-bg: #ffffff;
 }
+
+/* =========================================
+   2. CONFIGURAÇÕES GERAIS
+   ========================================= */
 html { scroll-behavior: smooth; }
 body {
     background: var(--uffs-page) !important;
     color: var(--uffs-text) !important;
     font-family: "Fira Sans", "Segoe UI", Arial, sans-serif !important;
-    margin: 0; padding: 0; padding-bottom: 40px; line-height: 1.5;
+    margin: 0; 
+    padding: 0; 
+    padding-bottom: 40px; 
+    line-height: 1.5;
 }
 * { box-sizing: border-box; }
 
-/* Header */
-.header-uffs-principal {
-    background: linear-gradient(120deg, var(--uffs-green) 0 42%, #0b833d 42% 54%, var(--uffs-green-darker) 54% 100%) !important;
-    padding: 18px 24px !important; color: #fff !important;
+/* =========================================
+   3. CABEÇALHO (HEADER) - ALINHADO
+   ========================================= */
+.header-uffs {
+    background-color: var(--card-bg);
+    border-bottom: 3px solid var(--uffs-green);
+    padding: 25px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
-.header-container { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.header-uffs-principal img { width: 272px !important; max-height: 78px !important; object-fit: contain !important; }
-.header-uffs-principal h1 { font-size: 1.35rem !important; margin: 0; font-weight: 700; color: #fff !important;}
-.header-uffs-principal p { margin: 0; font-size: 0.88rem; color: #fff !important;}
-.divisor-vertical { background: rgba(255, 255, 255, .32) !important; width: 1px; height: 46px; }
 
-/* Container e Cards */
+.header-container { 
+    max-width: 1000px; 
+    margin: 0 auto; 
+    display: flex; 
+    align-items: center; 
+    gap: 30px; 
+}
+
+.logo-box {
+    width: 240px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.logo-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.header-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-left: 2px solid var(--uffs-border);
+    padding-left: 30px;
+}
+
+.header-texts h1 { 
+    margin: 0; 
+    font-size: 1.45rem; 
+    font-weight: 800; 
+    color: var(--uffs-green-dark);
+}
+
+.header-texts p { 
+    margin: 0; 
+    font-size: 0.95rem; 
+    color: var(--uffs-text);
+}
+
+.header-texts h2 {
+    margin: 8px 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--uffs-text);
+}
+
+.header-texts span {
+    font-size: 0.85rem;
+    color: var(--uffs-muted);
+    font-style: italic;
+}
+
+/* =========================================
+   4. ESTRUTURA PRINCIPAL E CARDS
+   ========================================= */
 .main-container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
-.card { background: var(--card-bg); border-radius: 22px !important; padding: 25px; margin-bottom: 25px; border: 1px solid var(--uffs-border); box-shadow: var(--uffs-shadow) !important; }
-.card-hero-uffs { position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%); }
-.card-hero-uffs::after { content: 'AVALIAÇÃO'; position: absolute; right: -8px; top: 18px; font-size: clamp(42px, 7vw, 110px); font-weight: 800; line-height: 1; letter-spacing: .02em; color: rgba(0, 82, 40, .035); pointer-events: none; }
-.card-header { color: var(--uffs-green); border-bottom: 2px solid var(--uffs-green-soft); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.15rem; font-weight: 700; }
 
-/* Formulários */
+.card { 
+    background: var(--card-bg); 
+    border-radius: 22px !important; 
+    padding: 25px; 
+    margin-bottom: 25px; 
+    border: 1px solid var(--uffs-border); 
+    box-shadow: var(--uffs-shadow) !important; 
+}
+
+.card-hero-uffs { 
+    position: relative; 
+    overflow: hidden; 
+    background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%); 
+}
+
+.card-hero-uffs::after { 
+    content: 'AVALIAÇÃO'; 
+    position: absolute; 
+    right: -8px; 
+    top: 18px; 
+    font-size: clamp(42px, 7vw, 110px); 
+    font-weight: 800; 
+    line-height: 1; 
+    letter-spacing: .02em; 
+    color: rgba(0, 82, 40, .035); 
+    pointer-events: none; 
+}
+
+.card-header { 
+    color: var(--uffs-green); 
+    border-bottom: 2px solid var(--uffs-green-soft); 
+    padding-bottom: 10px; 
+    margin-bottom: 20px; 
+    font-size: 1.15rem; 
+    font-weight: 700; 
+}
+
+/* =========================================
+   5. FORMULÁRIOS
+   ========================================= */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .full-width { grid-column: 1 / -1; }
+
 label { font-weight: 600; font-size: 0.9rem; color: var(--uffs-text); }
-input, select, textarea { padding: 10px 12px; border: 1px solid var(--uffs-border); border-radius: 8px; font-size: 0.95rem; color: var(--uffs-text) !important; transition: all 0.2s ease; }
-input:focus, textarea:focus { outline: none; border-color: var(--uffs-green) !important; box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important; }
+
+input, select, textarea { 
+    padding: 10px 12px; 
+    border: 1px solid var(--uffs-border); 
+    border-radius: 8px; 
+    font-size: 0.95rem; 
+    color: var(--uffs-text) !important; 
+    transition: all 0.2s ease; 
+}
+
+input:focus, textarea:focus { 
+    outline: none; 
+    border-color: var(--uffs-green) !important; 
+    box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important; 
+}
+
 .radio-group { display: flex; flex-direction: column; gap: 12px; }
-.radio-option { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px 15px; background: var(--uffs-page); border: 1px solid var(--uffs-border); border-radius: 8px; transition: border-color 0.2s; }
+.radio-option { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    cursor: pointer; 
+    padding: 10px 15px; 
+    background: var(--uffs-page); 
+    border: 1px solid var(--uffs-border); 
+    border-radius: 8px; 
+    transition: border-color 0.2s; 
+}
 .radio-option:hover { border-color: var(--uffs-green); }
 
-/* Notas e Blocos */
-.scale-info { background-color: var(--uffs-green-soft); border-left: 4px solid var(--uffs-green); padding: 12px 15px; font-size: 0.9rem; margin-bottom: 20px; border-radius: 0 8px 8px 0; color: var(--uffs-green-dark); }
-.dimensao-block { margin-bottom: 25px; background: var(--uffs-page); padding: 20px; border-radius: 12px; border: 1px solid var(--uffs-border); }
-.dimensao-block h4 { color: var(--uffs-green-darker); margin-bottom: 15px; font-size: 1rem; border-bottom: 1px dashed var(--uffs-border); padding-bottom: 8px; }
-.question-item { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e9ecea; }
-.question-item label { font-weight: 400; font-size: 0.95rem; flex: 1; }
-.score-input { width: 70px; text-align: center; padding: 8px; font-weight: 700; font-size: 1rem; color: var(--uffs-green-dark) !important; }
+/* =========================================
+   6. BLOCOS DE NOTAS / DIMENSÕES
+   ========================================= */
+.scale-info { 
+    background-color: var(--uffs-green-soft); 
+    border-left: 4px solid var(--uffs-green); 
+    padding: 12px 15px; 
+    font-size: 0.9rem; 
+    margin-bottom: 20px; 
+    border-radius: 0 8px 8px 0; 
+    color: var(--uffs-green-dark); 
+}
 
-/* Resumo e Botão */
+.dimensao-block { 
+    margin-bottom: 25px; 
+    background: var(--uffs-page); 
+    padding: 20px; 
+    border-radius: 12px; 
+    border: 1px solid var(--uffs-border); 
+}
+
+.dimensao-block h4 { 
+    color: var(--uffs-green-darker); 
+    margin-bottom: 15px; 
+    font-size: 1rem; 
+    border-bottom: 1px dashed var(--uffs-border); 
+    padding-bottom: 8px; 
+}
+
+.question-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 12px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #e9ecea; 
+}
+
+.question-item label { font-weight: 400; font-size: 0.95rem; flex: 1; }
+
+.score-input { 
+    width: 70px; 
+    text-align: center; 
+    padding: 8px; 
+    font-weight: 700; 
+    font-size: 1rem; 
+    color: var(--uffs-green-dark) !important; 
+}
+
+/* =========================================
+   7. RESUMO E BOTÕES
+   ========================================= */
 .summary-card { background-color: var(--uffs-green-soft) !important; border: 1px solid #d0e6d7 !important; }
 .score-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; font-size: 0.95rem; }
-.total-score-box { background-color: var(--uffs-green); color: white; padding: 15px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 700; }
-.total-score-box small { display: block; font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
-.actions-area { text-align: center; margin-top: 30px; }
-.btn-brand-uffs { background: var(--uffs-green) !important; color: #fff !important; border: none; padding: 14px 28px; font-size: 1.05rem; font-weight: 700; cursor: pointer; border-radius: 22px !important; transition: all 0.2s; }
-.btn-brand-uffs:hover { background: var(--uffs-green-dark) !important; transform: translateY(-2px); }
 
-/* Rodapé */
-footer.footer-uffs { background: var(--uffs-green) !important; color: #fff !important; padding: 34px 24px !important; text-align: center; font-size: 0.9rem; margin-top: 40px; }
+.total-score-box { 
+    background-color: var(--uffs-green); 
+    color: white; 
+    padding: 15px; 
+    border-radius: 12px; 
+    text-align: center; 
+    font-size: 1.2rem; 
+    font-weight: 700; 
+}
+.total-score-box small { display: block; font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
+
+.actions-area { text-align: center; margin-top: 30px; }
+
+.btn-primary, .btn-brand-uffs { 
+    background: var(--uffs-green) !important; 
+    color: #fff !important; 
+    border: none; 
+    padding: 14px 28px; 
+    font-size: 1.05rem; 
+    font-weight: 700; 
+    cursor: pointer; 
+    border-radius: 22px !important; 
+    transition: all 0.2s; 
+}
+.btn-primary:hover, .btn-brand-uffs:hover { 
+    background: var(--uffs-green-dark) !important; 
+    transform: translateY(-2px); 
+}
+
+/* =========================================
+   8. RODAPÉ (FOOTER)
+   ========================================= */
+footer.footer-uffs { 
+    background: var(--uffs-green) !important; 
+    color: #fff !important; 
+    padding: 34px 24px !important; 
+    text-align: center; 
+    font-size: 0.9rem; 
+    margin-top: 40px; 
+}
 footer.footer-uffs p { margin: 5px 0; color: #fff !important; }
 
-/* PDF Oculto */
+/* =========================================
+   9. PDF OCULTO (HTML2PDF)
+   ========================================= */
 #pdfRenderWrapper { display: none; }
 .pdf-container { width: 100%; padding: 20px; background: #ffffff; font-size: 8.5pt; color: #000000; font-family: Arial, sans-serif; }
 .print-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px; }
