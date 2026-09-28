@@ -178,6 +178,11 @@ input, select, textarea {
     transition: all 0.2s ease; 
 }
 
+textarea {
+    resize: vertical; 
+    min-height: 100px; 
+}
+
 input:focus, textarea:focus { 
     outline: none; 
     border-color: var(--uffs-green) !important; 
@@ -196,7 +201,18 @@ input:focus, textarea:focus {
     border-radius: 8px; 
     transition: border-color 0.2s; 
 }
+
 .radio-option:hover { border-color: var(--uffs-green); }
+
+/* Melhoria UI: Destaque visual ao selecionar um radio */
+.radio-option:has(input[type="radio"]:checked) {
+    border-color: var(--uffs-green);
+    background-color: var(--uffs-green-soft);
+    box-shadow: 0 0 0 1px var(--uffs-green);
+}
+.radio-option input[type="radio"] {
+    accent-color: var(--uffs-green-dark);
+}
 
 /* =========================================
    6. BLOCOS DE NOTAS / DIMENSÕES
@@ -217,6 +233,14 @@ input:focus, textarea:focus {
     padding: 20px; 
     border-radius: 12px; 
     border: 1px solid var(--uffs-border); 
+    transition: all 0.3s ease;
+}
+
+/* Melhoria UI: Foco no bloco onde o utilizador está a preencher */
+.dimensao-block:focus-within {
+    border-color: var(--uffs-green);
+    box-shadow: 0 4px 15px rgba(0, 128, 55, 0.1);
+    transform: translateY(-2px);
 }
 
 .dimensao-block h4 { 
@@ -283,6 +307,12 @@ input:focus, textarea:focus {
     transform: translateY(-2px); 
 }
 
+/* Melhoria UI: Feedback tátil no clique do botão */
+.btn-primary:active, .btn-brand-uffs:active {
+    transform: translateY(1px); 
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+}
+
 /* =========================================
    8. RODAPÉ (FOOTER)
    ========================================= */
@@ -317,3 +347,32 @@ footer.footer-uffs p { margin: 5px 0; color: #fff !important; }
 .signature-box { width: 250px; text-align: center; font-size: 8pt; }
 .signature-box .line { border-top: 1px solid #000; margin-bottom: 4px; }
 .margin-top { margin-top: 10px; }
+
+/* =========================================
+   10. RESPONSIVIDADE (MOBILE)
+   ========================================= */
+@media (max-width: 768px) {
+    .grid-2, .score-summary-grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .header-top {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .institution-info, .header-bottom {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .question-item {
+        flex-direction: column; 
+        align-items: flex-start;
+    }
+    
+    .score-input {
+        width: 100%; 
+        margin-top: 10px;
+    }
+}
