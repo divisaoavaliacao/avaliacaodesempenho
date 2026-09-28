@@ -17,17 +17,14 @@
     gap: 20px; /* Espaço entre o logo e o título */
 }
 
-/* Caixa branca em volta do logo e controle de tamanho */
+/* Controle de tamanho do logo sem a caixa branca */
 .logo-box {
-    padding: 10px 20px;
-    border-radius: 4px;
-    width: 200px; /* Aqui limitamos o tamanho do logo */
+    width: 240px; /* Você pode aumentar ou diminuir este valor para ajustar o tamanho do logo */
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
-/* Faz a imagem obedecer o limite da caixa */
+/* Faz a imagem obedecer o limite de tamanho e remove bordas soltas */
 .logo-box img {
     width: 100%;
     height: auto;
