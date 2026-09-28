@@ -12,11 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
         input.setAttribute('min', '0');
         input.setAttribute('max', '10');
         input.setAttribute('step', '1');
+input.setAttribute('inputmode', 'numeric');
+        input.setAttribute('pattern', '[0-9]*');
 
-        // Impede digitação de notas maiores que 10 ou menores que 0
+        // Bloqueia teclas de ponto, vírgula, hífen e notação científica (e/E)
+        input.addEventListener('keydown', (e) => {
+            if (e.key === '.' || e.key === ',' || e.key === '-' || e.key === 'e' || e.key === 'E') {
+                e.preventDefault();
+            }
+        });
+
+        // Higieniza caso o usuário cole ou tente digitar valores decimais/fora do limite
         input.addEventListener('input', () => {
-            if (parseFloat(input.value) > 10) input.value = 10;
-            if (parseFloat(input.value) < 0) input.value = 0;
+            // Remove qualquer caractere não numérico
+            input.value = input.value.replace(/[^0-9]/g, '');
+
+            if (input.value !== '') {
+                let val = parseInt(input.value, 10);
+                if (val > 10) input.value = 10;
+                if (val < 0) input.value = 0;
+            }
             calculateScores();
         });
     });
