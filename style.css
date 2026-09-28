@@ -30,68 +30,92 @@ body {
 * { box-sizing: border-box; }
 
 /* =========================================
-   3. CABEÇALHO (HEADER) - ALINHADO
+   3. CABEÇALHO (HEADER) - FUNDO VERDE ESCURO
    ========================================= */
 .header-uffs {
-    background-color: var(--card-bg);
-    border-bottom: 3px solid var(--uffs-green);
-    padding: 25px 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background-color: var(--uffs-green-darker);
+    padding: 30px 20px;
+    color: #ffffff;
 }
 
 .header-container { 
     max-width: 1000px; 
     margin: 0 auto; 
     display: flex; 
-    align-items: center; 
-    gap: 30px; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+/* --- Parte Superior (Logo + Universidade) --- */
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .logo-box {
-    width: 240px;
-    flex-shrink: 0;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-width: 110px;
+}
+
+.logo-text {
+    color: var(--uffs-green-darker);
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 1px;
 }
 
 .logo-box img {
-    width: 100%;
+    max-width: 100px;
     height: auto;
     display: block;
 }
 
-.header-texts {
+.institution-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.institution-info h1 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #ffffff !important;
+}
+
+.institution-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ffffff !important;
+}
+
+/* --- Parte Inferior (Título da Avaliação) --- */
+.header-bottom {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    border-left: 2px solid var(--uffs-border);
-    padding-left: 30px;
+    padding-top: 5px;
 }
 
-.header-texts h1 { 
-    margin: 0; 
-    font-size: 1.45rem; 
-    font-weight: 800; 
-    color: var(--uffs-green-dark);
-}
-
-.header-texts p { 
-    margin: 0; 
-    font-size: 0.95rem; 
-    color: var(--uffs-text);
-}
-
-.header-texts h2 {
-    margin: 8px 0 0 0;
-    font-size: 1.1rem;
+.header-bottom h2 {
+    margin: 0;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: var(--uffs-text);
+    color: #ffffff !important;
 }
 
-.header-texts span {
+.header-bottom span {
     font-size: 0.85rem;
-    color: var(--uffs-muted);
-    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* =========================================
