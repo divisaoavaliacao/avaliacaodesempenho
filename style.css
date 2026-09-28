@@ -1,249 +1,91 @@
+/* Camada institucional UFFS */
 :root {
-    --uffs-verde-principal: #004A2F;
-    --uffs-amarelo-destaque: #FFB81C;
-    --uffs-azul-institucional: #003366;
-    --uffs-cinza-texto: #333333;
-    --uffs-cinza-fundo: #F5F7F6;
-    --uffs-cinza-borda: #CCCCCC;
-    --uffs-branco: #FFFFFF;
+    --uffs-green: #008037;
+    --uffs-green-dark: #00652c;
+    --uffs-green-darker: #065228;
+    --uffs-green-soft: #edf7f0;
+    --uffs-text: #16362a;
+    --uffs-muted: #62756e;
+    --uffs-border: #d8e2dc;
+    --uffs-page: #f4f6f5;
+    --uffs-shadow: 0 22px 55px rgba(7, 32, 19, .08);
+    --card-bg: #ffffff;
 }
+html { scroll-behavior: smooth; }
+body {
+    background: var(--uffs-page) !important;
+    color: var(--uffs-text) !important;
+    font-family: "Fira Sans", "Segoe UI", Arial, sans-serif !important;
+    margin: 0; padding: 0; padding-bottom: 40px; line-height: 1.5;
+}
+* { box-sizing: border-box; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
-body { background-color: var(--uffs-cinza-fundo); color: var(--uffs-cinza-texto); line-height: 1.4; }
+/* Header */
+.header-uffs-principal {
+    background: linear-gradient(120deg, var(--uffs-green) 0 42%, #0b833d 42% 54%, var(--uffs-green-darker) 54% 100%) !important;
+    padding: 18px 24px !important; color: #fff !important;
+}
+.header-container { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.header-uffs-principal img { width: 272px !important; max-height: 78px !important; object-fit: contain !important; }
+.header-uffs-principal h1 { font-size: 1.35rem !important; margin: 0; font-weight: 700; color: #fff !important;}
+.header-uffs-principal p { margin: 0; font-size: 0.88rem; color: #fff !important;}
+.divisor-vertical { background: rgba(255, 255, 255, .32) !important; width: 1px; height: 46px; }
 
-/* Cabeçalho Web */
-.header-uffs { 
-    background-color: var(--uffs-verde-principal); 
-    color: var(--uffs-branco); 
-    padding: 20px 0;
-    border-bottom: 5px solid var(--uffs-amarelo-destaque);
-}
-.header-container { max-width: 920px; margin: 0 auto; padding: 0 20px; }
-.brand-area { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-.logo-box { 
-    background-color: var(--uffs-branco); 
-    color: var(--uffs-verde-principal); 
-    padding: 6px 14px; 
-    border-radius: 4px; 
-    font-weight: 900; 
-    font-size: 1.3rem; 
-    letter-spacing: 2px;
-}
-.institution-title h1 { font-size: 1.2rem; font-weight: bold; }
-.institution-title p { font-size: 0.85rem; opacity: 0.9; }
-.doc-title { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; margin-top: 8px; }
-.doc-title h2 { font-size: 1.05rem; }
-.doc-title span { font-size: 0.8rem; opacity: 0.85; }
+/* Container e Cards */
+.main-container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
+.card { background: var(--card-bg); border-radius: 22px !important; padding: 25px; margin-bottom: 25px; border: 1px solid var(--uffs-border); box-shadow: var(--uffs-shadow) !important; }
+.card-hero-uffs { position: relative; overflow: hidden; background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%); }
+.card-hero-uffs::after { content: 'AVALIAÇÃO'; position: absolute; right: -8px; top: 18px; font-size: clamp(42px, 7vw, 110px); font-weight: 800; line-height: 1; letter-spacing: .02em; color: rgba(0, 82, 40, .035); pointer-events: none; }
+.card-header { color: var(--uffs-green); border-bottom: 2px solid var(--uffs-green-soft); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.15rem; font-weight: 700; }
 
-/* Form Web */
-.main-container { max-width: 920px; margin: 20px auto; padding: 0 15px; }
-.card { 
-    background: var(--uffs-branco); 
-    border-radius: 6px; 
-    padding: 18px; 
-    margin-bottom: 18px; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
-    border-top: 4px solid var(--uffs-verde-principal); 
-}
-.modalidade-card { border-top-color: var(--uffs-azul-institucional); }
-.card-header { 
-    color: var(--uffs-verde-principal); 
-    font-size: 1.05rem; 
-    margin-bottom: 12px; 
-    border-bottom: 2px solid var(--uffs-cinza-fundo); 
-    padding-bottom: 4px; 
-}
+/* Formulários */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.full-width { grid-column: 1 / -1; }
+label { font-weight: 600; font-size: 0.9rem; color: var(--uffs-text); }
+input, select, textarea { padding: 10px 12px; border: 1px solid var(--uffs-border); border-radius: 8px; font-size: 0.95rem; color: var(--uffs-text) !important; transition: all 0.2s ease; }
+input:focus, textarea:focus { outline: none; border-color: var(--uffs-green) !important; box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important; }
+.radio-group { display: flex; flex-direction: column; gap: 12px; }
+.radio-option { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px 15px; background: var(--uffs-page); border: 1px solid var(--uffs-border); border-radius: 8px; transition: border-color 0.2s; }
+.radio-option:hover { border-color: var(--uffs-green); }
 
-.radio-group { display: flex; gap: 15px; margin-top: 8px; flex-wrap: wrap; }
-.radio-option { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    background: var(--uffs-cinza-fundo); 
-    padding: 10px 14px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    flex: 1; 
-    border: 1px solid transparent;
-}
-.radio-option:has(input:checked) {
-    border-color: var(--uffs-verde-principal);
-    background-color: #EBF4F0;
-}
-.radio-option input[type="radio"] { accent-color: var(--uffs-verde-principal); width: 16px; height: 16px; }
+/* Notas e Blocos */
+.scale-info { background-color: var(--uffs-green-soft); border-left: 4px solid var(--uffs-green); padding: 12px 15px; font-size: 0.9rem; margin-bottom: 20px; border-radius: 0 8px 8px 0; color: var(--uffs-green-dark); }
+.dimensao-block { margin-bottom: 25px; background: var(--uffs-page); padding: 20px; border-radius: 12px; border: 1px solid var(--uffs-border); }
+.dimensao-block h4 { color: var(--uffs-green-darker); margin-bottom: 15px; font-size: 1rem; border-bottom: 1px dashed var(--uffs-border); padding-bottom: 8px; }
+.question-item { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e9ecea; }
+.question-item label { font-weight: 400; font-size: 0.95rem; flex: 1; }
+.score-input { width: 70px; text-align: center; padding: 8px; font-weight: 700; font-size: 1rem; color: var(--uffs-green-dark) !important; }
 
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
+/* Resumo e Botão */
+.summary-card { background-color: var(--uffs-green-soft) !important; border: 1px solid #d0e6d7 !important; }
+.score-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; font-size: 0.95rem; }
+.total-score-box { background-color: var(--uffs-green); color: white; padding: 15px; border-radius: 12px; text-align: center; font-size: 1.2rem; font-weight: 700; }
+.total-score-box small { display: block; font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
+.actions-area { text-align: center; margin-top: 30px; }
+.btn-brand-uffs { background: var(--uffs-green) !important; color: #fff !important; border: none; padding: 14px 28px; font-size: 1.05rem; font-weight: 700; cursor: pointer; border-radius: 22px !important; transition: all 0.2s; }
+.btn-brand-uffs:hover { background: var(--uffs-green-dark) !important; transform: translateY(-2px); }
 
-.form-group { display: flex; flex-direction: column; }
-.full-width { grid-column: span 2; }
-label { font-weight: bold; margin-bottom: 4px; font-size: 0.85rem; color: #444; }
-input[type="text"], input[type="number"], textarea { 
-    padding: 8px; 
-    border: 1px solid var(--uffs-cinza-borda); 
-    border-radius: 4px; 
-    font-size: 0.9rem; 
-}
+/* Rodapé */
+footer.footer-uffs { background: var(--uffs-green) !important; color: #fff !important; padding: 34px 24px !important; text-align: center; font-size: 0.9rem; margin-top: 40px; }
+footer.footer-uffs p { margin: 5px 0; color: #fff !important; }
 
-.scale-info { 
-    background: #E8F1EC; 
-    border-left: 4px solid var(--uffs-amarelo-destaque); 
-    padding: 8px 12px; 
-    font-size: 0.85rem; 
-    margin-bottom: 12px; 
-    color: var(--uffs-verde-principal);
-}
-.dimensao-block { background: var(--uffs-cinza-fundo); padding: 12px; border-radius: 4px; margin-bottom: 12px; }
-.dimensao-block h4 { color: var(--uffs-verde-principal); margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
-.question-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 10px; }
-.question-item label { font-weight: normal; font-size: 0.85rem; flex: 1; }
-.score-input { width: 70px; text-align: center; font-weight: bold; }
-
-.actions-area { text-align: center; margin: 25px 0; }
-.btn-primary { 
-    background-color: var(--uffs-verde-principal); 
-    color: white; 
-    border: none; 
-    padding: 12px 28px; 
-    font-size: 1rem; 
-    font-weight: bold; 
-    border-radius: 4px; 
-    cursor: pointer; 
-}
-.btn-primary:hover { background-color: #003622; }
-
-/* ==========================================================================
-   ESTILO DO PDF (TABELA 100% LARGURA COM QUEBRA AUTOMÁTICA DE TEXTO)
-   ========================================================================== */
-
-#pdfRenderWrapper {
-    display: none;
-}
-
-.pdf-container { 
-    background: #ffffff; 
-    padding: 10px; 
-    color: #000000; 
-    font-size: 8pt; 
-    width: 100% !important;
-    box-sizing: border-box;
-}
-
-.print-header { 
-    text-align: center; 
-    margin-bottom: 10px; 
-}
-
-.pdf-brand-bar { 
-    background: #000000; 
-    color: #ffffff; 
-    padding: 5px; 
-    margin-bottom: 6px; 
-}
-
-.pdf-brand-bar h2 { 
-    font-size: 10pt; 
-    font-weight: bold;
-}
-
-.print-header h3 { 
-    font-size: 8.5pt; 
-    margin: 2px 0; 
-    color: #000000; 
-    font-weight: bold;
-}
-
-.badge-modalidade { 
-    display: inline-block; 
-    padding: 2px 8px; 
-    background: #FFFFFF; 
-    color: #000000; 
-    font-weight: bold; 
-    font-size: 7.5pt; 
-    border: 1px solid #000000;
-}
-
-/* REGRA DE LARGURA 100% E QUEBRA AUTOMÁTICA DE TEXTO */
-.print-table { 
-    width: 100% !important; 
-    max-width: 100% !important;
-    border-collapse: collapse; 
-    margin-bottom: 8px; 
-    table-layout: fixed !important; /* Obriga o navegador a respeitar as larguras definidas */
-}
-
-.print-table tr {
-    page-break-inside: avoid;
-}
-
-.print-table td, .print-table th { 
-    border: 1px solid #000000; 
-    padding: 4px 6px; 
-    font-size: 7.5pt; 
-    color: #000000;
-    line-height: 1.25;
-    vertical-align: middle;
-    white-space: normal !important; /* Permite a quebra de linha normal */
-    word-wrap: break-word !important; /* Quebra palavras se estourarem */
-    overflow-wrap: break-word !important;
-}
-
-.cell-desc {
-    width: 85% !important;
-    text-align: left;
-}
-
-.cell-nota {
-    width: 15% !important;
-    text-align: center;
-    font-weight: bold;
-}
-
-.table-section-title { 
-    background-color: #000000; 
-    color: #ffffff !important; 
-    text-align: left; 
-    font-size: 8pt; 
-    padding: 4px 6px; 
-    font-weight: bold;
-}
-
-.sub-dim-title { 
-    background-color: #E6E6E6; 
-    font-weight: bold; 
-    color: #000000; 
-    text-align: left;
-}
-
-.table-total-row { 
-    background-color: #E6E6E6; 
-}
-
-.print-obs { 
-    border: 1px solid #000000; 
-    padding: 6px; 
-    min-height: 40px; 
-    font-size: 7.5pt; 
-    color: #000000;
-    page-break-inside: avoid;
-}
-
-.signatures-container { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 30px; 
-    page-break-inside: avoid; 
-}
-
-.signature-box { 
-    width: 60%; 
-    text-align: center; 
-    font-size: 8pt; 
-    color: #000000;
-}
-
-.signature-box .line { 
-    border-top: 1px solid #000000; 
-    margin-bottom: 6px; 
-}
+/* PDF Oculto */
+#pdfRenderWrapper { display: none; }
+.pdf-container { width: 100%; padding: 20px; background: #ffffff; font-size: 8.5pt; color: #000000; font-family: Arial, sans-serif; }
+.print-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px; }
+.pdf-brand-bar h2 { font-size: 11pt; font-weight: bold; margin-bottom: 2px; }
+.print-header h3 { font-size: 10pt; margin-top: 4px; }
+.badge-modalidade { display: inline-block; margin-top: 6px; padding: 3px 8px; background: #eee; border: 1px solid #ccc; font-weight: bold; font-size: 8pt; }
+.print-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+.print-table th, .print-table td { border: 1px solid #666; padding: 4px 6px; vertical-align: middle; }
+.table-section-title { background-color: #f0f0f0; text-align: left; font-size: 8.5pt; font-weight: bold; }
+.sub-dim-title { background-color: #f9f9f9; font-weight: bold; font-size: 8pt; }
+.cell-desc { font-size: 8pt; }
+.cell-nota { text-align: center; font-weight: bold; width: 45px; }
+.table-total-row { background-color: #e6e6e6; }
+.print-obs { border: 1px solid #666; padding: 6px; min-height: 50px; font-size: 8pt; }
+.signatures-container { margin-top: 30px; display: flex; justify-content: center; }
+.signature-box { width: 250px; text-align: center; font-size: 8pt; }
+.signature-box .line { border-top: 1px solid #000; margin-bottom: 4px; }
+.margin-top { margin-top: 10px; }
