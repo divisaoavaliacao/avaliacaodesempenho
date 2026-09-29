@@ -1,3 +1,5 @@
+JavaScript
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('evalForm');
     const radiosModalidade = document.querySelectorAll('input[name="modalidade"]');
@@ -118,3 +120,161 @@ document.addEventListener('DOMContentLoaded', () => {
             const title = block.querySelector('h4').innerText;
             const trTitle = document.createElement('tr');
             trTitle.innerHTML = `
+
+${title}`;
+tbody.appendChild(trTitle);
+
+        const items = block.querySelectorAll('.question-item');
+        items.forEach(item => {
+            const questionText = item.querySelector('label').innerText;
+            const inputVal = item.querySelector('input').value;
+            const trItem = document.createElement('tr');
+            trItem.innerHTML = `
+
+${questionText}
+
+${inputVal !== '' ? parseInt(inputVal, 10) : '-'}
+`;
+tbody.appendChild(trItem);
+});
+});
+}
+
+function prepareReportData() {
+const scores = calculateScores();
+const dataHoje = new Date().toLocaleDateString('pt-BR');
+
+const nomeServidor = document.getElementById('nomeServidor').value || 'Servidor(a)';
+const nomeChefia = document.getElementById('nomeChefia').value || 'Chefia Imediata';
+
+// Preenchimento dos dados de identificação
+document.getElementById('pModalidadeBadge').innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
+document.getElementById('pNomeServidor').innerText = nomeServidor;
+document.getElementById('pSiape').innerText = document.getElementById('siape').value || 'Não Informado';
+document.getElementById('pCargoServidor').innerText = document.getElementById('cargoServidor').value || 'Não Informado';
+document.getElementById('pPeriodo').innerText = document.getElementById('periodoAvaliacao').value || 'Não Informado';
+document.getElementById('pOrgaoDestino').innerText = document.getElementById('orgaoDestino').value || 'Não Informado';
+document.getElementById('pNomeChefia').innerText = nomeChefia;
+document.getElementById('pCargoChefia').innerText = document.getElementById('cargoChefia').value || 'Não Informado';
+
+generateDetailedNotesTable(scores.isAuto);
+
+// Preenchimento das médias e pontuações
+document.getElementById('pMediaConhecimentos').innerText = scores.avgConhecimentos.toFixed(1);
+document.getElementById('pPondConhecimentos').innerText = scores.pondConhecimentos.toFixed(2);
+
+document.getElementById('pMediaHabilidades').innerText = scores.avgHabilidades.toFixed(1);
+document.getElementById('pPondHabilidades').innerText = scores.pondHabilidades.toFixed(2);
+
+document.getElementById('pMediaMetas').innerText = scores.avgMetas.toFixed(1);
+document.getElementById('pPondMetas').innerText = scores.pondMetas.toFixed(2);
+
+document.getElementById('pMediaComportamentos').innerText = scores.avgComportamentos.toFixed(1);
+document.getElementById('pPondComportamentos').innerText = scores.pondComportamentos.toFixed(2);
+
+if (scores.isAuto && document.getElementById('pMediaMediadores')) {
+    document.getElementById('pMediaMediadores').innerText = getAverage('input-mediadores').toFixed(1);
+}
+
+document.getElementById('pTotalObtido').innerText = `\({scores.totalPonderado.toFixed(2)} /\){scores.isAuto ? '4.25' : '5.75'}`;
+document.getElementById('pObservacoes').innerText = document.getElementById('observacoes').value || 'Sem observações.';
+
+// LÓGICA DE ASSINATURA ÚNICA
+const sigContainer = document.getElementById('pSignaturesContainer');
+
+if (scores.isAuto) {
+    // Exibe apenas a assinatura do Servidor
+    sigContainer.innerHTML = `
+
+${nomeServidor}
+
+Servidor(a) Avaliado(a)
+
+Data: ${dataHoje}
+
+`;
+
+} else {
+// Exibe apenas a assinatura da Chefia Imediata
+sigContainer.innerHTML = `
+
+${nomeChefia}
+
+Chefia Imediata (Avaliador)
+
+Data: ${dataHoje}
+
+    `;
+}
+
+return scores;
+
+}
+
+// Função para sanitizar e formatar o nome no arquivo
+function formatFileName(name) {
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-0]/g, '_');
+}
+
+btnDownloadPDF.addEventListener('click', async () => {
+    const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
+
+    // 1. Validação dos campos de identificação obrigatórios do formulário
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // 2. Validação se TODAS as notas foram atribuídas
+    if (!validateAllScoresFilled(isAuto)) {
+        alert('Por favor, preencha todas as notas da avaliação antes de gerar o relatório PDF.');
+        return;
+    }
+
+    prepareReportData();
+
+    const printArea = document.getElementById('printArea');
+    const nomeServidor = document.getElementById('nomeServidor').value || 'servidor';
+    const nomeChefia = document.getElementById('nomeChefia').value || 'chefia';
+
+    // Definição do nome do arquivo PDF impresso
+    let filenamePDF = '';
+    if (isAuto) {
+        filenamePDF = `autoavaliacao_${formatFileName(nomeServidor)}.pdf`;
+    } else {
+        filenamePDF = `avaliacao_\({formatFileName(nomeChefia)}_\){formatFileName(nomeServidor)}.pdf`;
+    }
+
+    // Clonagem para geração sem falhas
+    const clone = printArea.cloneNode(true);
+    clone.id = 'pdfTempContainer';
+    clone.style.display = 'block';
+    clone.style.width = '700px';
+    clone.style.margin = '0 auto';
+    clone.style.backgroundColor = '#ffffff';
+
+    document.body.appendChild(clone);
+
+    const opt = {
+        margin:       [10, 10, 10, 10],
+        filename:     filenamePDF,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['css', 'legacy'] }
+    };
+
+    try {
+        await html2pdf().set(opt).from(clone).save();
+    } catch (err) {
+        console.error('Erro ao gerar PDF:', err);
+    } finally {
+        if (document.getElementById('pdfTempContainer')) {
+            document.body.removeChild(clone);
+        }
+    }
+});
+
+updateModalidadeUI();
+
+});
