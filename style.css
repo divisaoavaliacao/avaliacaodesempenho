@@ -602,9 +602,7 @@ textarea {
     width:
         100%;
    
-input[type="radio"] {
-    width: auto;
-    min-width: auto;
+
     color:
         var(--uffs-text);
 
