@@ -1,5 +1,3 @@
-JavaScript
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('evalForm');
     const radiosModalidade = document.querySelectorAll('input[name="modalidade"]');
@@ -7,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rowPrintMediadores = document.getElementById('rowPrintMediadores');
     const btnDownloadPDF = document.getElementById('btnDownloadPDF');
 
-    // Configura o step = 1 e os limites de 0 a 10 em todos os campos de nota
+    // Configura o step = 1 e força valores inteiros de 0 a 10 em todos os campos de nota
     const scoreInputs = document.querySelectorAll('.score-input');
     scoreInputs.forEach(input => {
         input.setAttribute('type', 'number');
@@ -24,14 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Higieniza caso o usuário cole ou tente digitar valores decimais/fora do limite
+        // Higienização instantânea durante a digitação/colagem
         input.addEventListener('input', () => {
-            input.value = input.value.replace(/[^0-9]/g, '');
+            // Remove tudo que não for dígito numérico (0-9)
+            let cleanVal = input.value.replace(/[^0-9]/g, '');
 
-            if (input.value !== '') {
+            if (cleanVal !== '') {
+                let val = parseInt(cleanVal, 10);
+                if (val > 10) val = 10;
+                if (val < 0) val = 0;
+                input.value = val;
+            } else {
+                input.value = '';
+            }
+            calculateScores();
+        });
+
+        // Garante valor válido (0-10) caso o usuário deixe em branco e saia do campo
+        input.addEventListener('blur', () => {
+            if (input.value === '' || isNaN(parseInt(input.value, 10))) {
+                input.value = '0';
+            } else {
                 let val = parseInt(input.value, 10);
-                if (val > 10) input.value = 10;
-                if (val < 0) input.value = 0;
+                if (val > 10) input.value = '10';
+                if (val < 0) input.value = '0';
             }
             calculateScores();
         });
@@ -57,9 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getAverage(className) {
         const inputs = Array.from(document.querySelectorAll(`.${className}`));
-        const validInputs = inputs.filter(i => i.value !== '' && !isNaN(parseFloat(i.value)));
+        const validInputs = inputs.filter(i => i.value !== '' && !isNaN(parseInt(i.value, 10)));
         if (validInputs.length === 0) return 0;
-        const sum = validInputs.reduce((acc, curr) => acc + parseFloat(curr.value), 0);
+        const sum = validInputs.reduce((acc, curr) => acc + parseInt(curr.value, 10), 0);
         return sum / validInputs.length;
     }
 
@@ -111,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isAuto && input.classList.contains('input-mediadores')) {
                 continue;
             }
-            if (input.value === '' || isNaN(parseFloat(input.value))) {
+            if (input.value === '' || isNaN(parseInt(input.value, 10))) {
                 return false;
             }
         }
@@ -184,7 +198,7 @@ function prepareReportData() {
 
     generateDetailedNotesTable(scores.isAuto);
 
-    // Preenchimento das Médias e Pontuações (Com verificação defensiva de elementos)
+    // Preenchimento das Médias e Pontuações
     const setInnerText = (id, value) => {
         const el = document.getElementById(id);
         if (el) el.innerText = value;
@@ -255,7 +269,7 @@ if (btnDownloadPDF) {
 
         // 2. Validação se TODAS as notas foram atribuídas
         if (!validateAllScoresFilled(isAuto)) {
-            alert('Por favor, preencha todas as notas da avaliação antes de gerar o relatório PDF.');
+            alert('Por favor, preencha todas as notas da avaliação com números inteiros de 0 a 10 antes de gerar o relatório PDF.');
             return;
         }
 
@@ -302,8 +316,3 @@ if (btnDownloadPDF) {
 }
 
 updateModalidadeUI();
-
-});
-
-
-*Lembre-se apenas de conferir no seu `index.html` se os campos de resultado da tabela do relatório usam os IDs atualizados (ex: `id="pPontuacaoConhecimentos"`, `id="pPontuacaoHabilidades"`, `id="pPontuacaoMetas"`, `id="pPontuacaoComportamentos"`).*
