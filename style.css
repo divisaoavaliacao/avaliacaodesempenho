@@ -1,124 +1,2078 @@
-/* UFFS — Avaliação de Desempenho */
+/* ============================================================
+   UFFS — AVALIAÇÃO DE DESEMPENHO
+   Folha de estilos
+============================================================ */
+
+
+/* ============================================================
+   VARIÁVEIS INSTITUCIONAIS
+============================================================ */
+
 :root {
-  --uffs-green:#008037; --uffs-green-dark:#00652c; --uffs-green-soft:#edf7f0;
-  --uffs-text:#16362a; --uffs-muted:#62756e; --uffs-border:#d8e2dc;
-  --uffs-page:#f4f6f5; --uffs-shadow:0 22px 55px rgba(7,32,19,.08);
+
+    --uffs-green: #008037;
+    --uffs-green-dark: #00652c;
+    --uffs-green-darker: #005a2b;
+
+    --uffs-green-soft: #edf7f0;
+
+    --uffs-text: #16362a;
+    --uffs-muted: #62756e;
+
+    --uffs-border: #d8e2dc;
+
+    --uffs-page: #f4f6f5;
+
+    --uffs-white: #ffffff;
+
+    --uffs-shadow:
+        0 10px 30px rgba(7, 32, 19, .07);
+
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth}
-body{background:var(--uffs-page);color:var(--uffs-text);font-family:"Fira Sans","Segoe UI",Arial,sans-serif;margin:0}
-.header-uffs-principal{background:#005a2b;padding:12px 24px;color:#fff}
-.header-content{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:auto;gap:20px}
-.header-left{display:flex;align-items:center;gap:16px;min-width:0}
-.logo-box-white{background:#fff;padding:6px 10px;border-radius:6px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.logo-box-white img{height:42px;width:auto;max-width:220px;object-fit:contain}
-.divisor-vertical{background:rgba(255,255,255,.3);width:1px;height:38px}
-.header-uffs-principal h1{font-size:1.25rem;margin:0;color:#fff}
-.subtitle-row{display:flex;gap:8px;margin-top:2px;font-size:.8rem;opacity:.95;flex-wrap:wrap}
-.badge-v2{background:#ffc107;color:#000;font-weight:700;font-size:.7rem;padding:2px 8px;border-radius:12px}
-.btn-top-header{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 14px;border-radius:20px;font-weight:600;cursor:pointer}
-.main-container{max-width:1200px;margin:24px auto;padding:0 16px}
-.card-hero-uffs{position:relative;overflow:hidden;background:linear-gradient(90deg,#fff,rgba(255,255,255,.97) 55%,rgba(232,241,236,.92));border:1px solid #e2e9e4;border-radius:24px;box-shadow:var(--uffs-shadow);padding:28px;margin-bottom:24px}
-.card-hero-uffs:after{content:"CEDIDOS";position:absolute;right:-8px;top:18px;font-size:clamp(42px,7vw,110px);font-weight:800;color:rgba(0,82,40,.055);pointer-events:none}
-.card-hero-uffs h2{margin:0 0 8px;color:var(--uffs-green);position:relative;z-index:1}.card-hero-uffs p{margin:0;color:var(--uffs-muted);font-weight:500}
-.card{background:#fff;border:1px solid var(--uffs-border);padding:24px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.03)}
-.rounded-uffs{border-radius:22px}.card-header{margin:0 0 16px;font-size:1.25rem;border-bottom:2px solid var(--uffs-green-soft);padding-bottom:8px;color:var(--uffs-green)}
-.radio-group{display:grid;gap:10px}.radio-option{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--uffs-border);border-radius:10px;cursor:pointer}
-.radio-option:has(input:checked){border-color:var(--uffs-green);background:var(--uffs-green-soft)}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.form-group{display:flex;flex-direction:column;gap:6px}.form-group label{font-weight:600;font-size:.9rem}
-input,textarea{color:var(--uffs-text);padding:10px 12px;border:1px solid var(--uffs-border);border-radius:8px;font-size:.95rem;outline:none;background:#fff}
-input:focus,textarea:focus{border-color:var(--uffs-green);box-shadow:0 0 0 3px rgba(0,128,55,.18)}input[readonly]{background:#f5f7f6}
-.scale-info,.formula-box{background:var(--uffs-green-soft);border:1px solid #d0e6d7;padding:12px;border-radius:8px;margin-bottom:20px}
-.question-block{margin-bottom:24px}.question-block h4{color:var(--uffs-green-dark);margin:0 0 6px}
-.dimension-description{font-size:.85rem;color:var(--uffs-muted);margin:0 0 12px}
-.question-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0;border-bottom:1px dashed var(--uffs-border)}
-.question-item label{font-size:.92rem;flex:1}.score-input{width:70px;text-align:center}
-.summary-card{border-top:4px solid var(--uffs-green)}
-.score-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.score-summary-grid>div{border:1px solid var(--uffs-border);border-radius:10px;padding:14px;background:#fff}
-.score-summary-grid span{display:block;font-weight:600;margin-bottom:5px}.score-summary-grid strong{display:block;color:var(--uffs-green-dark);font-size:1.35rem}
-.score-summary-grid small{display:block;color:var(--uffs-muted);margin-top:4px}
-.total-score-box{background:var(--uffs-green-soft);padding:16px;border-radius:12px;text-align:center;font-size:1.1rem}
-.total-score-box strong{color:var(--uffs-green-dark);font-size:1.6rem;display:block;margin-top:4px}
-.consolidated-box{background:#f8faf9;border:1px solid var(--uffs-border);padding:14px;border-radius:12px;margin-top:14px}
-.consolidated-box strong{color:var(--uffs-green-dark)}
-.actions-area{display:flex;justify-content:center;gap:12px;margin:24px 0 34px;flex-wrap:wrap}
-.btn-brand-uffs,.btn-secondary-action{padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer}
-.btn-brand-uffs{background:var(--uffs-green);border:0;color:#fff}.btn-brand-uffs:hover{background:var(--uffs-green-dark)}
-.btn-secondary-action{background:#fff;border:1px solid var(--uffs-green);color:var(--uffs-green-dark)}
-.footer-uffs{background:var(--uffs-green);color:#fff;padding:22px 0;text-align:center}
 
-/* PDF */
-#pdfRenderWrapper{position:fixed;left:-100000px;top:0;width:210mm;background:#fff;z-index:-1}
-#printArea{width:210mm;min-height:297mm;padding:9mm 10mm;color:#000;background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:9pt;line-height:1.3}
-.print-header{text-align:center;font-weight:bold;margin-bottom:10px}.pdf-brand-bar{background:#000;color:#fff;padding:6px;margin-bottom:7px}.pdf-brand-bar h2{color:#fff;margin:0;font-size:10.5pt}
-.print-header h3{margin:0;font-size:11pt;text-transform:uppercase}.print-header p{margin:2px 0;font-size:9.5pt}
-.badge-modalidade{display:inline-block;border:1px solid #000;padding:3px 9px;margin-top:3px;font-size:8.5pt;font-weight:bold}
-.print-table{width:100%;border-collapse:collapse;margin-bottom:10px;page-break-inside:auto}
-.print-table tr{page-break-inside:avoid}.print-table th,.print-table td{border:1px solid #000;padding:4px 6px;font-size:8.5pt;vertical-align:middle}
-.table-section-title{background:#000!important;color:#fff!important;font-weight:bold;text-align:left}.label-cell{background:#f2f2f2}
-.center{text-align:center!important}.bold{font-weight:bold!important}.dimension-print-title{background:#e7e7e7;font-weight:bold}
-.dimension-description-print{font-size:8.2pt}.table-total-row td{background:#e7e7e7}.total-pdf-score{font-size:10pt!important}
-.print-obs{border:1px solid #000;padding:6px 8px;min-height:42px}.print-obs p{margin:5px 0 0;white-space:pre-wrap}
-.signatures-container{display:flex;justify-content:center;gap:25mm;margin-top:16mm;page-break-inside:avoid}
-.signature-block{width:75mm;text-align:center;font-size:9pt}.signature-line{border-top:1px solid #000;margin-bottom:5px}.signature-block .name{font-weight:bold}
-@media print{body>*:not(#pdfRenderWrapper){display:none!important}#pdfRenderWrapper{position:static!important;display:block!important;width:auto!important}#printArea{margin:0}}
-@media(max-width:900px){.score-summary-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.header-content{flex-direction:column;align-items:flex-start}.divisor-vertical{display:none}.score-summary-grid{grid-template-columns:1fr}.question-item{align-items:flex-start}}
-@media(max-width:520px){.question-item{flex-direction:column;align-items:stretch}.score-input{width:100%}}
 
-/* Mediadores: visíveis exclusivamente na Autoavaliação. */
+/* ============================================================
+   CONFIGURAÇÃO GERAL
+============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    background:
+        var(--uffs-page);
+
+    color:
+        var(--uffs-text);
+
+    font-family:
+        "Fira Sans",
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.45;
+
+}
+
+
+/* ============================================================
+   CABEÇALHO PRINCIPAL
+============================================================ */
+
+.header-uffs-principal {
+
+    background:
+        var(--uffs-green-darker);
+
+    color:
+        #ffffff;
+
+    padding:
+        12px 24px;
+
+}
+
+
+.header-content {
+
+    max-width:
+        1400px;
+
+    margin:
+        0 auto;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+}
+
+
+.header-left {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    min-width:
+        0;
+
+}
+
+
+/* ============================================================
+   LOGO DA TELA
+============================================================ */
+
+.logo-box-white {
+
+    background:
+        #ffffff;
+
+    padding:
+        6px 14px;
+
+    border-radius:
+        6px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    box-shadow:
+        0 2px 6px rgba(0,0,0,.15);
+
+    flex-shrink:
+        0;
+
+}
+
+
+.logo-box-white img {
+
+    height:
+        42px;
+
+    width:
+        auto;
+
+    object-fit:
+        contain;
+
+}
+
+
+/* ============================================================
+   DIVISOR
+============================================================ */
+
+.divisor-vertical {
+
+    width:
+        1px;
+
+    height:
+        38px;
+
+    background:
+        rgba(255,255,255,.30);
+
+    flex-shrink:
+        0;
+
+}
+
+
+/* ============================================================
+   TÍTULO DO CABEÇALHO
+============================================================ */
+
+.header-uffs-principal h1 {
+
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        1.25rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.subtitle-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    margin-top:
+        3px;
+
+    font-size:
+        .80rem;
+
+    opacity:
+        .95;
+
+}
+
+
+/* ============================================================
+   BADGE
+============================================================ */
+
+.badge-v2 {
+
+    display:
+        inline-block;
+
+    background:
+        #ffc107;
+
+    color:
+        #000000;
+
+    padding:
+        2px 8px;
+
+    border-radius:
+        12px;
+
+    font-size:
+        .70rem;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* ============================================================
+   BOTÃO DO CABEÇALHO
+============================================================ */
+
+.btn-top-header {
+
+    background:
+        rgba(0,0,0,.22);
+
+    border:
+        1px solid rgba(255,255,255,.35);
+
+    color:
+        #ffffff;
+
+    padding:
+        8px 14px;
+
+    border-radius:
+        20px;
+
+    font-size:
+        .82rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+    transition:
+        background .2s ease,
+        transform .1s ease;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.btn-top-header:hover {
+
+    background:
+        rgba(0,0,0,.38);
+
+}
+
+
+.btn-top-header:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+/* ============================================================
+   CONTEÚDO PRINCIPAL
+============================================================ */
+
+.main-container {
+
+    width:
+        min(1180px, calc(100% - 32px));
+
+    margin:
+        28px auto 50px;
+
+}
+
+
+/* ============================================================
+   CARD PRINCIPAL / HERO
+============================================================ */
+
+.card-hero-uffs {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.99) 0%,
+            rgba(255,255,255,.97) 55%,
+            rgba(232,241,236,.92) 100%
+        );
+
+    border:
+        1px solid #e2e9e4;
+
+    border-radius:
+        24px;
+
+    box-shadow:
+        var(--uffs-shadow);
+
+    padding:
+        30px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.card-hero-uffs::after {
+
+    content:
+        "CEDIDOS";
+
+    position:
+        absolute;
+
+    right:
+        -8px;
+
+    top:
+        18px;
+
+    font-size:
+        clamp(42px, 7vw, 110px);
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        .02em;
+
+    color:
+        rgba(0,82,40,.055);
+
+    pointer-events:
+        none;
+
+}
+
+
+.card-hero-uffs h2 {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    margin:
+        0 0 6px;
+
+    color:
+        var(--uffs-green-dark);
+
+    font-size:
+        1.55rem;
+
+}
+
+
+.card-hero-uffs p {
+
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    margin:
+        0;
+
+    color:
+        var(--uffs-muted);
+
+}
+
+
+/* ============================================================
+   CARDS DO FORMULÁRIO
+============================================================ */
+
+.card {
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid var(--uffs-border);
+
+    padding:
+        24px;
+
+    margin-bottom:
+        20px;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.03);
+
+}
+
+
+.rounded-uffs {
+
+    border-radius:
+        22px;
+
+}
+
+
+.card-header {
+
+    margin:
+        0 0 18px;
+
+    padding-bottom:
+        9px;
+
+    border-bottom:
+        2px solid var(--uffs-green-soft);
+
+    color:
+        var(--uffs-green-dark);
+
+    font-size:
+        1.18rem;
+
+}
+
+
+/* ============================================================
+   MODALIDADE
+============================================================ */
+
+.radio-group {
+
+    display:
+        grid;
+
+    gap:
+        12px;
+
+}
+
+
+.radio-option {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid var(--uffs-border);
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    background:
+        #ffffff;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+
+}
+
+
+.radio-option:hover {
+
+    background:
+        var(--uffs-green-soft);
+
+    border-color:
+        #b7d7c2;
+
+}
+
+
+.radio-option input {
+
+    margin-top:
+        4px;
+
+    padding:
+        0;
+
+    accent-color:
+        var(--uffs-green);
+
+}
+
+
+/* ============================================================
+   GRID DOS CAMPOS
+============================================================ */
+
+.grid-2 {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        16px;
+
+}
+
+
+.form-group {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        6px;
+
+}
+
+
+.form-group label {
+
+    font-size:
+        .90rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.form-group textarea {
+
+    resize:
+        vertical;
+
+}
+
+
+/* ============================================================
+   INPUTS
+============================================================ */
+
+input,
+select,
+textarea {
+
+    width:
+        100%;
+
+    color:
+        var(--uffs-text);
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid var(--uffs-border);
+
+    border-radius:
+        8px;
+
+    padding:
+        10px 12px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .95rem;
+
+    outline:
+        none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color:
+        var(--uffs-green);
+
+    box-shadow:
+        0 0 0 3px rgba(0,128,55,.15);
+
+}
+
+
+input[readonly] {
+
+    background:
+        #f3f5f4;
+
+}
+
+
+/* ============================================================
+   DIMENSÕES E QUESTÕES
+============================================================ */
+
+.question-block {
+
+    margin-bottom:
+        28px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid var(--uffs-border);
+
+    border-radius:
+        12px;
+
+    background:
+        #ffffff;
+
+}
+
+
+.question-block:last-child {
+
+    margin-bottom:
+        0;
+
+}
+
+
+.question-block h4 {
+
+    margin:
+        0 0 6px;
+
+    color:
+        var(--uffs-green-dark);
+
+    font-size:
+        1.05rem;
+
+}
+
+
+.dimension-description {
+
+    margin:
+        0 0 14px;
+
+    color:
+        var(--uffs-muted);
+
+    font-size:
+        .88rem;
+
+}
+
+
+.question-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        18px;
+
+    padding:
+        10px 0;
+
+    border-bottom:
+        1px dashed var(--uffs-border);
+
+}
+
+
+.question-item:last-child {
+
+    border-bottom:
+        0;
+
+}
+
+
+.question-item label {
+
+    flex:
+        1;
+
+    font-size:
+        .92rem;
+
+}
+
+
+.score-input {
+
+    width:
+        70px;
+
+    min-width:
+        70px;
+
+    text-align:
+        center;
+
+    font-weight:
+        600;
+
+}
+
+
+.mediator-block {
+
+    background:
+        #fafdfb;
+
+    border:
+        1px solid #cfe3d5;
+
+}
+
+
 .mediator-block[hidden] {
-  display: none !important;
+
+    display:
+        none !important;
+
 }
+
+
+/* ============================================================
+   ESCALA
+============================================================ */
+
+.scale-info {
+
+    margin-bottom:
+        18px;
+
+    padding:
+        12px 14px;
+
+    background:
+        var(--uffs-green-soft);
+
+    border:
+        1px solid #d3e8da;
+
+    border-radius:
+        9px;
+
+    font-size:
+        .88rem;
+
+}
+
+
+/* ============================================================
+   BOX DE FÓRMULA
+============================================================ */
+
+.formula-box {
+
+    margin-top:
+        14px;
+
+    padding:
+        12px 14px;
+
+    background:
+        #f7f9f8;
+
+    border-left:
+        4px solid var(--uffs-green);
+
+    border-radius:
+        5px;
+
+    font-size:
+        .84rem;
+
+    color:
+        #4f625a;
+
+}
+
+
+/* ============================================================
+   RESUMO
+============================================================ */
+
+.summary-card {
+
+    background:
+        #ffffff;
+
+}
+
+
+.score-summary-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+
+    gap:
+        12px;
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.score-summary-grid > div {
+
+    border:
+        1px solid var(--uffs-border);
+
+    border-radius:
+        10px;
+
+    padding:
+        14px;
+
+    text-align:
+        center;
+
+    background:
+        #ffffff;
+
+}
+
+
+.score-summary-grid span {
+
+    display:
+        block;
+
+    font-weight:
+        600;
+
+    font-size:
+        .85rem;
+
+}
+
+
+.score-summary-grid strong {
+
+    display:
+        block;
+
+    margin:
+        8px 0 2px;
+
+    color:
+        var(--uffs-green-dark);
+
+    font-size:
+        1.5rem;
+
+}
+
+
+.score-summary-grid small {
+
+    display:
+        block;
+
+    color:
+        var(--uffs-muted);
+
+    font-size:
+        .72rem;
+
+}
+
+
+.total-score-box {
+
+    background:
+        var(--uffs-green-soft);
+
+    padding:
+        18px;
+
+    border:
+        1px solid #cfe5d6;
+
+    border-radius:
+        12px;
+
+    text-align:
+        center;
+
+}
+
+
+.total-score-box span {
+
+    display:
+        block;
+
+    font-size:
+        1rem;
+
+}
+
+
+.total-score-box strong {
+
+    display:
+        block;
+
+    margin:
+        5px 0;
+
+    color:
+        var(--uffs-green-dark);
+
+    font-size:
+        1.75rem;
+
+}
+
+
+.total-score-box small {
+
+    color:
+        var(--uffs-muted);
+
+}
+
+
+.consolidated-box {
+
+    margin-top:
+        14px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid var(--uffs-border);
+
+    border-radius:
+        10px;
+
+    background:
+        #fafbfa;
+
+    font-size:
+        .84rem;
+
+}
+
+
+/* ============================================================
+   ÁREA DE AÇÕES
+============================================================ */
+
+.actions-area {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    margin:
+        26px 0 8px;
+
+}
+
+
+.btn-brand-uffs {
+
+    border:
+        0;
+
+    background:
+        var(--uffs-green);
+
+    color:
+        #ffffff;
+
+    padding:
+        13px 24px;
+
+    border-radius:
+        9px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        .98rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 4px 10px rgba(0,128,55,.18);
+
+    transition:
+        background .2s ease,
+        transform .1s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.btn-brand-uffs:hover {
+
+    background:
+        var(--uffs-green-dark);
+
+    box-shadow:
+        0 6px 15px rgba(0,128,55,.23);
+
+}
+
+
+.btn-brand-uffs:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+.btn-brand-uffs:disabled {
+
+    opacity:
+        .65;
+
+    cursor:
+        wait;
+
+}
+
+
 .pdf-help {
-  text-align: center;
-  color: #62756e;
-  font-size: .85rem;
-  margin: -20px auto 30px;
+
+    margin:
+        0 auto 25px;
+
+    max-width:
+        700px;
+
+    text-align:
+        center;
+
+    color:
+        var(--uffs-muted);
+
+    font-size:
+        .82rem;
+
 }
 
-/* V8 — relatório completo para impressão/PDF */
-#printArea{box-sizing:border-box}
-.print-header{border:1px solid #222;padding:10px 12px;margin-bottom:10px;text-align:center;background:#fff}
-.print-header-top{display:grid;grid-template-columns:85px 1fr 75px;align-items:center;gap:10px;text-align:left;border-bottom:1px solid #333;padding-bottom:8px;margin-bottom:8px}
-.print-header-top img{width:78px;max-height:48px;object-fit:contain;object-position:left center}
-.print-header-text{line-height:1.2}
-.print-institution{font-size:12pt;font-weight:700}
-.print-unit{font-size:8.5pt;font-weight:700;margin-top:2px}
-.print-service{font-size:7.5pt;margin-top:2px}
-.print-annex{font-size:9pt;font-weight:700;text-align:center;border:1px solid #333;padding:6px 3px}
-.print-header h2{font-size:12pt;margin:6px 0 3px}
-.print-reference{font-size:8.5pt;margin:1px 0}
-.badge-modalidade{display:inline-block;margin-top:7px;border:1px solid #222;padding:4px 10px;font-weight:700;font-size:9pt}
-.print-table{width:100%;border-collapse:collapse;margin:0 0 10px;table-layout:fixed}
-.print-table th,.print-table td{border:1px solid #555;padding:4px 5px;vertical-align:top;font-size:8.5pt;line-height:1.2}
-.print-table .table-section-title{background:#e9ecef;font-weight:700;text-align:left}
-.print-table .label-cell{font-weight:700;width:18%;background:#f5f5f5}
-.print-table .center{text-align:center}
-.print-table .bold{font-weight:700}
-.print-table .dimension-print-title{background:#f1f1f1;font-weight:700;font-size:9pt;padding-top:5px;padding-bottom:5px}
-.note-cell{width:16mm;font-size:10pt!important}
-.table-total-row td{background:#e9ecef}
-.total-pdf-score{font-size:10pt!important}
-.print-note{font-size:7.5pt;margin:-4px 0 10px}
-.print-obs{font-size:8.5pt;margin:8px 0 12px}
-.obs-box{border:1px solid #555;min-height:35px;padding:7px;margin-top:4px;white-space:pre-wrap}
-.signature-section-title{font-size:9pt;font-weight:700;border:1px solid #555;border-bottom:0;background:#e9ecef;padding:5px}
-.signatures-container{border:1px solid #555;min-height:72px;display:flex;justify-content:center;align-items:flex-end;padding:25px 10px 10px}
-.signature-block{text-align:center;width:75%;font-size:8.5pt}
-.signature-line{border-top:1px solid #222;margin:0 auto 4px;max-width:330px}
-.signature-block .name{font-weight:700}
-#btnDownloadPDF:disabled{opacity:.75;cursor:wait}
 
-@media print{
-  @page{size:A4 portrait;margin:9mm}
-  html,body{background:#fff!important}
-  body>*:not(#pdfRenderWrapper){display:none!important}
-  #pdfRenderWrapper{position:static!important;display:block!important;width:auto!important;left:auto!important;top:auto!important;background:#fff!important;z-index:0!important}
-  #printArea{width:auto!important;min-height:0!important;padding:0!important;margin:0!important;font-size:8.5pt!important}
-  .print-table{break-inside:auto}
-  .print-table tr{break-inside:avoid;page-break-inside:avoid}
-  .print-header{break-inside:avoid;page-break-inside:avoid}
-  .signature-section-title,.signatures-container{break-inside:avoid;page-break-inside:avoid}
+/* ============================================================
+   RODAPÉ
+============================================================ */
+
+.footer-uffs {
+
+    background:
+        var(--uffs-green);
+
+    color:
+        #ffffff;
+
+    text-align:
+        center;
+
+    padding:
+        28px 15px;
+
+    font-size:
+        .85rem;
+
+}
+
+
+/* ============================================================
+   RELATÓRIO PARA PDF
+============================================================ */
+
+/*
+   A área fica invisível durante a utilização normal
+   do sistema.
+*/
+
+#pdfRenderWrapper {
+
+    display:
+        none;
+
+}
+
+
+/*
+   Documento impresso.
+*/
+
+#printArea {
+
+    width:
+        210mm;
+
+    min-height:
+        297mm;
+
+    padding:
+        10mm;
+
+    margin:
+        0 auto;
+
+    background:
+        #ffffff;
+
+    color:
+        #000000;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size:
+        9pt;
+
+    line-height:
+        1.3;
+
+}
+
+
+/* ============================================================
+   CABEÇALHO DO PDF
+============================================================ */
+
+.print-header {
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.print-header-top {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    min-height:
+        25mm;
+
+}
+
+
+.print-header-top img {
+
+    width:
+        38mm;
+
+    max-height:
+        20mm;
+
+    object-fit:
+        contain;
+
+}
+
+
+.print-header-text {
+
+    flex:
+        1;
+
+    text-align:
+        center;
+
+}
+
+
+.print-institution {
+
+    font-size:
+        11pt;
+
+    font-weight:
+        700;
+
+}
+
+
+.print-unit {
+
+    margin-top:
+        3px;
+
+    font-size:
+        9pt;
+
+    font-weight:
+        700;
+
+}
+
+
+.print-service {
+
+    margin-top:
+        2px;
+
+    font-size:
+        8.5pt;
+
+}
+
+
+.print-annex {
+
+    width:
+        20mm;
+
+    font-size:
+        8pt;
+
+    font-weight:
+        700;
+
+    text-align:
+        right;
+
+}
+
+
+.print-header h2 {
+
+    margin:
+        6px 0 2px;
+
+    text-align:
+        center;
+
+    font-size:
+        12pt;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.print-reference {
+
+    text-align:
+        center;
+
+    font-size:
+        8.5pt;
+
+    margin:
+        2px 0;
+
+}
+
+
+.badge-modalidade {
+
+    display:
+        block;
+
+    width:
+        max-content;
+
+    margin:
+        8px auto 0;
+
+    padding:
+        4px 12px;
+
+    border:
+        1px solid #000000;
+
+    font-size:
+        8pt;
+
+    font-weight:
+        700;
+
+}
+
+
+/* ============================================================
+   TABELAS DO PDF
+============================================================ */
+
+table.print-table {
+
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    margin:
+        0 0 12px;
+
+    page-break-inside:
+        auto;
+
+}
+
+
+table.print-table tr {
+
+    page-break-inside:
+        avoid;
+
+}
+
+
+table.print-table th,
+table.print-table td {
+
+    border:
+        1px solid #000000;
+
+    padding:
+        4px 6px;
+
+    color:
+        #000000;
+
+    font-size:
+        8.5pt;
+
+    vertical-align:
+        middle;
+
+}
+
+
+table.print-table th {
+
+    font-weight:
+        700;
+
+}
+
+
+.table-section-title {
+
+    background:
+        #f2f2f2;
+
+    font-weight:
+        700;
+
+    text-align:
+        left;
+
+}
+
+
+.label-cell {
+
+    width:
+        18%;
+
+    font-weight:
+        700;
+
+}
+
+
+.identification-table td:nth-child(2) {
+
+    width:
+        32%;
+
+}
+
+
+.identification-table td:nth-child(4) {
+
+    width:
+        32%;
+
+}
+
+
+.dimension-print-title {
+
+    background:
+        #e9e9e9;
+
+    font-weight:
+        700;
+
+}
+
+
+.center {
+
+    text-align:
+        center;
+
+}
+
+
+.bold {
+
+    font-weight:
+        700;
+
+}
+
+
+.note-cell {
+
+    width:
+        30mm;
+
+    text-align:
+        center;
+
+}
+
+
+.table-total-row td {
+
+    background:
+        #eeeeee;
+
+}
+
+
+.total-pdf-score {
+
+    font-size:
+        10pt;
+
+}
+
+
+/* ============================================================
+   OBSERVAÇÕES
+============================================================ */
+
+.print-obs {
+
+    margin-top:
+        10px;
+
+    page-break-inside:
+        avoid;
+
+}
+
+
+.print-obs > strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+.obs-box {
+
+    min-height:
+        25mm;
+
+    padding:
+        7px;
+
+    border:
+        1px solid #000000;
+
+    white-space:
+        pre-wrap;
+
+}
+
+
+/* ============================================================
+   ASSINATURAS
+============================================================ */
+
+.signature-section-title {
+
+    margin-top:
+        14px;
+
+    padding:
+        4px 6px;
+
+    border:
+        1px solid #000000;
+
+    background:
+        #f2f2f2;
+
+    font-weight:
+        700;
+
+}
+
+
+.signatures-container {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    margin-top:
+        22mm;
+
+}
+
+
+.signature-block {
+
+    width:
+        80mm;
+
+    text-align:
+        center;
+
+    font-size:
+        8.5pt;
+
+}
+
+
+.signature-line {
+
+    width:
+        100%;
+
+    border-top:
+        1px solid #000000;
+
+    margin-bottom:
+        4px;
+
+}
+
+
+.signature-block .name {
+
+    font-weight:
+        700;
+
+}
+
+
+/* ============================================================
+   NOTA DOS MEDIADORES
+============================================================ */
+
+.print-note {
+
+    margin:
+        -6px 0 12px;
+
+    font-size:
+        7.5pt;
+
+    font-style:
+        italic;
+
+}
+
+
+/* ============================================================
+   IMPRESSÃO
+============================================================ */
+
+@media print {
+
+    @page {
+
+        size:
+            A4 portrait;
+
+        margin:
+            0;
+
+    }
+
+
+    html,
+    body {
+
+        margin:
+            0 !important;
+
+        padding:
+            0 !important;
+
+        background:
+            #ffffff !important;
+
+    }
+
+
+    /*
+       Esconde todo o sistema e mostra somente
+       o relatório.
+    */
+
+    body > *:not(#pdfRenderWrapper) {
+
+        display:
+            none !important;
+
+    }
+
+
+    #pdfRenderWrapper {
+
+        display:
+            block !important;
+
+        position:
+            static !important;
+
+        width:
+            100% !important;
+
+        margin:
+            0 !important;
+
+        padding:
+            0 !important;
+
+        background:
+            #ffffff !important;
+
+    }
+
+
+    #printArea {
+
+        display:
+            block !important;
+
+        width:
+            210mm !important;
+
+        min-height:
+            297mm;
+
+        margin:
+            0 auto !important;
+
+        padding:
+            10mm !important;
+
+        background:
+            #ffffff !important;
+
+        color:
+            #000000 !important;
+
+    }
+
+
+    /*
+       Garante que elementos coloridos da aplicação
+       não contaminem o documento.
+    */
+
+    #printArea * {
+
+        color:
+            #000000 !important;
+
+        box-shadow:
+            none !important;
+
+        text-shadow:
+            none !important;
+
+    }
+
+
+    #printArea table,
+    #printArea tr,
+    #printArea td,
+    #printArea th {
+
+        border-color:
+            #000000 !important;
+
+    }
+
+
+    .table-section-title,
+    .dimension-print-title,
+    .table-total-row td,
+    .signature-section-title {
+
+        background:
+            #eeeeee !important;
+
+    }
+
+
+    /*
+       Permite que tabelas longas continuem
+       corretamente em páginas seguintes.
+    */
+
+    table.print-table {
+
+        page-break-inside:
+            auto;
+
+    }
+
+
+    table.print-table tr {
+
+        page-break-inside:
+            avoid;
+
+        page-break-after:
+            auto;
+
+    }
+
+
+    .question-block,
+    .print-obs,
+    .signature-section-title {
+
+        page-break-inside:
+            avoid;
+
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVIDADE
+============================================================ */
+
+@media (max-width: 900px) {
+
+    .header-content {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .score-summary-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .header-content {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .header-left {
+
+        align-items:
+            center;
+
+    }
+
+
+    .header-uffs-principal h1 {
+
+        font-size:
+            1.05rem;
+
+    }
+
+
+    .subtitle-row {
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    .btn-top-header {
+
+        align-self:
+            flex-start;
+
+    }
+
+
+    .grid-2 {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .score-summary-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .question-item {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .question-item label {
+
+        font-size:
+            .88rem;
+
+    }
+
+
+    .score-input {
+
+        width:
+            60px;
+
+        min-width:
+            60px;
+
+    }
+
+
+    .main-container {
+
+        width:
+            min(100% - 20px, 1180px);
+
+        margin-top:
+            15px;
+
+    }
+
+
+    .card {
+
+        padding:
+            17px;
+
+    }
+
+
+    .card-hero-uffs {
+
+        padding:
+            22px;
+
+        border-radius:
+            18px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .logo-box-white img {
+
+        height:
+            34px;
+
+    }
+
+
+    .header-left {
+
+        gap:
+            10px;
+
+    }
+
+
+    .divisor-vertical {
+
+        display:
+            none;
+
+    }
+
+
+    .card-hero-uffs h2 {
+
+        font-size:
+            1.25rem;
+
+    }
+
+
+    .question-item {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            7px;
+
+    }
+
+
+    .score-input {
+
+        width:
+            80px;
+
+        align-self:
+            flex-end;
+
+    }
+
 }
