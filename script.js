@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.setAttribute('min', '0');
         input.setAttribute('max', '10');
         input.setAttribute('step', '1');
-        input.setAttribute('inputmode', 'numeric');
+input.setAttribute('inputmode', 'numeric');
         input.setAttribute('pattern', '[0-9]*');
 
         // Bloqueia teclas de ponto, vírgula, hífen e notação científica (e/E)
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Higieniza caso o usuário cole ou tente digitar valores decimais/fora do limite
         input.addEventListener('input', () => {
+            // Remove qualquer caractere não numérico
             input.value = input.value.replace(/[^0-9]/g, '');
 
             if (input.value !== '') {
@@ -38,15 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateModalidadeUI() {
         const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
         if (isAuto) {
-            if (blockMediadores) blockMediadores.style.display = 'block';
+            blockMediadores.style.display = 'block';
             if (rowPrintMediadores) rowPrintMediadores.style.display = 'table-row';
-            const lblMax = document.getElementById('lblScoreMax');
-            if (lblMax) lblMax.innerText = '(Máximo: 4.25)';
+            document.getElementById('lblScoreMax').innerText = '(Máximo: 4.25)';
         } else {
-            if (blockMediadores) blockMediadores.style.display = 'none';
+            blockMediadores.style.display = 'none';
             if (rowPrintMediadores) rowPrintMediadores.style.display = 'none';
-            const lblMax = document.getElementById('lblScoreMax');
-            if (lblMax) lblMax.innerText = '(Máximo: 5.75)';
+            document.getElementById('lblScoreMax').innerText = '(Máximo: 5.75)';
         }
         calculateScores();
     }
@@ -74,30 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const factorMetas = isAuto ? 0.10 : 0.15;
         const factorComportamentos = 0.125;
 
-        // Cálculo dos Pontos
-        const pontuacaoConhecimentos = avgConhecimentos * factorConhecimentos;
-        const pontuacaoHabilidades = avgHabilidades * factorHabilidades;
-        const pontuacaoMetas = avgMetas * factorMetas;
-        const pontuacaoComportamentos = avgComportamentos * factorComportamentos;
+        const pondConhecimentos = avgConhecimentos * factorConhecimentos;
+        const pondHabilidades = avgHabilidades * factorHabilidades;
+        const pondMetas = avgMetas * factorMetas;
+        const pondComportamentos = avgComportamentos * factorComportamentos;
 
-        const totalPontuacao = pontuacaoConhecimentos + pontuacaoHabilidades + pontuacaoMetas + pontuacaoComportamentos;
+        const totalPonderado = pondConhecimentos + pondHabilidades + pondMetas + pondComportamentos;
 
-        // Atualização da Tela Principal
-        const elemConh = document.getElementById('lblScoreConhecimentos');
-        const elemHab = document.getElementById('lblScoreHabilidades');
-        const elemMetas = document.getElementById('lblScoreMetas');
-        const elemComp = document.getElementById('lblScoreComportamentos');
-        const elemTotal = document.getElementById('lblScoreTotal');
-
-        if (elemConh) elemConh.innerText = `\({pontuacaoConhecimentos.toFixed(2)} pts (Média:\){avgConhecimentos.toFixed(1)})`;
-        if (elemHab) elemHab.innerText = `\({pontuacaoHabilidades.toFixed(2)} pts (Média:\){avgHabilidades.toFixed(1)})`;
-        if (elemMetas) elemMetas.innerText = `\({pontuacaoMetas.toFixed(2)} pts (Média:\){avgMetas.toFixed(1)})`;
-        if (elemComp) elemComp.innerText = `\({pontuacaoComportamentos.toFixed(2)} pts (Média:\){avgComportamentos.toFixed(1)})`;
-        if (elemTotal) elemTotal.innerText = totalPontuacao.toFixed(2);
+        document.getElementById('lblScoreConhecimentos').innerText = `${pondConhecimentos.toFixed(2)} pts (Média: ${avgConhecimentos.toFixed(1)})`;
+        document.getElementById('lblScoreHabilidades').innerText = `${pondHabilidades.toFixed(2)} pts (Média: ${avgHabilidades.toFixed(1)})`;
+        document.getElementById('lblScoreMetas').innerText = `${pondMetas.toFixed(2)} pts (Média: ${avgMetas.toFixed(1)})`;
+        document.getElementById('lblScoreComportamentos').innerText = `${pondComportamentos.toFixed(2)} pts (Média: ${avgComportamentos.toFixed(1)})`;
+        document.getElementById('lblScoreTotal').innerText = totalPonderado.toFixed(2);
 
         return {
             isAuto, avgConhecimentos, avgHabilidades, avgMetas, avgComportamentos,
-            pontuacaoConhecimentos, pontuacaoHabilidades, pontuacaoMetas, pontuacaoComportamentos, totalPontuacao
+            pondConhecimentos, pondHabilidades, pondMetas, pondComportamentos, totalPonderado
         };
     }
 
@@ -118,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateDetailedNotesTable(isAuto) {
         const tbody = document.getElementById('pTableDetailedNotes');
-        if (!tbody) return;
         tbody.innerHTML = '';
 
         const dimBlocks = document.querySelectorAll('.dimensao-block');
@@ -127,4 +117,153 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const title = block.querySelector('h4').innerText;
             const trTitle = document.createElement('tr');
-            trTitle.innerHTML = `
+            trTitle.innerHTML = `<td colspan="2" class="sub-dim-title">${title}</td>`;
+            tbody.appendChild(trTitle);
+
+            const items = block.querySelectorAll('.question-item');
+            items.forEach(item => {
+                const questionText = item.querySelector('label').innerText;
+                const inputVal = item.querySelector('input').value;
+                const trItem = document.createElement('tr');
+                trItem.innerHTML = `
+                    <td class="cell-desc">${questionText}</td>
+                    <td class="cell-nota">${inputVal !== '' ? parseInt(inputVal, 10) : '-'}</td>
+                `;
+                tbody.appendChild(trItem);
+            });
+        });
+    }
+
+   function prepareReportData() {
+    const scores = calculateScores();
+    const dataHoje = new Date().toLocaleDateString('pt-BR');
+
+    const nomeServidor = document.getElementById('nomeServidor').value || 'Servidor(a)';
+    const nomeChefia = document.getElementById('nomeChefia').value || 'Chefia Imediata';
+
+    // Preenchimento dos dados de identificação
+    document.getElementById('pModalidadeBadge').innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
+    document.getElementById('pNomeServidor').innerText = nomeServidor;
+    document.getElementById('pSiape').innerText = document.getElementById('siape').value || 'Não Informado';
+    document.getElementById('pCargoServidor').innerText = document.getElementById('cargoServidor').value || 'Não Informado';
+    document.getElementById('pPeriodo').innerText = document.getElementById('periodoAvaliacao').value || 'Não Informado';
+    document.getElementById('pOrgaoDestino').innerText = document.getElementById('orgaoDestino').value || 'Não Informado';
+    document.getElementById('pNomeChefia').innerText = nomeChefia;
+    document.getElementById('pCargoChefia').innerText = document.getElementById('cargoChefia').value || 'Não Informado';
+
+    generateDetailedNotesTable(scores.isAuto);
+
+    // Preenchimento das médias e pontuações
+    document.getElementById('pMediaConhecimentos').innerText = scores.avgConhecimentos.toFixed(1);
+    document.getElementById('pPondConhecimentos').innerText = scores.pondConhecimentos.toFixed(2);
+
+    document.getElementById('pMediaHabilidades').innerText = scores.avgHabilidades.toFixed(1);
+    document.getElementById('pPondHabilidades').innerText = scores.pondHabilidades.toFixed(2);
+
+    document.getElementById('pMediaMetas').innerText = scores.avgMetas.toFixed(1);
+    document.getElementById('pPondMetas').innerText = scores.pondMetas.toFixed(2);
+
+    document.getElementById('pMediaComportamentos').innerText = scores.avgComportamentos.toFixed(1);
+    document.getElementById('pPondComportamentos').innerText = scores.pondComportamentos.toFixed(2);
+
+    if (scores.isAuto && document.getElementById('pMediaMediadores')) {
+        document.getElementById('pMediaMediadores').innerText = getAverage('input-mediadores').toFixed(1);
+    }
+
+    document.getElementById('pTotalObtido').innerText = `${scores.totalPonderado.toFixed(2)} / ${scores.isAuto ? '4.25' : '5.75'}`;
+    document.getElementById('pObservacoes').innerText = document.getElementById('observacoes').value || 'Sem observações.';
+
+    // LÓGICA DE ASSINATURA ÚNICA
+    const sigContainer = document.getElementById('pSignaturesContainer');
+    
+    if (scores.isAuto) {
+        // Exibe apenas a assinatura do Servidor
+        sigContainer.innerHTML = `
+            <div class="signature-box" style="margin: 0 auto;">
+                <div class="line"></div>
+                <p><strong>${nomeServidor}</strong></p>
+                <p>Servidor(a) Avaliado(a)</p>
+                <p>Data: ${dataHoje}</p>
+            </div>
+        `;
+    } else {
+        // Exibe apenas a assinatura da Chefia Imediata
+        sigContainer.innerHTML = `
+            <div class="signature-box" style="margin: 0 auto;">
+                <div class="line"></div>
+                <p><strong>${nomeChefia}</strong></p>
+                <p>Chefia Imediata (Avaliador)</p>
+                <p>Data: ${dataHoje}</p>
+            </div>
+        `;
+    }
+
+    return scores;
+}
+
+    // Função para sanitizar e formatar o nome no arquivo
+    function formatFileName(name) {
+        return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-0]/g, '_');
+    }
+
+    btnDownloadPDF.addEventListener('click', async () => {
+        const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
+
+        // 1. Validação dos campos de identificação obrigatórios do formulário
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // 2. Validação se TODAS as notas foram atribuídas
+        if (!validateAllScoresFilled(isAuto)) {
+            alert('Por favor, preencha todas as notas da avaliação antes de gerar o relatório PDF.');
+            return;
+        }
+
+        prepareReportData();
+
+        const printArea = document.getElementById('printArea');
+        const nomeServidor = document.getElementById('nomeServidor').value || 'servidor';
+        const nomeChefia = document.getElementById('nomeChefia').value || 'chefia';
+
+        // Definição do nome do arquivo PDF impresso
+        let filenamePDF = '';
+        if (isAuto) {
+            filenamePDF = `autoavaliacao_${formatFileName(nomeServidor)}.pdf`;
+        } else {
+            filenamePDF = `avaliacao_${formatFileName(nomeChefia)}_${formatFileName(nomeServidor)}.pdf`;
+        }
+
+        // Clonagem para geração sem falhas
+        const clone = printArea.cloneNode(true);
+        clone.id = 'pdfTempContainer';
+        clone.style.display = 'block';
+        clone.style.width = '700px';
+        clone.style.margin = '0 auto';
+        clone.style.backgroundColor = '#ffffff';
+
+        document.body.appendChild(clone);
+
+        const opt = {
+            margin:       [10, 10, 10, 10],
+            filename:     filenamePDF,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'] }
+        };
+
+        try {
+            await html2pdf().set(opt).from(clone).save();
+        } catch (err) {
+            console.error('Erro ao gerar PDF:', err);
+        } finally {
+            if (document.getElementById('pdfTempContainer')) {
+                document.body.removeChild(clone);
+            }
+        }
+    });
+
+    updateModalidadeUI();
+});
