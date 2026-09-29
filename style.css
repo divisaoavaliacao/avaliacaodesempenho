@@ -77,3 +77,48 @@ input:focus,textarea:focus{border-color:var(--uffs-green);box-shadow:0 0 0 3px r
   font-size: .85rem;
   margin: -20px auto 30px;
 }
+
+/* V8 — relatório completo para impressão/PDF */
+#printArea{box-sizing:border-box}
+.print-header{border:1px solid #222;padding:10px 12px;margin-bottom:10px;text-align:center;background:#fff}
+.print-header-top{display:grid;grid-template-columns:85px 1fr 75px;align-items:center;gap:10px;text-align:left;border-bottom:1px solid #333;padding-bottom:8px;margin-bottom:8px}
+.print-header-top img{width:78px;max-height:48px;object-fit:contain;object-position:left center}
+.print-header-text{line-height:1.2}
+.print-institution{font-size:12pt;font-weight:700}
+.print-unit{font-size:8.5pt;font-weight:700;margin-top:2px}
+.print-service{font-size:7.5pt;margin-top:2px}
+.print-annex{font-size:9pt;font-weight:700;text-align:center;border:1px solid #333;padding:6px 3px}
+.print-header h2{font-size:12pt;margin:6px 0 3px}
+.print-reference{font-size:8.5pt;margin:1px 0}
+.badge-modalidade{display:inline-block;margin-top:7px;border:1px solid #222;padding:4px 10px;font-weight:700;font-size:9pt}
+.print-table{width:100%;border-collapse:collapse;margin:0 0 10px;table-layout:fixed}
+.print-table th,.print-table td{border:1px solid #555;padding:4px 5px;vertical-align:top;font-size:8.5pt;line-height:1.2}
+.print-table .table-section-title{background:#e9ecef;font-weight:700;text-align:left}
+.print-table .label-cell{font-weight:700;width:18%;background:#f5f5f5}
+.print-table .center{text-align:center}
+.print-table .bold{font-weight:700}
+.print-table .dimension-print-title{background:#f1f1f1;font-weight:700;font-size:9pt;padding-top:5px;padding-bottom:5px}
+.note-cell{width:16mm;font-size:10pt!important}
+.table-total-row td{background:#e9ecef}
+.total-pdf-score{font-size:10pt!important}
+.print-note{font-size:7.5pt;margin:-4px 0 10px}
+.print-obs{font-size:8.5pt;margin:8px 0 12px}
+.obs-box{border:1px solid #555;min-height:35px;padding:7px;margin-top:4px;white-space:pre-wrap}
+.signature-section-title{font-size:9pt;font-weight:700;border:1px solid #555;border-bottom:0;background:#e9ecef;padding:5px}
+.signatures-container{border:1px solid #555;min-height:72px;display:flex;justify-content:center;align-items:flex-end;padding:25px 10px 10px}
+.signature-block{text-align:center;width:75%;font-size:8.5pt}
+.signature-line{border-top:1px solid #222;margin:0 auto 4px;max-width:330px}
+.signature-block .name{font-weight:700}
+#btnDownloadPDF:disabled{opacity:.75;cursor:wait}
+
+@media print{
+  @page{size:A4 portrait;margin:9mm}
+  html,body{background:#fff!important}
+  body>*:not(#pdfRenderWrapper){display:none!important}
+  #pdfRenderWrapper{position:static!important;display:block!important;width:auto!important;left:auto!important;top:auto!important;background:#fff!important;z-index:0!important}
+  #printArea{width:auto!important;min-height:0!important;padding:0!important;margin:0!important;font-size:8.5pt!important}
+  .print-table{break-inside:auto}
+  .print-table tr{break-inside:avoid;page-break-inside:avoid}
+  .print-header{break-inside:avoid;page-break-inside:avoid}
+  .signature-section-title,.signatures-container{break-inside:avoid;page-break-inside:avoid}
+}
