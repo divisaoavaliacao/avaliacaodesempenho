@@ -29,14 +29,15 @@ body {
   background: linear-gradient(120deg, var(--uffs-green) 0 42%, #0b833d 42% 54%, var(--uffs-green-darker) 54% 100%) !important;
   border-bottom: 0 !important;
   box-shadow: none !important;
-  padding: 18px 24px !important;
+  padding: 14px 24px !important;
   color: #fff !important;
 }
 
+/* Logo reduzido */
 .header-uffs-principal img {
-  width: 272px !important;
+  width: 170px !important;
   height: auto !important;
-  max-height: 78px !important;
+  max-height: 50px !important;
   object-fit: contain !important;
 }
 
@@ -47,20 +48,20 @@ body {
 }
 
 .header-uffs-principal h1 {
-  font-size: 1.55rem !important;
+  font-size: 1.35rem !important;
   letter-spacing: -.02em !important;
   font-weight: 700;
 }
 
 .header-uffs-principal p {
   opacity: .92 !important;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
 }
 
 .header-uffs-principal .divisor-vertical {
   background: rgba(255, 255, 255, .32) !important;
   width: 1px;
-  height: 36px;
+  height: 32px;
 }
 
 /* Botões do topo */
@@ -257,7 +258,7 @@ footer.footer-uffs a {
 
 @media (max-width: 768px) {
   .header-uffs-principal img {
-    width: 220px !important;
+    width: 130px !important;
   }
   
   .header-uffs-principal .divisor-vertical {
