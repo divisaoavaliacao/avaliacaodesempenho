@@ -1,373 +1,79 @@
-/* Camada institucional UFFS — adaptação visual para publicação estática no IIS */
+/* UFFS — Avaliação de Desempenho */
 :root {
-  --uffs-green: #008037;
-  --uffs-green-dark: #00652c;
-  --uffs-green-darker: #065228;
-  --uffs-green-soft: #edf7f0;
-  --uffs-text: #16362a;
-  --uffs-muted: #62756e;
-  --uffs-border: #d8e2dc;
-  --uffs-page: #f4f6f5;
-  --uffs-shadow: 0 22px 55px rgba(7, 32, 19, .08);
+  --uffs-green:#008037; --uffs-green-dark:#00652c; --uffs-green-soft:#edf7f0;
+  --uffs-text:#16362a; --uffs-muted:#62756e; --uffs-border:#d8e2dc;
+  --uffs-page:#f4f6f5; --uffs-shadow:0 22px 55px rgba(7,32,19,.08);
 }
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{background:var(--uffs-page);color:var(--uffs-text);font-family:"Fira Sans","Segoe UI",Arial,sans-serif;margin:0}
+.header-uffs-principal{background:#005a2b;padding:12px 24px;color:#fff}
+.header-content{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:auto;gap:20px}
+.header-left{display:flex;align-items:center;gap:16px;min-width:0}
+.logo-box-white{background:#fff;padding:6px 10px;border-radius:6px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.logo-box-white img{height:42px;width:auto;max-width:220px;object-fit:contain}
+.divisor-vertical{background:rgba(255,255,255,.3);width:1px;height:38px}
+.header-uffs-principal h1{font-size:1.25rem;margin:0;color:#fff}
+.subtitle-row{display:flex;gap:8px;margin-top:2px;font-size:.8rem;opacity:.95;flex-wrap:wrap}
+.badge-v2{background:#ffc107;color:#000;font-weight:700;font-size:.7rem;padding:2px 8px;border-radius:12px}
+.btn-top-header{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 14px;border-radius:20px;font-weight:600;cursor:pointer}
+.main-container{max-width:1200px;margin:24px auto;padding:0 16px}
+.card-hero-uffs{position:relative;overflow:hidden;background:linear-gradient(90deg,#fff,rgba(255,255,255,.97) 55%,rgba(232,241,236,.92));border:1px solid #e2e9e4;border-radius:24px;box-shadow:var(--uffs-shadow);padding:28px;margin-bottom:24px}
+.card-hero-uffs:after{content:"CEDIDOS";position:absolute;right:-8px;top:18px;font-size:clamp(42px,7vw,110px);font-weight:800;color:rgba(0,82,40,.055);pointer-events:none}
+.card-hero-uffs h2{margin:0 0 8px;color:var(--uffs-green);position:relative;z-index:1}.card-hero-uffs p{margin:0;color:var(--uffs-muted);font-weight:500}
+.card{background:#fff;border:1px solid var(--uffs-border);padding:24px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.03)}
+.rounded-uffs{border-radius:22px}.card-header{margin:0 0 16px;font-size:1.25rem;border-bottom:2px solid var(--uffs-green-soft);padding-bottom:8px;color:var(--uffs-green)}
+.radio-group{display:grid;gap:10px}.radio-option{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--uffs-border);border-radius:10px;cursor:pointer}
+.radio-option:has(input:checked){border-color:var(--uffs-green);background:var(--uffs-green-soft)}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}.form-group label{font-weight:600;font-size:.9rem}
+input,textarea{color:var(--uffs-text);padding:10px 12px;border:1px solid var(--uffs-border);border-radius:8px;font-size:.95rem;outline:none;background:#fff}
+input:focus,textarea:focus{border-color:var(--uffs-green);box-shadow:0 0 0 3px rgba(0,128,55,.18)}input[readonly]{background:#f5f7f6}
+.scale-info,.formula-box{background:var(--uffs-green-soft);border:1px solid #d0e6d7;padding:12px;border-radius:8px;margin-bottom:20px}
+.question-block{margin-bottom:24px}.question-block h4{color:var(--uffs-green-dark);margin:0 0 6px}
+.dimension-description{font-size:.85rem;color:var(--uffs-muted);margin:0 0 12px}
+.question-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0;border-bottom:1px dashed var(--uffs-border)}
+.question-item label{font-size:.92rem;flex:1}.score-input{width:70px;text-align:center}
+.summary-card{border-top:4px solid var(--uffs-green)}
+.score-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.score-summary-grid>div{border:1px solid var(--uffs-border);border-radius:10px;padding:14px;background:#fff}
+.score-summary-grid span{display:block;font-weight:600;margin-bottom:5px}.score-summary-grid strong{display:block;color:var(--uffs-green-dark);font-size:1.35rem}
+.score-summary-grid small{display:block;color:var(--uffs-muted);margin-top:4px}
+.total-score-box{background:var(--uffs-green-soft);padding:16px;border-radius:12px;text-align:center;font-size:1.1rem}
+.total-score-box strong{color:var(--uffs-green-dark);font-size:1.6rem;display:block;margin-top:4px}
+.consolidated-box{background:#f8faf9;border:1px solid var(--uffs-border);padding:14px;border-radius:12px;margin-top:14px}
+.consolidated-box strong{color:var(--uffs-green-dark)}
+.actions-area{display:flex;justify-content:center;gap:12px;margin:24px 0 34px;flex-wrap:wrap}
+.btn-brand-uffs,.btn-secondary-action{padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer}
+.btn-brand-uffs{background:var(--uffs-green);border:0;color:#fff}.btn-brand-uffs:hover{background:var(--uffs-green-dark)}
+.btn-secondary-action{background:#fff;border:1px solid var(--uffs-green);color:var(--uffs-green-dark)}
+.footer-uffs{background:var(--uffs-green);color:#fff;padding:22px 0;text-align:center}
 
-html {
-  scroll-behavior: smooth;
+/* PDF */
+#pdfRenderWrapper{position:fixed;left:-100000px;top:0;width:210mm;background:#fff;z-index:-1}
+#printArea{width:210mm;min-height:297mm;padding:9mm 10mm;color:#000;background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:9pt;line-height:1.3}
+.print-header{text-align:center;font-weight:bold;margin-bottom:10px}.pdf-brand-bar{background:#000;color:#fff;padding:6px;margin-bottom:7px}.pdf-brand-bar h2{color:#fff;margin:0;font-size:10.5pt}
+.print-header h3{margin:0;font-size:11pt;text-transform:uppercase}.print-header p{margin:2px 0;font-size:9.5pt}
+.badge-modalidade{display:inline-block;border:1px solid #000;padding:3px 9px;margin-top:3px;font-size:8.5pt;font-weight:bold}
+.print-table{width:100%;border-collapse:collapse;margin-bottom:10px;page-break-inside:auto}
+.print-table tr{page-break-inside:avoid}.print-table th,.print-table td{border:1px solid #000;padding:4px 6px;font-size:8.5pt;vertical-align:middle}
+.table-section-title{background:#000!important;color:#fff!important;font-weight:bold;text-align:left}.label-cell{background:#f2f2f2}
+.center{text-align:center!important}.bold{font-weight:bold!important}.dimension-print-title{background:#e7e7e7;font-weight:bold}
+.dimension-description-print{font-size:8.2pt}.table-total-row td{background:#e7e7e7}.total-pdf-score{font-size:10pt!important}
+.print-obs{border:1px solid #000;padding:6px 8px;min-height:42px}.print-obs p{margin:5px 0 0;white-space:pre-wrap}
+.signatures-container{display:flex;justify-content:center;gap:25mm;margin-top:16mm;page-break-inside:avoid}
+.signature-block{width:75mm;text-align:center;font-size:9pt}.signature-line{border-top:1px solid #000;margin-bottom:5px}.signature-block .name{font-weight:bold}
+@media print{body>*:not(#pdfRenderWrapper){display:none!important}#pdfRenderWrapper{position:static!important;display:block!important;width:auto!important}#printArea{margin:0}}
+@media(max-width:900px){.score-summary-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.header-content{flex-direction:column;align-items:flex-start}.divisor-vertical{display:none}.score-summary-grid{grid-template-columns:1fr}.question-item{align-items:flex-start}}
+@media(max-width:520px){.question-item{flex-direction:column;align-items:stretch}.score-input{width:100%}}
+
+/* Mediadores: visíveis exclusivamente na Autoavaliação. */
+.mediator-block[hidden] {
+  display: none !important;
 }
-
-body {
-  background: var(--uffs-page) !important;
-  color: var(--uffs-text) !important;
-  font-family: "Fira Sans", "Segoe UI", Arial, sans-serif !important;
-  margin: 0;
-  padding: 0;
-}
-
-/* Cabeçalho Institucional idêntico ao RSC */
-.header-uffs-principal {
-  background: #005a2b !important;
-  padding: 12px 24px !important;
-  color: #fff !important;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Container Branco do Logo */
-.logo-box-white {
-  background: #ffffff;
-  padding: 6px 14px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.logo-box-white img {
-  height: 42px !important;
-  width: auto !important;
-  object-fit: contain !important;
-}
-
-.divisor-vertical {
-  background: rgba(255, 255, 255, 0.3) !important;
-  width: 1px;
-  height: 38px;
-}
-
-.header-uffs-principal h1 {
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  margin: 0;
-  color: #fff !important;
-}
-
-.subtitle-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 2px;
-  font-size: 0.8rem;
-  opacity: 0.95;
-}
-
-/* Tag/Badge do Anexo II */
-.badge-v2 {
-  background: #ffc107;
-  color: #000;
-  font-weight: 700;
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-}
-
-/* Botão Topo Direito */
-.btn-top-header {
-  background: rgba(0, 0, 0, 0.25) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #fff !important;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-top-header:hover {
-  background: rgba(0, 0, 0, 0.4) !important;
-}
-
-/* Marca d'água no Card Principal */
-.card-hero-uffs::after {
-  content: 'CEDIDOS';
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: clamp(40px, 6vw, 90px);
-  font-weight: 900;
-  letter-spacing: .02em;
-  color: rgba(0, 82, 40, 0.05);
-  pointer-events: none;
-}
-
-/* Área Hero / Card Principal com watermark dos Cedidos */
-.card-hero-uffs {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), 
-              radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%);
-  border: 1px solid #e2e9e4;
-  border-radius: 24px !important;
-  box-shadow: var(--uffs-shadow) !important;
-}
-
-.card-hero-uffs::after {
-  content: 'CEDIDOS';
-  position: absolute;
-  right: -8px;
-  top: 18px;
-  font-size: clamp(42px, 7vw, 110px);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: .02em;
-  color: rgba(0, 82, 40, .055);
-  pointer-events: none;
-}
-
-/* Elementos de Destaque e Botões de Ação */
-.text-brand-uffs {
-  color: var(--uffs-green) !important;
-}
-
-.btn-brand-uffs {
-  background: var(--uffs-green) !important;
-  border-color: var(--uffs-green) !important;
-  color: #fff !important;
-  border: none;
-  transition: background 0.2s ease;
-}
-
-.btn-brand-uffs:hover {
-  background: var(--uffs-green-dark) !important;
-  color: #fff !important;
-}
-
-.bg-brand-soft {
-  background: var(--uffs-green-soft) !important;
-}
-
-.border-brand-soft {
-  border-color: #d0e6d7 !important;
-}
-
-.rounded-uffs {
-  border-radius: 22px !important;
-}
-
-/* Form Cards */
-.card {
-  background: #fff;
-  border: 1px solid var(--uffs-border);
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-}
-
-.card-header {
-  margin-top: 0;
-  margin-bottom: 16px;
-  font-size: 1.25rem;
-  border-bottom: 2px solid var(--uffs-green-soft);
-  padding-bottom: 8px;
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group label {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-/* Inputs, Selects e Textareas */
-input, select, textarea {
-  color: var(--uffs-text) !important;
-  padding: 10px 12px;
-  border: 1px solid var(--uffs-border);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--uffs-green) !important;
-  box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important;
-}
-
-/* Questões & Resumo */
-.question-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 0;
-  border-bottom: 1px dashed var(--uffs-border);
-}
-
-.question-item label {
-  font-size: 0.92rem;
-  flex: 1;
-}
-
-.score-input {
-  width: 70px;
+.pdf-help {
   text-align: center;
-}
-
-.dimensao-block {
-  margin-bottom: 24px;
-}
-
-.dimensao-block h4 {
-  color: var(--uffs-green-dark);
-  margin-bottom: 8px;
-}
-
-.score-summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.total-score-box {
-  background: var(--uffs-green-soft);
-  padding: 16px;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 1.1rem;
-}
-
-.total-score-box strong {
-  color: var(--uffs-green-dark);
-  font-size: 1.6rem;
-  display: block;
-}
-
-/* Ocultar render do PDF da tela principal */
-#pdfRenderWrapper {
-  display: none;
-}
-
-/* Rodapé Institucional UFFS */
-footer.footer-uffs {
-  background: var(--uffs-green) !important;
-  border-top: 0 !important;
-  color: #fff !important;
-  padding: 34px 0 !important;
-}
-
-footer.footer-uffs,
-footer.footer-uffs p,
-footer.footer-uffs span,
-footer.footer-uffs a {
-  color: #fff !important;
-}
-
-footer.footer-uffs a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-@media (max-width: 768px) {
-  .header-uffs-principal img {
-    width: 130px !important;
-  }
-  
-  .header-uffs-principal .divisor-vertical {
-    display: none;
-  }
-}
-/* Estilo idêntico ao formulário oficial UFFS */
-#printArea, #pdfTempContainer {
-    color: #000000 !important;
-    background-color: #ffffff !important;
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 9pt !important;
-    line-height: 1.3 !important;
-}
-
-#printArea *, #pdfTempContainer * {
-    color: #000000 !important;
-    border-color: #000000 !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-}
-
-/* Cabeçalho do Documento */
-.print-header {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-.print-header h3 {
-    margin: 0;
-    font-size: 11pt;
-    text-transform: uppercase;
-}
-.print-header p {
-    margin: 2px 0;
-    font-size: 9.5pt;
-}
-
-/* Tabelas e Grelhas */
-table.print-table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    margin-bottom: 12px !important;
-}
-
-table.print-table th,
-table.print-table td {
-    border: 1px solid #000000 !important;
-    padding: 4px 6px !important;
-    font-size: 8.5pt !important;
-    vertical-align: middle;
-}
-
-.table-section-title {
-    background-color: #f2f2f2 !important;
-    font-weight: bold !important;
-    text-align: left !important;
-}
-
-/* Assinaturas no Rodapé */
-.signature-block {
-    margin-top: 25px;
-    text-align: center;
-    font-size: 9pt;
+  color: #62756e;
+  font-size: .85rem;
+  margin: -20px auto 30px;
 }
