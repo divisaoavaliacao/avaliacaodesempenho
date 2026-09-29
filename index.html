@@ -52,31 +52,63 @@
 <div class="consolidated-box"><strong>Nota final consolidada:</strong> a nota final da avaliação é a soma da pontuação da autoavaliação (máx. 4,25) com a pontuação da chefia (máx. 5,75), totalizando no máximo 10,00. Este formulário calcula apenas a modalidade selecionada.</div>
 </section>
 
-<div class="actions-area"><button type="button" id="btnDownloadPDF" class="btn-brand-uffs">📄 Gerar relatório para PDF</button></div>
-<div class="pdf-help">Se o download automático não estiver disponível, o sistema abrirá a impressão do navegador. Selecione <strong>Salvar como PDF</strong>.</div>
+<div class="actions-area"><button type="button" id="btnDownloadPDF" class="btn-brand-uffs">📄 Gerar PDF</button></div>
+<div class="pdf-help">Clique em <strong>Gerar PDF</strong>. O sistema preparará a avaliação completa e abrirá a janela de impressão. Selecione <strong>Salvar como PDF</strong>.</div>
 </form></main>
 
 <div id="pdfRenderWrapper" aria-hidden="true"><div id="printArea" class="pdf-container">
-<div class="print-header"><div class="pdf-brand-bar"><h2>UNIVERSIDADE FEDERAL DA FRONTEIRA SUL</h2></div>
-<h3>ANEXO II - FORMULÁRIO DE AVALIAÇÃO DE DESEMPENHO</h3><p>Resolução nº 48/CONSUNI CAPGP/UFFS/2022</p><div class="badge-modalidade" id="pModalidadeBadge">AUTOAVALIAÇÃO</div></div>
-<table class="print-table"><tr><th colspan="4" class="table-section-title">1. DADOS DE IDENTIFICAÇÃO</th></tr>
-<tr><td class="label-cell">Servidor(a):</td><td id="pNomeServidor"></td><td class="label-cell">SIAPE:</td><td id="pSiape"></td></tr>
-<tr><td class="label-cell">Cargo/Função:</td><td id="pCargoServidor"></td><td class="label-cell">Calendário:</td><td id="pPeriodo"></td></tr>
-<tr><td class="label-cell">Órgão Origem:</td><td>UFFS</td><td class="label-cell">Órgão Destino:</td><td id="pOrgaoDestino"></td></tr>
-<tr><td class="label-cell">Chefia Imediata:</td><td id="pNomeChefia"></td><td class="label-cell">Cargo Chefia:</td><td id="pCargoChefia"></td></tr></table>
+  <div class="print-header">
+    <div class="print-header-top">
+      <img src="logo-uffs.png" alt="UFFS">
+      <div class="print-header-text">
+        <div class="print-institution">UNIVERSIDADE FEDERAL DA FRONTEIRA SUL</div>
+        <div class="print-unit">PRÓ-REITORIA DE GESTÃO DE PESSOAS — PROGESP</div>
+        <div class="print-service">SERVIÇO ESPECIAL DE AVALIAÇÃO DE DESEMPENHO — SEAD</div>
+      </div>
+      <div class="print-annex">ANEXO II</div>
+    </div>
+    <h2>FORMULÁRIO DE AVALIAÇÃO DE DESEMPENHO</h2>
+    <div class="print-reference">Avaliação de Desempenho — Servidores Cedidos</div>
+    <div class="print-reference">Resolução nº 48/CONSUNI CAPGP/UFFS/2022</div>
+    <div class="badge-modalidade" id="pModalidadeBadge">AUTOAVALIAÇÃO</div>
+  </div>
 
-<table class="print-table"><thead><tr><th class="table-section-title">2. DETALHAMENTO DAS NOTAS ATRIBUÍDAS</th><th class="table-section-title center">NOTA</th></tr></thead><tbody id="pTableDetailedNotes"></tbody></table>
+  <table class="print-table identification-table">
+    <tr><th colspan="4" class="table-section-title">1. DADOS DE IDENTIFICAÇÃO</th></tr>
+    <tr><td class="label-cell">Servidor(a):</td><td id="pNomeServidor"></td><td class="label-cell">SIAPE:</td><td id="pSiape"></td></tr>
+    <tr><td class="label-cell">Cargo/Função:</td><td id="pCargoServidor"></td><td class="label-cell">Período de Avaliação:</td><td id="pPeriodo"></td></tr>
+    <tr><td class="label-cell">Órgão de Origem:</td><td>UFFS — Universidade Federal da Fronteira Sul</td><td class="label-cell">Órgão de Destino:</td><td id="pOrgaoDestino"></td></tr>
+    <tr><td class="label-cell">Chefia Imediata:</td><td id="pNomeChefia"></td><td class="label-cell">Cargo/Função da Chefia:</td><td id="pCargoChefia"></td></tr>
+  </table>
 
-<table class="print-table"><thead><tr><th class="table-section-title">3. RESUMO DAS DIMENSÕES</th><th class="table-section-title center">MÉDIA SIMPLES</th><th class="table-section-title center">PONTUAÇÃO</th></tr></thead>
-<tbody>
-<tr><td>Conhecimentos</td><td id="pMediaConhecimentos" class="center">-</td><td id="pPondConhecimentos" class="center bold">-</td></tr>
-<tr><td>Habilidades</td><td id="pMediaHabilidades" class="center">-</td><td id="pPondHabilidades" class="center bold">-</td></tr>
-<tr><td>Metas</td><td id="pMediaMetas" class="center">-</td><td id="pPondMetas" class="center bold">-</td></tr>
-<tr><td>Comportamentos e Atitudes</td><td id="pMediaComportamentos" class="center">-</td><td id="pPondComportamentos" class="center bold">-</td></tr>
-<tr class="table-total-row"><td colspan="2"><strong>PONTUAÇÃO TOTAL OBTIDA</strong></td><td id="pTotalObtido" class="center bold total-pdf-score">0,00</td></tr>
-</tbody></table>
-<div class="print-obs"><strong>Observações / Justificativas:</strong><p id="pObservacoes"></p></div>
-<div class="signatures-container" id="pSignaturesContainer"></div>
+  <table class="print-table">
+    <thead><tr><th colspan="2" class="table-section-title">2. AVALIAÇÃO DE DESEMPENHO — NOTAS ATRIBUÍDAS</th></tr></thead>
+    <tbody id="pTableDetailedNotes"></tbody>
+  </table>
+
+  <div id="pMediatorSection">
+    <table class="print-table">
+      <thead><tr><th colspan="2" class="table-section-title">3. MEDIADORES DE DESEMPENHO</th></tr></thead>
+      <tbody id="pTableMediators"></tbody>
+    </table>
+    <p class="print-note">* Os Mediadores de Desempenho são preenchidos somente na autoavaliação e não integram o cálculo da pontuação.</p>
+  </div>
+
+  <table class="print-table summary-print-table">
+    <thead><tr><th colspan="3" class="table-section-title">4. RESULTADO DA AVALIAÇÃO</th></tr>
+      <tr><th>Dimensão</th><th class="center">Média das Notas</th><th class="center">Pontuação na Modalidade</th></tr></thead>
+    <tbody>
+      <tr><td>Conhecimentos</td><td id="pMediaConhecimentos" class="center">-</td><td id="pPondConhecimentos" class="center bold">-</td></tr>
+      <tr><td>Habilidades</td><td id="pMediaHabilidades" class="center">-</td><td id="pPondHabilidades" class="center bold">-</td></tr>
+      <tr><td>Metas</td><td id="pMediaMetas" class="center">-</td><td id="pPondMetas" class="center bold">-</td></tr>
+      <tr><td>Comportamentos e Atitudes</td><td id="pMediaComportamentos" class="center">-</td><td id="pPondComportamentos" class="center bold">-</td></tr>
+      <tr class="table-total-row"><td colspan="2"><strong>PONTUAÇÃO TOTAL DA MODALIDADE</strong></td><td id="pTotalObtido" class="center bold total-pdf-score">0,00</td></tr>
+    </tbody>
+  </table>
+
+  <div class="print-obs"><strong>5. OBSERVAÇÕES / JUSTIFICATIVAS</strong><div class="obs-box" id="pObservacoes"></div></div>
+  <div class="signature-section-title">6. ASSINATURA</div>
+  <div class="signatures-container" id="pSignaturesContainer"></div>
 </div></div>
 <footer class="footer-uffs">Universidade Federal da Fronteira Sul — PROGESP</footer>
 <script>
@@ -222,30 +254,74 @@ function fillPdf(d,calc){
   text("pNomeServidor",d.nome);text("pSiape",d.siape);text("pCargoServidor",d.cargo);text("pPeriodo",d.periodo);
   text("pOrgaoDestino",d.destino);text("pNomeChefia",d.chefia);text("pCargoChefia",d.cargoChefia);
   text("pModalidadeBadge",d.modalidade==="auto"?"AUTOAVALIAÇÃO":"AVALIAÇÃO DA CHEFIA IMEDIATA");
-  text("pEvaluationMax",d.modalidade==="auto"?"4,25":"5,75");
   text("pObservacoes",d.obs||"Sem observações.");
+
   const tbody=$("pTableDetailedNotes");tbody.innerHTML="";
   CONFIG.dimensions.forEach(dim=>{
-    const title=document.createElement("tr");title.innerHTML=`<td colspan="2" class="dimension-print-title">${esc(dim.name)}</td>`;tbody.appendChild(title);
+    const title=document.createElement("tr");
+    title.innerHTML=`<td colspan="2" class="dimension-print-title">${esc(dim.name)}</td>`;
+    tbody.appendChild(title);
     const inputs=[...document.querySelectorAll(`.score-input[data-dimension="${dim.id}"]`)];
-    dim.questions.forEach((q,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}. ${esc(q)}</td><td class="center bold">${esc(inputs[i]?.value||"")}</td>`;tbody.appendChild(tr)});
+    dim.questions.forEach((q,i)=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${i+1}. ${esc(q)}</td><td class="center bold note-cell">${esc(inputs[i]?.value||"")}</td>`;
+      tbody.appendChild(tr);
+    });
     const res=calc.r[dim.id];
-    const avg=document.createElement("tr");avg.innerHTML=`<td><strong>Pontuação da dimensão (média simples)</strong></td><td class="center bold">${fmt(res.average)}</td>`;tbody.appendChild(avg);
+    const avg=document.createElement("tr");
+    avg.innerHTML=`<td><strong>Média da dimensão</strong></td><td class="center bold">${fmt(res.average)}</td>`;
+    tbody.appendChild(avg);
   });
-  CONFIG.dimensions.forEach(dim=>{text("pMedia"+cap(dim.id),fmt(calc.r[dim.id].average));text("pPond"+cap(dim.id),fmt(calc.r[dim.id].contribution))});
+
+  // Mediadores: somente no relatório da Autoavaliação.
+  const mediatorSection=$("pMediatorSection");
+  const mediatorBody=$("pTableMediators");
+  if(d.modalidade==="auto"){
+    mediatorSection.style.display="block";
+    mediatorBody.innerHTML="";
+    CONFIG.mediators.forEach((q,i)=>{
+      const input=document.querySelector(`.mediator-input[data-mediator="${i}"]`);
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${i+1}. ${esc(q)}</td><td class="center bold note-cell">${esc(input?.value||"")}</td>`;
+      mediatorBody.appendChild(tr);
+    });
+  }else{
+    mediatorSection.style.display="none";
+    mediatorBody.innerHTML="";
+  }
+
+  CONFIG.dimensions.forEach(dim=>{
+    text("pMedia"+cap(dim.id),fmt(calc.r[dim.id].average));
+    text("pPond"+cap(dim.id),fmt(calc.r[dim.id].contribution));
+  });
   text("pTotalObtido",`${fmt(calc.total)} / ${d.modalidade==="auto"?"4,25":"5,75"}`);
-  $("pSignaturesContainer").innerHTML=`<div class="signature-block"><div class="signature-line"></div><div class="name">${esc(d.modalidade==="auto"?d.nome:d.chefia)}</div><div>${d.modalidade==="auto"?"Servidor(a) Avaliado(a)":"Chefia Imediata (Avaliador)"}</div><div>Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>`;
+
+  const signer=d.modalidade==="auto"?d.nome:d.chefia;
+  const role=d.modalidade==="auto"?"Servidor(a) Avaliado(a)":"Chefia Imediata (Avaliador(a))";
+  $("pSignaturesContainer").innerHTML=`<div class="signature-block"><div class="signature-line"></div><div class="name">${esc(signer)}</div><div>${role}</div><div>Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>`;
 }
 
 function generatePdf(){
+  const btn=$("btnDownloadPDF");
   if(!valid()) return;
+  if(typeof window.print!=="function"){
+    alert("Seu navegador não disponibiliza a função de impressão necessária para gerar o PDF.");
+    return;
+  }
   const d=data();
   const calc=calculate();
   fillPdf(d,calc);
-  // GitHub Pages é estático: usamos a impressão nativa do navegador, sem CDN.
-  // Na janela de impressão, escolha "Salvar como PDF".
-  window.setTimeout(()=>window.print(),100);
+  btn.disabled=true;
+  btn.textContent="⏳ Preparando PDF...";
+  document.body.classList.add("printing-report");
+  window.setTimeout(()=>window.print(),150);
 }
+
+window.addEventListener("afterprint",()=>{
+  const btn=$("btnDownloadPDF");
+  if(btn){btn.disabled=false;btn.textContent="📄 Gerar PDF";}
+  document.body.classList.remove("printing-report");
+});
 
 function reset(){ $("evalForm").reset();calculate();window.scrollTo({top:0,behavior:"smooth"})}
 
