@@ -1,382 +1,266 @@
-**2. Ficheiro `style.css`**
-Este arquivo cuida de todo o visual e design da página.
-
-```css
-/* =========================================
-   1. CAMADA INSTITUCIONAL UFFS (VARIÁVEIS)
-   ========================================= */
+/* Camada institucional UFFS — adaptação visual para publicação estática no IIS */
 :root {
-    --uffs-green: #008037;
-    --uffs-green-dark: #00652c;
-    --uffs-green-darker: #065228;
-    --uffs-green-soft: #edf7f0;
-    --uffs-text: #16362a;
-    --uffs-muted: #62756e;
-    --uffs-border: #d8e2dc;
-    --uffs-page: #f4f6f5;
-    --uffs-shadow: 0 22px 55px rgba(7, 32, 19, .08);
-    --card-bg: #ffffff;
+  --uffs-green: #008037;
+  --uffs-green-dark: #00652c;
+  --uffs-green-darker: #065228;
+  --uffs-green-soft: #edf7f0;
+  --uffs-text: #16362a;
+  --uffs-muted: #62756e;
+  --uffs-border: #d8e2dc;
+  --uffs-page: #f4f6f5;
+  --uffs-shadow: 0 22px 55px rgba(7, 32, 19, .08);
 }
 
-/* =========================================
-   2. CONFIGURAÇÕES GERAIS
-   ========================================= */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-    background: var(--uffs-page) !important;
-    color: var(--uffs-text) !important;
-    font-family: "Fira Sans", "Segoe UI", Arial, sans-serif !important;
-    margin: 0; 
-    padding: 0; 
-    padding-bottom: 40px; 
-    line-height: 1.5;
-}
-* { box-sizing: border-box; }
-
-/* =========================================
-   3. CABEÇALHO (HEADER) - FUNDO VERDE ESCURO
-   ========================================= */
-.header-uffs {
-    background-color: var(--uffs-green-darker);
-    padding: 30px 20px;
-    color: #ffffff;
+  background: var(--uffs-page) !important;
+  color: var(--uffs-text) !important;
+  font-family: "Fira Sans", "Segoe UI", Arial, sans-serif !important;
+  margin: 0;
+  padding: 0;
 }
 
-.header-container { 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 15px; 
+/* Header Principal Institucional */
+.header-uffs-principal {
+  position: relative !important;
+  background: linear-gradient(120deg, var(--uffs-green) 0 42%, #0b833d 42% 54%, var(--uffs-green-darker) 54% 100%) !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  padding: 18px 24px !important;
+  color: #fff !important;
 }
 
-/* --- Parte Superior (Logo + Universidade) --- */
-.header-top {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+.header-uffs-principal img {
+  width: 272px !important;
+  height: auto !important;
+  max-height: 78px !important;
+  object-fit: contain !important;
 }
 
-.logo-box {
-    background-color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 110px;
+.header-uffs-principal h1,
+.header-uffs-principal p {
+  color: #fff !important;
+  margin: 0;
 }
 
-.logo-text {
-    color: var(--uffs-green-darker);
-    font-size: 1.8rem;
-    font-weight: 900;
-    margin: 0;
-    letter-spacing: 1px;
+.header-uffs-principal h1 {
+  font-size: 1.55rem !important;
+  letter-spacing: -.02em !important;
+  font-weight: 700;
 }
 
-.logo-box img {
-    max-width: 100px;
-    height: auto;
-    display: block;
+.header-uffs-principal p {
+  opacity: .92 !important;
+  font-size: 0.88rem;
 }
 
-.institution-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+.header-uffs-principal .divisor-vertical {
+  background: rgba(255, 255, 255, .32) !important;
+  width: 1px;
+  height: 36px;
 }
 
-.institution-info h1 {
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #ffffff !important;
+/* Botões do topo */
+.header-uffs-principal button {
+  border-color: rgba(255, 255, 255, .25) !important;
+  background: rgba(0, 0, 0, .12) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  transition: background 0.2s;
 }
 
-.institution-info p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #ffffff !important;
+.header-uffs-principal button:hover {
+  background: rgba(0, 0, 0, .22) !important;
 }
 
-/* --- Parte Inferior (Título da Avaliação) --- */
-.header-bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding-top: 5px;
+/* Área Hero / Card Principal com watermark dos Cedidos */
+.card-hero-uffs {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), 
+              radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%);
+  border: 1px solid #e2e9e4;
+  border-radius: 24px !important;
+  box-shadow: var(--uffs-shadow) !important;
 }
 
-.header-bottom h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #ffffff !important;
+.card-hero-uffs::after {
+  content: 'CEDIDOS';
+  position: absolute;
+  right: -8px;
+  top: 18px;
+  font-size: clamp(42px, 7vw, 110px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .02em;
+  color: rgba(0, 82, 40, .055);
+  pointer-events: none;
 }
 
-.header-bottom span {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.9);
+/* Elementos de Destaque e Botões de Ação */
+.text-brand-uffs {
+  color: var(--uffs-green) !important;
 }
 
-/* =========================================
-   4. ESTRUTURA PRINCIPAL E CARDS
-   ========================================= */
-.main-container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
-
-.card { 
-    background: var(--card-bg); 
-    border-radius: 22px !important; 
-    padding: 25px; 
-    margin-bottom: 25px; 
-    border: 1px solid var(--uffs-border); 
-    box-shadow: var(--uffs-shadow) !important; 
+.btn-brand-uffs {
+  background: var(--uffs-green) !important;
+  border-color: var(--uffs-green) !important;
+  color: #fff !important;
+  border: none;
+  transition: background 0.2s ease;
 }
 
-.card-hero-uffs { 
-    position: relative; 
-    overflow: hidden; 
-    background: linear-gradient(90deg, rgba(255, 255, 255, .99) 0%, rgba(255, 255, 255, .97) 55%, rgba(232, 241, 236, .92) 100%), radial-gradient(circle at right center, rgba(0, 128, 55, .18), transparent 32%); 
+.btn-brand-uffs:hover {
+  background: var(--uffs-green-dark) !important;
+  color: #fff !important;
 }
 
-.card-hero-uffs::after { 
-    content: 'AVALIAÇÃO'; 
-    position: absolute; 
-    right: -8px; 
-    top: 18px; 
-    font-size: clamp(42px, 7vw, 110px); 
-    font-weight: 800; 
-    line-height: 1; 
-    letter-spacing: .02em; 
-    color: rgba(0, 82, 40, .035); 
-    pointer-events: none; 
+.bg-brand-soft {
+  background: var(--uffs-green-soft) !important;
 }
 
-.card-header { 
-    color: var(--uffs-green); 
-    border-bottom: 2px solid var(--uffs-green-soft); 
-    padding-bottom: 10px; 
-    margin-bottom: 20px; 
-    font-size: 1.15rem; 
-    font-weight: 700; 
+.border-brand-soft {
+  border-color: #d0e6d7 !important;
 }
 
-/* =========================================
-   5. FORMULÁRIOS
-   ========================================= */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.full-width { grid-column: 1 / -1; }
-
-label { font-weight: 600; font-size: 0.9rem; color: var(--uffs-text); }
-
-input, select, textarea { 
-    padding: 10px 12px; 
-    border: 1px solid var(--uffs-border); 
-    border-radius: 8px; 
-    font-size: 0.95rem; 
-    color: var(--uffs-text) !important; 
-    transition: all 0.2s ease; 
+.rounded-uffs {
+  border-radius: 22px !important;
 }
 
-textarea {
-    resize: vertical; 
-    min-height: 100px; 
+/* Form Cards */
+.card {
+  background: #fff;
+  border: 1px solid var(--uffs-border);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-input:focus, textarea:focus { 
-    outline: none; 
-    border-color: var(--uffs-green) !important; 
-    box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important; 
+.card-header {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  border-bottom: 2px solid var(--uffs-green-soft);
+  padding-bottom: 8px;
 }
 
-.radio-group { display: flex; flex-direction: column; gap: 12px; }
-.radio-option { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    cursor: pointer; 
-    padding: 10px 15px; 
-    background: var(--uffs-page); 
-    border: 1px solid var(--uffs-border); 
-    border-radius: 8px; 
-    transition: border-color 0.2s; 
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
 }
 
-.radio-option:hover { border-color: var(--uffs-green); }
-
-/* Melhoria UI: Destaque visual ao selecionar um radio */
-.radio-option:has(input[type="radio"]:checked) {
-    border-color: var(--uffs-green);
-    background-color: var(--uffs-green-soft);
-    box-shadow: 0 0 0 1px var(--uffs-green);
-}
-.radio-option input[type="radio"] {
-    accent-color: var(--uffs-green-dark);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* =========================================
-   6. BLOCOS DE NOTAS / DIMENSÕES
-   ========================================= */
-.scale-info { 
-    background-color: var(--uffs-green-soft); 
-    border-left: 4px solid var(--uffs-green); 
-    padding: 12px 15px; 
-    font-size: 0.9rem; 
-    margin-bottom: 20px; 
-    border-radius: 0 8px 8px 0; 
-    color: var(--uffs-green-dark); 
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.dimensao-block { 
-    margin-bottom: 25px; 
-    background: var(--uffs-page); 
-    padding: 20px; 
-    border-radius: 12px; 
-    border: 1px solid var(--uffs-border); 
-    transition: all 0.3s ease;
+/* Inputs, Selects e Textareas */
+input, select, textarea {
+  color: var(--uffs-text) !important;
+  padding: 10px 12px;
+  border: 1px solid var(--uffs-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Melhoria UI: Foco no bloco onde o utilizador está a preencher */
-.dimensao-block:focus-within {
-    border-color: var(--uffs-green);
-    box-shadow: 0 4px 15px rgba(0, 128, 55, 0.1);
-    transform: translateY(-2px);
+input:focus, select:focus, textarea:focus {
+  border-color: var(--uffs-green) !important;
+  box-shadow: 0 0 0 3px rgba(0, 128, 55, .18) !important;
 }
 
-.dimensao-block h4 { 
-    color: var(--uffs-green-darker); 
-    margin-bottom: 15px; 
-    font-size: 1rem; 
-    border-bottom: 1px dashed var(--uffs-border); 
-    padding-bottom: 8px; 
+/* Questões & Resumo */
+.question-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--uffs-border);
 }
 
-.question-item { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    gap: 15px; 
-    margin-bottom: 12px; 
-    padding-bottom: 10px; 
-    border-bottom: 1px solid #e9ecea; 
+.question-item label {
+  font-size: 0.92rem;
+  flex: 1;
 }
 
-.question-item label { font-weight: 400; font-size: 0.95rem; flex: 1; }
-
-.score-input { 
-    width: 70px; 
-    text-align: center; 
-    padding: 8px; 
-    font-weight: 700; 
-    font-size: 1rem; 
-    color: var(--uffs-green-dark) !important; 
+.score-input {
+  width: 70px;
+  text-align: center;
 }
 
-/* =========================================
-   7. RESUMO E BOTÕES
-   ========================================= */
-.summary-card { background-color: var(--uffs-green-soft) !important; border: 1px solid #d0e6d7 !important; }
-.score-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; font-size: 0.95rem; }
-
-.total-score-box { 
-    background-color: var(--uffs-green); 
-    color: white; 
-    padding: 15px; 
-    border-radius: 12px; 
-    text-align: center; 
-    font-size: 1.2rem; 
-    font-weight: 700; 
-}
-.total-score-box small { display: block; font-size: 0.85rem; font-weight: 400; opacity: 0.9; }
-
-.actions-area { text-align: center; margin-top: 30px; }
-
-.btn-primary, .btn-brand-uffs { 
-    background: var(--uffs-green) !important; 
-    color: #fff !important; 
-    border: none; 
-    padding: 14px 28px; 
-    font-size: 1.05rem; 
-    font-weight: 700; 
-    cursor: pointer; 
-    border-radius: 22px !important; 
-    transition: all 0.2s; 
-}
-.btn-primary:hover, .btn-brand-uffs:hover { 
-    background: var(--uffs-green-dark) !important; 
-    transform: translateY(-2px); 
+.dimensao-block {
+  margin-bottom: 24px;
 }
 
-/* Melhoria UI: Feedback tátil no clique do botão */
-.btn-primary:active, .btn-brand-uffs:active {
-    transform: translateY(1px); 
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+.dimensao-block h4 {
+  color: var(--uffs-green-dark);
+  margin-bottom: 8px;
 }
 
-/* =========================================
-   8. RODAPÉ (FOOTER)
-   ========================================= */
-footer.footer-uffs { 
-    background: var(--uffs-green) !important; 
-    color: #fff !important; 
-    padding: 34px 24px !important; 
-    text-align: center; 
-    font-size: 0.9rem; 
-    margin-top: 40px; 
+.score-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
 }
-footer.footer-uffs p { margin: 5px 0; color: #fff !important; }
 
-/* =========================================
-   9. PDF OCULTO (HTML2PDF)
-   ========================================= */
-#pdfRenderWrapper { display: none; }
-.pdf-container { width: 100%; padding: 20px; background: #ffffff; font-size: 8.5pt; color: #000000; font-family: Arial, sans-serif; }
-.print-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px; }
-.pdf-brand-bar h2 { font-size: 11pt; font-weight: bold; margin-bottom: 2px; }
-.print-header h3 { font-size: 10pt; margin-top: 4px; }
-.badge-modalidade { display: inline-block; margin-top: 6px; padding: 3px 8px; background: #eee; border: 1px solid #ccc; font-weight: bold; font-size: 8pt; }
-.print-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-.print-table th, .print-table td { border: 1px solid #666; padding: 4px 6px; vertical-align: middle; }
-.table-section-title { background-color: #f0f0f0; text-align: left; font-size: 8.5pt; font-weight: bold; }
-.sub-dim-title { background-color: #f9f9f9; font-weight: bold; font-size: 8pt; }
-.cell-desc { font-size: 8pt; }
-.cell-nota { text-align: center; font-weight: bold; width: 45px; }
-.table-total-row { background-color: #e6e6e6; }
-.print-obs { border: 1px solid #666; padding: 6px; min-height: 50px; font-size: 8pt; }
-.signatures-container { margin-top: 30px; display: flex; justify-content: center; }
-.signature-box { width: 250px; text-align: center; font-size: 8pt; }
-.signature-box .line { border-top: 1px solid #000; margin-bottom: 4px; }
-.margin-top { margin-top: 10px; }
+.total-score-box {
+  background: var(--uffs-green-soft);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.1rem;
+}
 
-/* =========================================
-   10. RESPONSIVIDADE (MOBILE)
-   ========================================= */
+.total-score-box strong {
+  color: var(--uffs-green-dark);
+  font-size: 1.6rem;
+  display: block;
+}
+
+/* Ocultar render do PDF da tela principal */
+#pdfRenderWrapper {
+  display: none;
+}
+
+/* Rodapé Institucional UFFS */
+footer.footer-uffs {
+  background: var(--uffs-green) !important;
+  border-top: 0 !important;
+  color: #fff !important;
+  padding: 34px 0 !important;
+}
+
+footer.footer-uffs,
+footer.footer-uffs p,
+footer.footer-uffs span,
+footer.footer-uffs a {
+  color: #fff !important;
+}
+
+footer.footer-uffs a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 768px) {
-    .grid-2, .score-summary-grid { 
-        grid-template-columns: 1fr; 
-    }
-    
-    .header-top {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .institution-info, .header-bottom {
-        align-items: center;
-        text-align: center;
-    }
-    
-    .question-item {
-        flex-direction: column; 
-        align-items: flex-start;
-    }
-    
-    .score-input {
-        width: 100%; 
-        margin-top: 10px;
-    }
+  .header-uffs-principal img {
+    width: 220px !important;
+  }
+  
+  .header-uffs-principal .divisor-vertical {
+    display: none;
+  }
 }
