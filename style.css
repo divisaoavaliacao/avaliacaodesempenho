@@ -35,10 +35,16 @@ body {
 
 /* Logo reduzido */
 .header-uffs-principal img {
-  width: 170px !important;
+  width: 120px !important;
   height: auto !important;
-  max-height: 50px !important;
+  max-height: 38px !important;
   object-fit: contain !important;
+}
+
+@media (max-width: 768px) {
+  .header-uffs-principal img {
+    width: 90px !important;
+  }
 }
 
 .header-uffs-principal h1,
