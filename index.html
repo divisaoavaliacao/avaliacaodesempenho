@@ -1,5 +1,3 @@
-Código Completo - index.html (Avaliação de Desempenho - Servidores Cedidos)
-Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para a Avaliação de Desempenho dos Servidores Cedidos UFFS.
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,7 +8,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <!-- Cabeçalho Institucional (Estilo RSC) -->
+    <!-- Cabeçalho Institucional -->
     <header class="header-uffs-principal">
         <div class="header-content">
             <div class="header-left">
@@ -115,6 +113,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
 
                 <div class="dimensao-block">
                     <h4>Habilidades</h4>
+                     <p style="font-size: 0.85rem; color: var(--uffs-muted); margin-bottom: 12px;">Capacidade que o servidor possui de mediar e pôr em prática os seus conhecimentos, ou seja, a utilização dos conhecimentos no desempenho de suas funções</p>
                     <div class="question-item"><label>1. Desenvolve suas atividades de forma autônoma, sem necessidade de orientações constantes</label><input type="number" min="0" max="10" step="1" class="score-input input-habilidades" required></div>
                     <div class="question-item"><label>2. Organiza adequadamente suas atividades, priorizando aquelas de maior urgência, visando executá-las de forma eficiente e eficaz</label><input type="number" min="0" max="10" step="1" class="score-input input-habilidades" required></div>
                     <div class="question-item"><label>3. Produz volume de trabalho proporcional à sua complexidade e aos recursos disponíveis, racionalizando o tempo na execução das atividades</label><input type="number" min="0" max="10" step="1" class="score-input input-habilidades" required></div>
@@ -124,6 +123,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
 
                 <div class="dimensao-block">
                     <h4>Metas</h4>
+                    <p style="font-size: 0.85rem; color: var(--uffs-muted); margin-bottom: 12px;">Relaciona-se ao cumprimento das metas estabelecidas no Plano de Trabalho</p>
                     <div class="question-item"><label>1. Atinge as metas conforme planejado</label><input type="number" min="0" max="10" step="1" class="score-input input-metas" required></div>
                     <div class="question-item"><label>2. Atinge as metas com a qualidade esperada</label><input type="number" min="0" max="10" step="1" class="score-input input-metas" required></div>
                     <div class="question-item"><label>3. Atinge as metas dentro do prazo estipulado</label><input type="number" min="0" max="10" step="1" class="score-input input-metas" required></div>
@@ -131,6 +131,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
 
                 <div class="dimensao-block">
                     <h4>Comportamentos e Atitudes</h4>
+                    <p style="font-size: 0.85rem; color: var(--uffs-muted); margin-bottom: 12px;">Características até certo ponto observáveis no ambiente de trabalho que se relacionam com o quanto o comportamento do servidor alinha-se às atitudes e aos valores estimulados pela UFFS</p>
                     <div class="question-item"><label>1. Relaciona-se respeitosamente com a chefia, demais servidores e com o público</label><input type="number" min="0" max="10" step="1" class="score-input input-comportamentos" required></div>
                     <div class="question-item"><label>2. Respeita a diversidade</label><input type="number" min="0" max="10" step="1" class="score-input input-comportamentos" required></div>
                     <div class="question-item"><label>3. Demonstra interesse no desempenho de suas atribuições</label><input type="number" min="0" max="10" step="1" class="score-input input-comportamentos" required></div>
@@ -147,6 +148,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
 
                 <div class="dimensao-block" id="blockMediadores">
                     <h4>Mediadores de Desempenho (Uso Institucional)</h4>
+                    <p style="font-size: 0.85rem; color: var(--uffs-muted); margin-bottom: 12px;">(Aspectos que contribuíram ou dificultaram o desenvolvimento das atividades do servidor no ambiente de trabalho</p>
                     <div class="question-item"><label>1. Planejamento proposto para o desenvolvimento de suas atividades</label><input type="number" min="0" max="10" step="1" class="score-input input-mediadores"></div>
                     <div class="question-item"><label>2. Atividades de capacitação oferecidas pela instituição</label><input type="number" min="0" max="10" step="1" class="score-input input-mediadores"></div>
                     <div class="question-item"><label>3. Condições das instalações físicas, equipamentos e material de expediente, considerando a modalidade de trabalho</label><input type="number" min="0" max="10" step="1" class="score-input input-mediadores"></div>
@@ -161,7 +163,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
 
             <!-- Resumo -->
             <section class="card summary-card rounded-uffs">
-                <h3 class="card-header text-brand-uffs">Resumo da Pontuação Ponderada</h3>
+                <h3 class="card-header text-brand-uffs">Resumo da Pontuação</h3>
                 <div class="score-summary-grid">
                     <div><span>Conhecimentos:</span> <strong id="lblScoreConhecimentos">0.00</strong></div>
                     <div><span>Habilidades:</span> <strong id="lblScoreHabilidades">0.00</strong></div>
@@ -169,7 +171,7 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
                     <div><span>Comportamentos/Atitudes:</span> <strong id="lblScoreComportamentos">0.00</strong></div>
                 </div>
                 <div class="total-score-box">
-                    <span>Pontuação Ponderada Total:</span>
+                    <span>Pontuação Total:</span>
                     <strong id="lblScoreTotal">0.00</strong>
                     <small id="lblScoreMax">(Máximo: 4.25)</small>
                 </div>
@@ -229,9 +231,9 @@ Ficheiro HTML completo com a estrutura e cabeçalho alinhados ao estilo RSC para
                 <table class="print-table margin-top">
                     <thead>
                         <tr>
-                            <th class="table-section-title">3. RESUMO PONDERADO DAS DIMENSÕES</th>
+                            <th class="table-section-title">3. RESUMO DAS DIMENSÕES</th>
                             <th class="table-section-title" style="text-align: center; width: 120px;">MÉDIA SIMPLES</th>
-                            <th class="table-section-title" style="text-align: center; width: 140px;">PONTUAÇÃO PONDERADA</th>
+                            <th class="table-section-title" style="text-align: center; width: 140px;">PONTUAÇÃO</th>
                         </tr>
                     </thead>
                     <tbody>
