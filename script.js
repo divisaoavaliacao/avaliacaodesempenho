@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const totalPonderado = pondConhecimentos + pondHabilidades + pondMetas + pondComportamentos;
 
-        document.getElementById('lblScoreConhecimentos').innerText = `\({pondConhecimentos.toFixed(2)} pts (Média:\){avgConhecimentos.toFixed(1)})`;
+        document.getElementById('lblScoreConhecimentos').innerText = `$({pondConhecimentos.toFixed(2)} pts (Média:\){avgConhecimentos.toFixed(1)})`;
         document.getElementById('lblScoreHabilidades').innerText = `\({pondHabilidades.toFixed(2)} pts (Média:\){avgHabilidades.toFixed(1)})`;
         document.getElementById('lblScoreMetas').innerText = `\({pondMetas.toFixed(2)} pts (Média:\){avgMetas.toFixed(1)})`;
         document.getElementById('lblScoreComportamentos').innerText = `\({pondComportamentos.toFixed(2)} pts (Média:\){avgComportamentos.toFixed(1)})`;
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const title = block.querySelector('h4').innerText;
             const trTitle = document.createElement('tr');
             trTitle.innerHTML = `
+            e
 
 ${title}`;
 tbody.appendChild(trTitle);
@@ -130,6 +131,7 @@ tbody.appendChild(trTitle);
             const inputVal = item.querySelector('input').value;
             const trItem = document.createElement('tr');
             trItem.innerHTML = `
+            e
 
 ${questionText}
 
