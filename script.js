@@ -1,79 +1,235 @@
-/* UFFS — Avaliação de Desempenho */
-:root {
-  --uffs-green:#008037; --uffs-green-dark:#00652c; --uffs-green-soft:#edf7f0;
-  --uffs-text:#16362a; --uffs-muted:#62756e; --uffs-border:#d8e2dc;
-  --uffs-page:#f4f6f5; --uffs-shadow:0 22px 55px rgba(7,32,19,.08);
-}
-*{box-sizing:border-box} html{scroll-behavior:smooth}
-body{background:var(--uffs-page);color:var(--uffs-text);font-family:"Fira Sans","Segoe UI",Arial,sans-serif;margin:0}
-.header-uffs-principal{background:#005a2b;padding:12px 24px;color:#fff}
-.header-content{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:auto;gap:20px}
-.header-left{display:flex;align-items:center;gap:16px;min-width:0}
-.logo-box-white{background:#fff;padding:6px 10px;border-radius:6px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.logo-box-white img{height:42px;width:auto;max-width:220px;object-fit:contain}
-.divisor-vertical{background:rgba(255,255,255,.3);width:1px;height:38px}
-.header-uffs-principal h1{font-size:1.25rem;margin:0;color:#fff}
-.subtitle-row{display:flex;gap:8px;margin-top:2px;font-size:.8rem;opacity:.95;flex-wrap:wrap}
-.badge-v2{background:#ffc107;color:#000;font-weight:700;font-size:.7rem;padding:2px 8px;border-radius:12px}
-.btn-top-header{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 14px;border-radius:20px;font-weight:600;cursor:pointer}
-.main-container{max-width:1200px;margin:24px auto;padding:0 16px}
-.card-hero-uffs{position:relative;overflow:hidden;background:linear-gradient(90deg,#fff,rgba(255,255,255,.97) 55%,rgba(232,241,236,.92));border:1px solid #e2e9e4;border-radius:24px;box-shadow:var(--uffs-shadow);padding:28px;margin-bottom:24px}
-.card-hero-uffs:after{content:"CEDIDOS";position:absolute;right:-8px;top:18px;font-size:clamp(42px,7vw,110px);font-weight:800;color:rgba(0,82,40,.055);pointer-events:none}
-.card-hero-uffs h2{margin:0 0 8px;color:var(--uffs-green);position:relative;z-index:1}.card-hero-uffs p{margin:0;color:var(--uffs-muted);font-weight:500}
-.card{background:#fff;border:1px solid var(--uffs-border);padding:24px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.03)}
-.rounded-uffs{border-radius:22px}.card-header{margin:0 0 16px;font-size:1.25rem;border-bottom:2px solid var(--uffs-green-soft);padding-bottom:8px;color:var(--uffs-green)}
-.radio-group{display:grid;gap:10px}.radio-option{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--uffs-border);border-radius:10px;cursor:pointer}
-.radio-option:has(input:checked){border-color:var(--uffs-green);background:var(--uffs-green-soft)}
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.form-group{display:flex;flex-direction:column;gap:6px}.form-group label{font-weight:600;font-size:.9rem}
-input,textarea{color:var(--uffs-text);padding:10px 12px;border:1px solid var(--uffs-border);border-radius:8px;font-size:.95rem;outline:none;background:#fff}
-input:focus,textarea:focus{border-color:var(--uffs-green);box-shadow:0 0 0 3px rgba(0,128,55,.18)}input[readonly]{background:#f5f7f6}
-.scale-info,.formula-box{background:var(--uffs-green-soft);border:1px solid #d0e6d7;padding:12px;border-radius:8px;margin-bottom:20px}
-.question-block{margin-bottom:24px}.question-block h4{color:var(--uffs-green-dark);margin:0 0 6px}
-.dimension-description{font-size:.85rem;color:var(--uffs-muted);margin:0 0 12px}
-.question-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 0;border-bottom:1px dashed var(--uffs-border)}
-.question-item label{font-size:.92rem;flex:1}.score-input{width:70px;text-align:center}
-.summary-card{border-top:4px solid var(--uffs-green)}
-.score-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.score-summary-grid>div{border:1px solid var(--uffs-border);border-radius:10px;padding:14px;background:#fff}
-.score-summary-grid span{display:block;font-weight:600;margin-bottom:5px}.score-summary-grid strong{display:block;color:var(--uffs-green-dark);font-size:1.35rem}
-.score-summary-grid small{display:block;color:var(--uffs-muted);margin-top:4px}
-.total-score-box{background:var(--uffs-green-soft);padding:16px;border-radius:12px;text-align:center;font-size:1.1rem}
-.total-score-box strong{color:var(--uffs-green-dark);font-size:1.6rem;display:block;margin-top:4px}
-.consolidated-box{background:#f8faf9;border:1px solid var(--uffs-border);padding:14px;border-radius:12px;margin-top:14px}
-.consolidated-box strong{color:var(--uffs-green-dark)}
-.actions-area{display:flex;justify-content:center;gap:12px;margin:24px 0 34px;flex-wrap:wrap}
-.btn-brand-uffs,.btn-secondary-action{padding:12px 24px;border-radius:8px;font-weight:600;cursor:pointer}
-.btn-brand-uffs{background:var(--uffs-green);border:0;color:#fff}.btn-brand-uffs:hover{background:var(--uffs-green-dark)}
-.btn-secondary-action{background:#fff;border:1px solid var(--uffs-green);color:var(--uffs-green-dark)}
-.footer-uffs{background:var(--uffs-green);color:#fff;padding:22px 0;text-align:center}
+/* UFFS — Avaliação de Desempenho
+   Fórmulas reproduzidas da planilha:
+   - Conhecimentos, Habilidades e Metas: 25% da nota final;
+     40% autoavaliação + 60% chefia.
+   - Comportamentos/Atitudes: 25% da nota final;
+     50% autoavaliação + 50% chefia.
+   - Mediadores: somente autoavaliação; não entram na média.
+*/
+"use strict";
 
-/* PDF */
-#pdfRenderWrapper{position:fixed;left:-100000px;top:0;width:210mm;background:#fff;z-index:-1}
-#printArea{width:210mm;min-height:297mm;padding:9mm 10mm;color:#000;background:#fff;font-family:Arial,Helvetica,sans-serif;font-size:9pt;line-height:1.3}
-.print-header{text-align:center;font-weight:bold;margin-bottom:10px}.pdf-brand-bar{background:#000;color:#fff;padding:6px;margin-bottom:7px}.pdf-brand-bar h2{color:#fff;margin:0;font-size:10.5pt}
-.print-header h3{margin:0;font-size:11pt;text-transform:uppercase}.print-header p{margin:2px 0;font-size:9.5pt}
-.badge-modalidade{display:inline-block;border:1px solid #000;padding:3px 9px;margin-top:3px;font-size:8.5pt;font-weight:bold}
-.print-table{width:100%;border-collapse:collapse;margin-bottom:10px;page-break-inside:auto}
-.print-table tr{page-break-inside:avoid}.print-table th,.print-table td{border:1px solid #000;padding:4px 6px;font-size:8.5pt;vertical-align:middle}
-.table-section-title{background:#000!important;color:#fff!important;font-weight:bold;text-align:left}.label-cell{background:#f2f2f2}
-.center{text-align:center!important}.bold{font-weight:bold!important}.dimension-print-title{background:#e7e7e7;font-weight:bold}
-.dimension-description-print{font-size:8.2pt}.table-total-row td{background:#e7e7e7}.total-pdf-score{font-size:10pt!important}
-.print-obs{border:1px solid #000;padding:6px 8px;min-height:42px}.print-obs p{margin:5px 0 0;white-space:pre-wrap}
-.signatures-container{display:flex;justify-content:center;gap:25mm;margin-top:16mm;page-break-inside:avoid}
-.signature-block{width:75mm;text-align:center;font-size:9pt}.signature-line{border-top:1px solid #000;margin-bottom:5px}.signature-block .name{font-weight:bold}
-@media print{body>*:not(#pdfRenderWrapper){display:none!important}#pdfRenderWrapper{position:static!important;display:block!important;width:auto!important}#printArea{margin:0}}
-@media(max-width:900px){.score-summary-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.header-content{flex-direction:column;align-items:flex-start}.divisor-vertical{display:none}.score-summary-grid{grid-template-columns:1fr}.question-item{align-items:flex-start}}
-@media(max-width:520px){.question-item{flex-direction:column;align-items:stretch}.score-input{width:100%}}
+const CONFIG = {
+  finalMax: 10,
+  dimensions: [
+    {id:"conhecimentos",name:"Conhecimentos",description:"Capacidade que o servidor possui de apropriar-se da realidade com a qual trabalha, de modo a dominar os conhecimentos necessários para a realização do seu trabalho.",questions:[
+      "Conhece os processos de trabalho que estão sob sua responsabilidade",
+      "Conhece as ferramentas necessárias para realizar as atividades sob sua responsabilidade",
+      "Conhece as leis e as normas que regulamentam o seu trabalho",
+      "Busca novos conhecimentos, por meio de atividades de capacitação, visando melhorar seu desempenho"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"habilidades",name:"Habilidades",description:"Capacidade que o servidor possui de mediar e pôr em prática os seus conhecimentos, ou seja, a utilização dos conhecimentos no desempenho de suas funções.",questions:[
+      "Desenvolve suas atividades de forma autônoma, sem necessidade de orientações constantes",
+      "Organiza adequadamente suas atividades, priorizando aquelas de maior urgência, visando executá-las de forma eficiente e eficaz",
+      "Produz volume de trabalho proporcional à sua complexidade e aos recursos disponíveis, racionalizando o tempo na execução das atividades",
+      "Toma decisões em situações de trabalho que sejam de sua competência e encaminha adequadamente as situações que fogem de sua alçada decisória",
+      "Compromete-se com os planos e atribuições setoriais e individuais"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"metas",name:"Metas",description:"Relaciona-se ao cumprimento das metas estabelecidas no Plano de Trabalho.",questions:[
+      "Atinge as metas conforme planejado","Atinge as metas com a qualidade esperada","Atinge as metas dentro do prazo estipulado"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"comportamentos",name:"Comportamentos e Atitudes",description:"Características até certo ponto observáveis no ambiente de trabalho que se relacionam com o quanto o comportamento do servidor alinha-se às atitudes e aos valores estimulados pela UFFS.",questions:[
+      "Relaciona-se respeitosamente com a chefia, demais servidores e com o público","Respeita a diversidade","Demonstra interesse no desempenho de suas atribuições","É assíduo e pontual em seus compromissos e responsabilidades","Tem postura proativa na utilização de seus conhecimentos e habilidades para o alcance das metas planejadas","É capaz de identificar problemas e se oferecer de modo oportuno para ajudar","Apresenta ideias e sugestões para melhoria dos processos com os quais trabalha","Coopera com o desenvolvimento de um bom clima organizacional na unidade","Comunica-se com clareza e respeito com a chefia, com os demais servidores e com o público","Zela pelo patrimônio da instituição, primando pela economicidade no uso dos materiais e pela eficiência na conservação dos equipamentos","Respeita a hierarquia funcional","Resguarda fatos e informações de interesse da administração, sobretudo os de caráter sigiloso"
+    ], autoWeight:.50, chefiaWeight:.50, dimensionWeight:.25}
+  ],
+  mediators:[
+    "Planejamento proposto para o desenvolvimento de suas atividades",
+    "Atividades de capacitação oferecidas pela instituição",
+    "Condições das instalações físicas, equipamentos e material de expediente, considerando a modalidade de trabalho",
+    "Relações interpessoais no setor de trabalho"
+  ]
+};
 
-/* Mediadores: visíveis exclusivamente na Autoavaliação. */
-.mediator-block[hidden] {
-  display: none !important;
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+const fmt = v => Number(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+
+function renderQuestions(){
+  const c=$("questionsContainer");
+
+  // As quatro dimensões de desempenho aparecem nas duas modalidades.
+  const dimensionsHtml=CONFIG.dimensions.map(d=>`
+    <div class="question-block">
+      <h4>${esc(d.name)}</h4>
+      <p class="dimension-description">${esc(d.description)}</p>
+      ${d.questions.map((q,i)=>`
+        <div class="question-item">
+          <label>${i+1}. ${esc(q)}</label>
+          <input class="score-input" data-dimension="${d.id}" min="0" max="10" step="1" required inputmode="numeric">
+        </div>`).join("")}
+    </div>`).join("");
+
+  // Os Mediadores de Desempenho são exclusivos da Autoavaliação.
+  // O bloco é mantido no DOM apenas para permitir a alternância da modalidade,
+  // mas fica completamente oculto na Avaliação da Chefia.
+  const mediatorHtml=`
+    <div id="mediatorBlock" class="question-block mediator-block">
+      <h4>Mediadores de Desempenho*</h4>
+      <p class="dimension-description">Aspectos que contribuíram ou dificultaram o desenvolvimento das atividades do servidor no ambiente de trabalho. Avaliados somente na autoavaliação e sem efeito na média da avaliação.</p>
+      ${CONFIG.mediators.map((q,i)=>`
+        <div class="question-item">
+          <label>${i+1}. ${esc(q)}</label>
+          <input class="score-input mediator-input" data-mediator="${i}" min="0" max="10" step="1" inputmode="numeric">
+        </div>`).join("")}
+      <div class="formula-box"><strong>*Mediadores:</strong> dimensão avaliada apenas na autoavaliação. Não interfere na média da avaliação do servidor e é utilizada para fins estratégicos da Instituição.</div>
+    </div>`;
+
+  c.innerHTML=dimensionsHtml+mediatorHtml;
+
+  c.querySelectorAll(".score-input").forEach(i=>i.addEventListener("input",()=>{sanitize(i);calculate();}));
+  updateMediatorVisibility();
 }
-.pdf-help {
-  text-align: center;
-  color: #62756e;
-  font-size: .85rem;
-  margin: -20px auto 30px;
+
+function updateMediatorVisibility(){
+  const block=$("mediatorBlock");
+  if(!block) return;
+
+  const isAuto=mode()==="auto";
+  block.hidden=!isAuto;
+  block.setAttribute("aria-hidden",String(!isAuto));
+
+  // Na modalidade Chefia, os Mediadores não aparecem e também não participam
+  // de nenhuma validação ou cálculo.
+  block.querySelectorAll(".mediator-input").forEach(input=>{
+    input.tabIndex=isAuto?0:-1;
+    input.disabled=!isAuto;
+  });
 }
+
+function sanitize(i){
+  if(i.value==="")return;
+  let n=Number(i.value); if(!Number.isFinite(n)){i.value="";return}
+  i.value=Math.max(0,Math.min(10,Math.round(n)));
+}
+
+function mode(){return document.querySelector('input[name="modalidade"]:checked')?.value||"auto"}
+function values(id){return [...document.querySelectorAll(`.score-input[data-dimension="${id}"]`)].map(i=>i.value).filter(v=>v!=="").map(Number)}
+function dimResult(d){
+  const v=values(d.id); const avg=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;
+  const contribution=avg*d.dimensionWeight*(mode()==="auto"?d.autoWeight:d.chefiaWeight);
+  return {count:v.length,average:avg,contribution};
+}
+function calculate(){
+  const r={}; CONFIG.dimensions.forEach(d=>r[d.id]=dimResult(d));
+  const total=Object.values(r).reduce((a,b)=>a+b.contribution,0);
+  CONFIG.dimensions.forEach(d=>{const el=$("lblScore"+cap(d.id));if(el)el.textContent=fmt(r[d.id].contribution)});
+  $("lblScoreTotal").textContent=`${fmt(total)} / ${fmt(mode()==="auto"?4.25:5.75)}`;
+  $("lblEvaluationMax").textContent=mode()==="auto"?"4,25":"5,75";
+  $("lblModeWeight").textContent=mode()==="auto"?"40% nas dimensões Conhecimentos, Habilidades e Metas; 50% em Comportamentos/Atitudes":"60% nas dimensões Conhecimentos, Habilidades e Metas; 50% em Comportamentos/Atitudes";
+  return {r,total};
+}
+
+function valid(){
+  const required=[...document.querySelectorAll(".score-input[data-dimension]")].filter(i=>i.value==="");
+  if(required.length){required[0].focus();alert("Preencha todas as notas das quatro dimensões antes de gerar o documento.");return false}
+  for(const i of document.querySelectorAll(".score-input")) if(i.value!==""&&(Number(i.value)<0||Number(i.value)>10)){i.focus();alert("As notas devem estar entre 0 e 10.");return false}
+  for(const id of ["nomeServidor","siape","cargoServidor","periodoAvaliacao","orgaoDestino","nomeChefia","cargoChefia"]) if(!$(`${id}`).value.trim()){ $(`${id}`).focus();alert("Preencha os dados de identificação.");return false}
+  return true;
+}
+
+function data(){
+  return {
+    modalidade:mode(),nome:$("nomeServidor").value.trim(),siape:$("siape").value.trim(),cargo:$("cargoServidor").value.trim(),
+    periodo:$("periodoAvaliacao").value.trim(),destino:$("orgaoDestino").value.trim(),chefia:$("nomeChefia").value.trim(),
+    cargoChefia:$("cargoChefia").value.trim(),obs:$("observacoes").value.trim()
+  }
+}
+function text(id,v){$(id).textContent=v||""}
+
+function fillPdf(d,calc){
+  text("pNomeServidor",d.nome);text("pSiape",d.siape);text("pCargoServidor",d.cargo);text("pPeriodo",d.periodo);
+  text("pOrgaoDestino",d.destino);text("pNomeChefia",d.chefia);text("pCargoChefia",d.cargoChefia);
+  text("pModalidadeBadge",d.modalidade==="auto"?"AUTOAVALIAÇÃO":"AVALIAÇÃO DA CHEFIA IMEDIATA");
+  text("pEvaluationMax",d.modalidade==="auto"?"4,25":"5,75");
+  text("pObservacoes",d.obs||"Sem observações.");
+  const tbody=$("pTableDetailedNotes");tbody.innerHTML="";
+  CONFIG.dimensions.forEach(dim=>{
+    const title=document.createElement("tr");title.innerHTML=`<td colspan="2" class="dimension-print-title">${esc(dim.name)}</td>`;tbody.appendChild(title);
+    const inputs=[...document.querySelectorAll(`.score-input[data-dimension="${dim.id}"]`)];
+    dim.questions.forEach((q,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}. ${esc(q)}</td><td class="center bold">${esc(inputs[i]?.value||"")}</td>`;tbody.appendChild(tr)});
+    const res=calc.r[dim.id];
+    const avg=document.createElement("tr");avg.innerHTML=`<td><strong>Pontuação da dimensão (média simples)</strong></td><td class="center bold">${fmt(res.average)}</td>`;tbody.appendChild(avg);
+  });
+  CONFIG.dimensions.forEach(dim=>{text("pMedia"+cap(dim.id),fmt(calc.r[dim.id].average));text("pPond"+cap(dim.id),fmt(calc.r[dim.id].contribution))});
+  text("pTotalObtido",`${fmt(calc.total)} / ${d.modalidade==="auto"?"4,25":"5,75"}`);
+  $("pSignaturesContainer").innerHTML=`<div class="signature-block"><div class="signature-line"></div><div class="name">${esc(d.modalidade==="auto"?d.nome:d.chefia)}</div><div>${d.modalidade==="auto"?"Servidor(a) Avaliado(a)":"Chefia Imediata (Avaliador)"}</div><div>Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>`;
+}
+
+async function generatePdf(){
+  if(!valid()) return;
+
+  const d = data();
+  const calc = calculate();
+  fillPdf(d, calc);
+
+  // O GitHub Pages pode ser aberto com bloqueio de CDN e o arquivo HTML
+  // também pode ser aberto localmente, sem acesso à internet.
+  // Nesse caso não devemos simplesmente falhar: usamos a impressão nativa
+  // do navegador, que permite escolher "Salvar como PDF".
+  if (typeof window.html2pdf !== "function") {
+    alert(
+      "O gerador automático de PDF não está disponível neste navegador.\n\n" +
+      "O documento será aberto na impressão. Na janela de impressão, " +
+      "selecione 'Salvar como PDF' como destino."
+    );
+    window.print();
+    return;
+  }
+
+  const w = $("pdfRenderWrapper");
+  w.style.position = "absolute";
+  w.style.left = "0";
+  w.style.top = "0";
+  w.style.zIndex = "9999";
+  w.style.display = "block";
+
+  try {
+    const clean = d.nome
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]+/g, "_");
+
+    await window.html2pdf().set({
+      margin: [8, 8, 8, 8],
+      filename: `Avaliacao_Desempenho_${clean || "servidor"}_${d.periodo || "avaliacao"}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+        compress: true
+      },
+      pagebreak: {
+        mode: ["css", "legacy"],
+        avoid: [".signature-block", ".print-table tr"]
+      }
+    }).from($("printArea")).save();
+  } catch (error) {
+    console.error("Falha no html2pdf:", error);
+    alert(
+      "O gerador automático encontrou um problema.\n\n" +
+      "O documento será aberto na impressão para que você possa selecionar " +
+      "'Salvar como PDF'."
+    );
+    window.print();
+  } finally {
+    w.style.position = "fixed";
+    w.style.left = "-100000px";
+    w.style.top = "0";
+    w.style.zIndex = "-1";
+  }
+}
+function printPdf(){if(!valid())return;const d=data(),calc=calculate();fillPdf(d,calc);window.print()}
+function reset(){ $("evalForm").reset();calculate();window.scrollTo({top:0,behavior:"smooth"})}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  renderQuestions();calculate();
+  document.querySelectorAll('input[name="modalidade"]').forEach(r=>r.addEventListener("change",()=>{updateMediatorVisibility();calculate();}));
+  $("btnDownloadPDF").addEventListener("click",generatePdf);$("btnPrint").addEventListener("click",printPdf);$("btnReset").addEventListener("click",()=>setTimeout(reset,0));
+});
