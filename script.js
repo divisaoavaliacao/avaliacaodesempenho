@@ -1,312 +1,235 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('evalForm');
-    const radiosModalidade = document.querySelectorAll('input[name="modalidade"]');
-    const blockMediadores = document.getElementById('blockMediadores');
-    const rowPrintMediadores = document.getElementById('rowPrintMediadores');
-    const btnDownloadPDF = document.getElementById('btnDownloadPDF');
+/* UFFS — Avaliação de Desempenho
+   Fórmulas reproduzidas da planilha:
+   - Conhecimentos, Habilidades e Metas: 25% da nota final;
+     40% autoavaliação + 60% chefia.
+   - Comportamentos/Atitudes: 25% da nota final;
+     50% autoavaliação + 50% chefia.
+   - Mediadores: somente autoavaliação; não entram na média.
+*/
+"use strict";
 
-    // Seleciona todos os campos de notas
-    const scoreInputs = document.querySelectorAll('.score-input');
-
-    scoreInputs.forEach(input => {
-        // Assegura atributos para aceitar somente números inteiros de 0 a 10
-        input.setAttribute('type', 'number');
-        input.setAttribute('min', '0');
-        input.setAttribute('max', '10');
-        input.setAttribute('step', '1');
-        input.setAttribute('inputmode', 'numeric');
-
-        // Bloqueia vírgula, ponto, sinal negativo e expoentes durante a digitação
-        input.addEventListener('keydown', (e) => {
-            if (['.', ',', '-', 'e', 'E', '+'].includes(e.key)) {
-                e.preventDefault();
-            }
-        });
-
-        // Limpeza instantânea durante digitação / colagem
-        input.addEventListener('input', () => {
-            // Remove tudo que não for número inteiro
-            let cleanVal = input.value.replace(/[^0-9]/g, '');
-
-            if (cleanVal !== '') {
-                let val = parseInt(cleanVal, 10);
-                if (val > 10) val = 10;
-                if (val < 0) val = 0;
-                input.value = val;
-            } else {
-                input.value = '';
-            }
-            calculateScores();
-        });
-
-        // Validação ao sair do campo (blur)
-        input.addEventListener('blur', () => {
-            if (input.value === '' || isNaN(parseInt(input.value, 10))) {
-                input.value = '0';
-            } else {
-                let val = parseInt(input.value, 10);
-                if (val > 10) input.value = '10';
-                if (val < 0) input.value = '0';
-                input.value = val;
-            }
-            calculateScores();
-        });
-    });
-
-    function updateModalidadeUI() {
-        const checkedModalidade = document.querySelector('input[name="modalidade"]:checked');
-        const isAuto = checkedModalidade ? checkedModalidade.value === 'auto' : true;
-
-        if (isAuto) {
-            if (blockMediadores) blockMediadores.style.display = 'block';
-            if (rowPrintMediadores) rowPrintMediadores.style.display = 'table-row';
-            const lblMax = document.getElementById('lblScoreMax');
-            if (lblMax) lblMax.innerText = '(Máximo: 4.25)';
-        } else {
-            if (blockMediadores) blockMediadores.style.display = 'none';
-            if (rowPrintMediadores) rowPrintMediadores.style.display = 'none';
-            const lblMax = document.getElementById('lblScoreMax');
-            if (lblMax) lblMax.innerText = '(Máximo: 5.75)';
-        }
-        calculateScores();
-    }
-
-    radiosModalidade.forEach(radio => radio.addEventListener('change', updateModalidadeUI));
-
-    function getAverage(className) {
-        const inputs = Array.from(document.querySelectorAll(`.${className}`));
-        const validInputs = inputs.filter(i => i.value !== '' && !isNaN(parseInt(i.value, 10)));
-        if (validInputs.length === 0) return 0;
-        const sum = validInputs.reduce((acc, curr) => acc + parseInt(curr.value, 10), 0);
-        return sum / validInputs.length;
-    }
-
-    function calculateScores() {
-        const checkedModalidade = document.querySelector('input[name="modalidade"]:checked');
-        const isAuto = checkedModalidade ? checkedModalidade.value === 'auto' : true;
-
-        const avgConhecimentos = getAverage('input-conhecimentos');
-        const avgHabilidades = getAverage('input-habilidades');
-        const avgMetas = getAverage('input-metas');
-        const avgComportamentos = getAverage('input-comportamentos');
-
-        const factorConhecimentos = isAuto ? 0.10 : 0.15;
-        const factorHabilidades = isAuto ? 0.10 : 0.15;
-        const factorMetas = isAuto ? 0.10 : 0.15;
-        const factorComportamentos = 0.125;
-
-        // Cálculo dos Pontos
-        const pontuacaoConhecimentos = avgConhecimentos * factorConhecimentos;
-        const pontuacaoHabilidades = avgHabilidades * factorHabilidades;
-        const pontuacaoMetas = avgMetas * factorMetas;
-        const pontuacaoComportamentos = avgComportamentos * factorComportamentos;
-
-        const totalPontuacao = pontuacaoConhecimentos + pontuacaoHabilidades + pontuacaoMetas + pontuacaoComportamentos;
-
-        // Atualização dos elementos na tela
-        const elemConh = document.getElementById('lblScoreConhecimentos');
-        const elemHab = document.getElementById('lblScoreHabilidades');
-        const elemMetas = document.getElementById('lblScoreMetas');
-        const elemComp = document.getElementById('lblScoreComportamentos');
-        const elemTotal = document.getElementById('lblScoreTotal');
-
-        if (elemConh) elemConh.innerText = `\({pontuacaoConhecimentos.toFixed(2)} pts (Média:\){avgConhecimentos.toFixed(1)})`;
-        if (elemHab) elemHab.innerText = `\({pontuacaoHabilidades.toFixed(2)} pts (Média:\){avgHabilidades.toFixed(1)})`;
-        if (elemMetas) elemMetas.innerText = `\({pontuacaoMetas.toFixed(2)} pts (Média:\){avgMetas.toFixed(1)})`;
-        if (elemComp) elemComp.innerText = `\({pontuacaoComportamentos.toFixed(2)} pts (Média:\){avgComportamentos.toFixed(1)})`;
-        if (elemTotal) elemTotal.innerText = totalPontuacao.toFixed(2);
-
-        return {
-            isAuto, avgConhecimentos, avgHabilidades, avgMetas, avgComportamentos,
-            pontuacaoConhecimentos, pontuacaoHabilidades, pontuacaoMetas, pontuacaoComportamentos, totalPontuacao
-        };
-    }
-
-    function validateAllScoresFilled(isAuto) {
-        const requiredInputs = document.querySelectorAll('.score-input');
-        for (let input of requiredInputs) {
-            if (!isAuto && input.classList.contains('input-mediadores')) {
-                continue;
-            }
-            if (input.value === '' || isNaN(parseInt(input.value, 10))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-function generateDetailedNotesTable(isAuto) {
-    const tbody = document.getElementById('pTableDetailedNotes');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-
-    const dimBlocks = document.querySelectorAll('.dimensao-block');
-    dimBlocks.forEach(block => {
-        if (!isAuto && block.id === 'blockMediadores') return;
-
-        const titleText = block.querySelector('h4') ? block.querySelector('h4').innerText : '';
-        const trTitle = document.createElement('tr');
-        trTitle.innerHTML = `
-
-${titleText}`;
-tbody.appendChild(trTitle);
-
-    const items = block.querySelectorAll('.question-item');
-    items.forEach(item => {
-        const questionText = item.querySelector('label') ? item.querySelector('label').innerText : '';
-        const inputVal = item.querySelector('input') ? item.querySelector('input').value : '0';
-        const trItem = document.createElement('tr');
-        trItem.innerHTML = `
-
-${questionText}
-
-${inputVal !== '' ? parseInt(inputVal, 10) : '0'}
-`;
-tbody.appendChild(trItem);
-});
-});
-}
-
-function prepareReportData() {
-const scores = calculateScores();
-const dataHoje = new Date().toLocaleDateString('pt-BR');
-
-const nomeServidor = document.getElementById('nomeServidor').value || '';
-const nomeChefia = document.getElementById('nomeChefia').value || '';
-
-const pModalidadeBadge = document.getElementById('pModalidadeBadge');
-if (pModalidadeBadge) {
-    pModalidadeBadge.innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
-}
-
-const setInnerText = (id, value) => {
-    const el = document.getElementById(id);
-    if (el) el.innerText = value;
+const CONFIG = {
+  finalMax: 10,
+  dimensions: [
+    {id:"conhecimentos",name:"Conhecimentos",description:"Capacidade que o servidor possui de apropriar-se da realidade com a qual trabalha, de modo a dominar os conhecimentos necessários para a realização do seu trabalho.",questions:[
+      "Conhece os processos de trabalho que estão sob sua responsabilidade",
+      "Conhece as ferramentas necessárias para realizar as atividades sob sua responsabilidade",
+      "Conhece as leis e as normas que regulamentam o seu trabalho",
+      "Busca novos conhecimentos, por meio de atividades de capacitação, visando melhorar seu desempenho"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"habilidades",name:"Habilidades",description:"Capacidade que o servidor possui de mediar e pôr em prática os seus conhecimentos, ou seja, a utilização dos conhecimentos no desempenho de suas funções.",questions:[
+      "Desenvolve suas atividades de forma autônoma, sem necessidade de orientações constantes",
+      "Organiza adequadamente suas atividades, priorizando aquelas de maior urgência, visando executá-las de forma eficiente e eficaz",
+      "Produz volume de trabalho proporcional à sua complexidade e aos recursos disponíveis, racionalizando o tempo na execução das atividades",
+      "Toma decisões em situações de trabalho que sejam de sua competência e encaminha adequadamente as situações que fogem de sua alçada decisória",
+      "Compromete-se com os planos e atribuições setoriais e individuais"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"metas",name:"Metas",description:"Relaciona-se ao cumprimento das metas estabelecidas no Plano de Trabalho.",questions:[
+      "Atinge as metas conforme planejado","Atinge as metas com a qualidade esperada","Atinge as metas dentro do prazo estipulado"
+    ], autoWeight:.40, chefiaWeight:.60, dimensionWeight:.25},
+    {id:"comportamentos",name:"Comportamentos e Atitudes",description:"Características até certo ponto observáveis no ambiente de trabalho que se relacionam com o quanto o comportamento do servidor alinha-se às atitudes e aos valores estimulados pela UFFS.",questions:[
+      "Relaciona-se respeitosamente com a chefia, demais servidores e com o público","Respeita a diversidade","Demonstra interesse no desempenho de suas atribuições","É assíduo e pontual em seus compromissos e responsabilidades","Tem postura proativa na utilização de seus conhecimentos e habilidades para o alcance das metas planejadas","É capaz de identificar problemas e se oferecer de modo oportuno para ajudar","Apresenta ideias e sugestões para melhoria dos processos com os quais trabalha","Coopera com o desenvolvimento de um bom clima organizacional na unidade","Comunica-se com clareza e respeito com a chefia, com os demais servidores e com o público","Zela pelo patrimônio da instituição, primando pela economicidade no uso dos materiais e pela eficiência na conservação dos equipamentos","Respeita a hierarquia funcional","Resguarda fatos e informações de interesse da administração, sobretudo os de caráter sigiloso"
+    ], autoWeight:.50, chefiaWeight:.50, dimensionWeight:.25}
+  ],
+  mediators:[
+    "Planejamento proposto para o desenvolvimento de suas atividades",
+    "Atividades de capacitação oferecidas pela instituição",
+    "Condições das instalações físicas, equipamentos e material de expediente, considerando a modalidade de trabalho",
+    "Relações interpessoais no setor de trabalho"
+  ]
 };
 
-// 1. Dados de Identificação
-setInnerText('pNomeServidor', nomeServidor);
-setInnerText('pSiape', document.getElementById('siape').value || '');
-setInnerText('pCargoServidor', document.getElementById('cargoServidor').value || '');
-setInnerText('pPeriodo', document.getElementById('periodoAvaliacao').value || '');
-setInnerText('pOrgaoOrigem', document.getElementById('orgaoOrigem')?.value || 'UFFS');
-setInnerText('pOrgaoDestino', document.getElementById('orgaoDestino').value || '');
-setInnerText('pNomeChefia', nomeChefia);
-setInnerText('pCargoChefia', document.getElementById('cargoChefia').value || '');
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+const fmt = v => Number(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
 
-// 2. Tabela Detalhada de Notas
-generateDetailedNotesTable(scores.isAuto);
+function renderQuestions(){
+  const c=$("questionsContainer");
 
-// 3. Resumo Ponderado das Dimensões
-setInnerText('pMediaConhecimentos', scores.avgConhecimentos.toFixed(1));
-setInnerText('pPondConhecimentos', scores.pontuacaoConhecimentos.toFixed(2));
+  // As quatro dimensões de desempenho aparecem nas duas modalidades.
+  const dimensionsHtml=CONFIG.dimensions.map(d=>`
+    <div class="question-block">
+      <h4>${esc(d.name)}</h4>
+      <p class="dimension-description">${esc(d.description)}</p>
+      ${d.questions.map((q,i)=>`
+        <div class="question-item">
+          <label>${i+1}. ${esc(q)}</label>
+          <input class="score-input" data-dimension="${d.id}" min="0" max="10" step="1" required inputmode="numeric">
+        </div>`).join("")}
+    </div>`).join("");
 
-setInnerText('pMediaHabilidades', scores.avgHabilidades.toFixed(1));
-setInnerText('pPondHabilidades', scores.pontuacaoHabilidades.toFixed(2));
+  // Os Mediadores de Desempenho são exclusivos da Autoavaliação.
+  // O bloco é mantido no DOM apenas para permitir a alternância da modalidade,
+  // mas fica completamente oculto na Avaliação da Chefia.
+  const mediatorHtml=`
+    <div id="mediatorBlock" class="question-block mediator-block">
+      <h4>Mediadores de Desempenho*</h4>
+      <p class="dimension-description">Aspectos que contribuíram ou dificultaram o desenvolvimento das atividades do servidor no ambiente de trabalho. Avaliados somente na autoavaliação e sem efeito na média da avaliação.</p>
+      ${CONFIG.mediators.map((q,i)=>`
+        <div class="question-item">
+          <label>${i+1}. ${esc(q)}</label>
+          <input class="score-input mediator-input" data-mediator="${i}" min="0" max="10" step="1" inputmode="numeric">
+        </div>`).join("")}
+      <div class="formula-box"><strong>*Mediadores:</strong> dimensão avaliada apenas na autoavaliação. Não interfere na média da avaliação do servidor e é utilizada para fins estratégicos da Instituição.</div>
+    </div>`;
 
-setInnerText('pMediaMetas', scores.avgMetas.toFixed(1));
-setInnerText('pPondMetas', scores.pontuacaoMetas.toFixed(2));
+  c.innerHTML=dimensionsHtml+mediatorHtml;
 
-setInnerText('pMediaComportamentos', scores.avgComportamentos.toFixed(1));
-setInnerText('pPondComportamentos', scores.pontuacaoComportamentos.toFixed(2));
-
-// Exibir/Ocultar linha de Mediadores na Tabela de Resumo
-const rowMediadores = document.getElementById('rowPrintMediadores');
-if (rowMediadores) {
-    if (scores.isAuto) {
-        rowMediadores.style.display = 'table-row';
-        setInnerText('pMediaMediadores', getAverage('input-mediadores').toFixed(1));
-        setInnerText('pPondMediadores', 'N/A');
-    } else {
-        rowMediadores.style.display = 'none';
-    }
+  c.querySelectorAll(".score-input").forEach(i=>i.addEventListener("input",()=>{sanitize(i);calculate();}));
+  updateMediatorVisibility();
 }
 
-setInnerText('pTotalObtido', `\({scores.totalPontuacao.toFixed(2)} /\){scores.isAuto ? '4.25' : '5.75'}`);
-setInnerText('pObservacoes', document.getElementById('observacoes').value || 'Sem observações.');
+function updateMediatorVisibility(){
+  const block=$("mediatorBlock");
+  if(!block) return;
 
-// Assinatura
-const sigContainer = document.getElementById('pSignaturesContainer');
-if (sigContainer) {
-    const assinadoPor = scores.isAuto ? nomeServidor : nomeChefia;
-    const papel = scores.isAuto ? 'Servidor(a) Avaliado(a)' : 'Chefia Imediata (Avaliador)';
+  const isAuto=mode()==="auto";
+  block.hidden=!isAuto;
+  block.setAttribute("aria-hidden",String(!isAuto));
 
-    sigContainer.innerHTML = `
-
-${assinadoPor}
-
-${papel}
-
-Data: ${dataHoje}
-
-    `;
+  // Na modalidade Chefia, os Mediadores não aparecem e também não participam
+  // de nenhuma validação ou cálculo.
+  block.querySelectorAll(".mediator-input").forEach(input=>{
+    input.tabIndex=isAuto?0:-1;
+    input.disabled=!isAuto;
+  });
 }
 
-return scores;
-
+function sanitize(i){
+  if(i.value==="")return;
+  let n=Number(i.value); if(!Number.isFinite(n)){i.value="";return}
+  i.value=Math.max(0,Math.min(10,Math.round(n)));
 }
 
-function formatFileName(name) {
-    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '_');
+function mode(){return document.querySelector('input[name="modalidade"]:checked')?.value||"auto"}
+function values(id){return [...document.querySelectorAll(`.score-input[data-dimension="${id}"]`)].map(i=>i.value).filter(v=>v!=="").map(Number)}
+function dimResult(d){
+  const v=values(d.id); const avg=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;
+  const contribution=avg*d.dimensionWeight*(mode()==="auto"?d.autoWeight:d.chefiaWeight);
+  return {count:v.length,average:avg,contribution};
+}
+function calculate(){
+  const r={}; CONFIG.dimensions.forEach(d=>r[d.id]=dimResult(d));
+  const total=Object.values(r).reduce((a,b)=>a+b.contribution,0);
+  CONFIG.dimensions.forEach(d=>{const el=$("lblScore"+cap(d.id));if(el)el.textContent=fmt(r[d.id].contribution)});
+  $("lblScoreTotal").textContent=`${fmt(total)} / ${fmt(mode()==="auto"?4.25:5.75)}`;
+  $("lblEvaluationMax").textContent=mode()==="auto"?"4,25":"5,75";
+  $("lblModeWeight").textContent=mode()==="auto"?"40% nas dimensões Conhecimentos, Habilidades e Metas; 50% em Comportamentos/Atitudes":"60% nas dimensões Conhecimentos, Habilidades e Metas; 50% em Comportamentos/Atitudes";
+  return {r,total};
 }
 
-if (btnDownloadPDF) {
-    btnDownloadPDF.addEventListener('click', async () => {
-        const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
-
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        if (!validateAllScoresFilled(isAuto)) {
-            alert('Por favor, preencha todas as notas da avaliação com números inteiros de 0 a 10.');
-            return;
-        }
-
-        prepareReportData();
-
-        const printArea = document.getElementById('printArea');
-        const nomeServidor = document.getElementById('nomeServidor').value || 'servidor';
-        const nomeChefia = document.getElementById('nomeChefia').value || 'chefia';
-
-        let filenamePDF = isAuto 
-            ? `autoavaliacao_${formatFileName(nomeServidor)}.pdf`
-            : `avaliacao_\({formatFileName(nomeChefia)}_\){formatFileName(nomeServidor)}.pdf`;
-
-        const clone = printArea.cloneNode(true);
-        clone.id = 'pdfTempContainer';
-        clone.style.display = 'block';
-        clone.style.width = '700px';
-        clone.style.margin = '0 auto';
-        clone.style.backgroundColor = '#ffffff';
-
-        document.body.appendChild(clone);
-
-        const opt = {
-            margin:       [10, 10, 10, 10],
-            filename:     filenamePDF,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['css', 'legacy'] }
-        };
-
-        try {
-            await html2pdf().set(opt).from(clone).save();
-        } catch (err) {
-            console.error('Erro ao gerar PDF:', err);
-            alert('Ocorreu um erro ao gerar o PDF. Verifique os dados e tente novamente.');
-        } finally {
-            const temp = document.getElementById('pdfTempContainer');
-            if (temp) {
-                document.body.removeChild(temp);
-            }
-        }
-    });
+function valid(){
+  const required=[...document.querySelectorAll(".score-input[data-dimension]")].filter(i=>i.value==="");
+  if(required.length){required[0].focus();alert("Preencha todas as notas das quatro dimensões antes de gerar o documento.");return false}
+  for(const i of document.querySelectorAll(".score-input")) if(i.value!==""&&(Number(i.value)<0||Number(i.value)>10)){i.focus();alert("As notas devem estar entre 0 e 10.");return false}
+  for(const id of ["nomeServidor","siape","cargoServidor","periodoAvaliacao","orgaoDestino","nomeChefia","cargoChefia"]) if(!$(`${id}`).value.trim()){ $(`${id}`).focus();alert("Preencha os dados de identificação.");return false}
+  return true;
 }
 
-// Inicialização da interface e cálculo inicial
-updateModalidadeUI();
+function data(){
+  return {
+    modalidade:mode(),nome:$("nomeServidor").value.trim(),siape:$("siape").value.trim(),cargo:$("cargoServidor").value.trim(),
+    periodo:$("periodoAvaliacao").value.trim(),destino:$("orgaoDestino").value.trim(),chefia:$("nomeChefia").value.trim(),
+    cargoChefia:$("cargoChefia").value.trim(),obs:$("observacoes").value.trim()
+  }
+}
+function text(id,v){$(id).textContent=v||""}
 
+function fillPdf(d,calc){
+  text("pNomeServidor",d.nome);text("pSiape",d.siape);text("pCargoServidor",d.cargo);text("pPeriodo",d.periodo);
+  text("pOrgaoDestino",d.destino);text("pNomeChefia",d.chefia);text("pCargoChefia",d.cargoChefia);
+  text("pModalidadeBadge",d.modalidade==="auto"?"AUTOAVALIAÇÃO":"AVALIAÇÃO DA CHEFIA IMEDIATA");
+  text("pEvaluationMax",d.modalidade==="auto"?"4,25":"5,75");
+  text("pObservacoes",d.obs||"Sem observações.");
+  const tbody=$("pTableDetailedNotes");tbody.innerHTML="";
+  CONFIG.dimensions.forEach(dim=>{
+    const title=document.createElement("tr");title.innerHTML=`<td colspan="2" class="dimension-print-title">${esc(dim.name)}</td>`;tbody.appendChild(title);
+    const inputs=[...document.querySelectorAll(`.score-input[data-dimension="${dim.id}"]`)];
+    dim.questions.forEach((q,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${i+1}. ${esc(q)}</td><td class="center bold">${esc(inputs[i]?.value||"")}</td>`;tbody.appendChild(tr)});
+    const res=calc.r[dim.id];
+    const avg=document.createElement("tr");avg.innerHTML=`<td><strong>Pontuação da dimensão (média simples)</strong></td><td class="center bold">${fmt(res.average)}</td>`;tbody.appendChild(avg);
+  });
+  CONFIG.dimensions.forEach(dim=>{text("pMedia"+cap(dim.id),fmt(calc.r[dim.id].average));text("pPond"+cap(dim.id),fmt(calc.r[dim.id].contribution))});
+  text("pTotalObtido",`${fmt(calc.total)} / ${d.modalidade==="auto"?"4,25":"5,75"}`);
+  $("pSignaturesContainer").innerHTML=`<div class="signature-block"><div class="signature-line"></div><div class="name">${esc(d.modalidade==="auto"?d.nome:d.chefia)}</div><div>${d.modalidade==="auto"?"Servidor(a) Avaliado(a)":"Chefia Imediata (Avaliador)"}</div><div>Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>`;
+}
+
+async function generatePdf(){
+  if(!valid()) return;
+
+  const d = data();
+  const calc = calculate();
+  fillPdf(d, calc);
+
+  // O GitHub Pages pode ser aberto com bloqueio de CDN e o arquivo HTML
+  // também pode ser aberto localmente, sem acesso à internet.
+  // Nesse caso não devemos simplesmente falhar: usamos a impressão nativa
+  // do navegador, que permite escolher "Salvar como PDF".
+  if (typeof window.html2pdf !== "function") {
+    alert(
+      "O gerador automático de PDF não está disponível neste navegador.\n\n" +
+      "O documento será aberto na impressão. Na janela de impressão, " +
+      "selecione 'Salvar como PDF' como destino."
+    );
+    window.print();
+    return;
+  }
+
+  const w = $("pdfRenderWrapper");
+  w.style.position = "absolute";
+  w.style.left = "0";
+  w.style.top = "0";
+  w.style.zIndex = "9999";
+  w.style.display = "block";
+
+  try {
+    const clean = d.nome
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]+/g, "_");
+
+    await window.html2pdf().set({
+      margin: [8, 8, 8, 8],
+      filename: `Avaliacao_Desempenho_${clean || "servidor"}_${d.periodo || "avaliacao"}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+        compress: true
+      },
+      pagebreak: {
+        mode: ["css", "legacy"],
+        avoid: [".signature-block", ".print-table tr"]
+      }
+    }).from($("printArea")).save();
+  } catch (error) {
+    console.error("Falha no html2pdf:", error);
+    alert(
+      "O gerador automático encontrou um problema.\n\n" +
+      "O documento será aberto na impressão para que você possa selecionar " +
+      "'Salvar como PDF'."
+    );
+    window.print();
+  } finally {
+    w.style.position = "fixed";
+    w.style.left = "-100000px";
+    w.style.top = "0";
+    w.style.zIndex = "-1";
+  }
+}
+function printPdf(){if(!valid())return;const d=data(),calc=calculate();fillPdf(d,calc);window.print()}
+function reset(){ $("evalForm").reset();calculate();window.scrollTo({top:0,behavior:"smooth"})}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  renderQuestions();calculate();
+  document.querySelectorAll('input[name="modalidade"]').forEach(r=>r.addEventListener("change",()=>{updateMediatorVisibility();calculate();}));
+  $("btnDownloadPDF").addEventListener("click",generatePdf);$("btnPrint").addEventListener("click",printPdf);$("btnReset").addEventListener("click",()=>setTimeout(reset,0));
 });
