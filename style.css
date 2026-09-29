@@ -510,71 +510,33 @@ body {
 ============================================================ */
 
 .radio-group {
-
-    display:
-        grid;
-
-    gap:
-        12px;
-
+    display: grid;
+    gap: 10px;
 }
-
 
 .radio-option {
-
-    display:
-        flex;
-
-    align-items:
-        flex-start;
-
-    gap:
-        10px;
-
-    padding:
-        14px;
-
-    border:
-        1px solid var(--uffs-border);
-
-    border-radius:
-        10px;
-
-    cursor:
-        pointer;
-
-    background:
-        #ffffff;
-
-    transition:
-        background .2s ease,
-        border-color .2s ease;
-
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--uffs-border);
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-
-.radio-option:hover {
-
-    background:
-        var(--uffs-green-soft);
-
-    border-color:
-        #b7d7c2;
-
+.radio-option:has(input:checked) {
+    border-color: var(--uffs-green);
+    background: var(--uffs-green-soft);
 }
 
-
-.radio-option input {
-
-    margin-top:
-        4px;
-
-    padding:
-        0;
-
-    accent-color:
-        var(--uffs-green);
-
+/* Impede que a regra geral dos inputs altere os botões de rádio */
+.radio-option input[type="radio"] {
+    width: auto;
+    min-width: auto;
+    margin: 0;
+    padding: 0;
+    accent-color: var(--uffs-green);
+    box-shadow: none;
 }
 
 
@@ -639,7 +601,10 @@ textarea {
 
     width:
         100%;
-
+   
+input[type="radio"] {
+    width: auto;
+    min-width: auto;
     color:
         var(--uffs-text);
 
