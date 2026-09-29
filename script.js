@@ -1,3 +1,5 @@
+JavaScript
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('evalForm');
     const radiosModalidade = document.querySelectorAll('input[name="modalidade"]');
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.setAttribute('min', '0');
         input.setAttribute('max', '10');
         input.setAttribute('step', '1');
-input.setAttribute('inputmode', 'numeric');
+        input.setAttribute('inputmode', 'numeric');
         input.setAttribute('pattern', '[0-9]*');
 
         // Bloqueia teclas de ponto, vírgula, hífen e notação científica (e/E)
@@ -24,7 +26,6 @@ input.setAttribute('inputmode', 'numeric');
 
         // Higieniza caso o usuário cole ou tente digitar valores decimais/fora do limite
         input.addEventListener('input', () => {
-            // Remove qualquer caractere não numérico
             input.value = input.value.replace(/[^0-9]/g, '');
 
             if (input.value !== '') {
@@ -39,13 +40,15 @@ input.setAttribute('inputmode', 'numeric');
     function updateModalidadeUI() {
         const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
         if (isAuto) {
-            blockMediadores.style.display = 'block';
+            if (blockMediadores) blockMediadores.style.display = 'block';
             if (rowPrintMediadores) rowPrintMediadores.style.display = 'table-row';
-            document.getElementById('lblScoreMax').innerText = '(Máximo: 4.25)';
+            const lblMax = document.getElementById('lblScoreMax');
+            if (lblMax) lblMax.innerText = '(Máximo: 4.25)';
         } else {
-            blockMediadores.style.display = 'none';
+            if (blockMediadores) blockMediadores.style.display = 'none';
             if (rowPrintMediadores) rowPrintMediadores.style.display = 'none';
-            document.getElementById('lblScoreMax').innerText = '(Máximo: 5.75)';
+            const lblMax = document.getElementById('lblScoreMax');
+            if (lblMax) lblMax.innerText = '(Máximo: 5.75)';
         }
         calculateScores();
     }
@@ -73,22 +76,30 @@ input.setAttribute('inputmode', 'numeric');
         const factorMetas = isAuto ? 0.10 : 0.15;
         const factorComportamentos = 0.125;
 
-        const pondConhecimentos = avgConhecimentos * factorConhecimentos;
-        const pondHabilidades = avgHabilidades * factorHabilidades;
-        const pondMetas = avgMetas * factorMetas;
-        const pondComportamentos = avgComportamentos * factorComportamentos;
+        // Cálculo dos Pontos
+        const pontuacaoConhecimentos = avgConhecimentos * factorConhecimentos;
+        const pontuacaoHabilidades = avgHabilidades * factorHabilidades;
+        const pontuacaoMetas = avgMetas * factorMetas;
+        const pontuacaoComportamentos = avgComportamentos * factorComportamentos;
 
-        const totalPonderado = pondConhecimentos + pondHabilidades + pondMetas + pondComportamentos;
+        const totalPontuacao = pontuacaoConhecimentos + pontuacaoHabilidades + pontuacaoMetas + pontuacaoComportamentos;
 
-        document.getElementById('lblScoreConhecimentos').innerText = `${pondConhecimentos.toFixed(2)} pts (Média: ${avgConhecimentos.toFixed(1)})`;
-        document.getElementById('lblScoreHabilidades').innerText = `${pondHabilidades.toFixed(2)} pts (Média: ${avgHabilidades.toFixed(1)})`;
-        document.getElementById('lblScoreMetas').innerText = `${pondMetas.toFixed(2)} pts (Média: ${avgMetas.toFixed(1)})`;
-        document.getElementById('lblScoreComportamentos').innerText = `${pondComportamentos.toFixed(2)} pts (Média: ${avgComportamentos.toFixed(1)})`;
-        document.getElementById('lblScoreTotal').innerText = totalPonderado.toFixed(2);
+        // Atualização da Tela Principal
+        const elemConh = document.getElementById('lblScoreConhecimentos');
+        const elemHab = document.getElementById('lblScoreHabilidades');
+        const elemMetas = document.getElementById('lblScoreMetas');
+        const elemComp = document.getElementById('lblScoreComportamentos');
+        const elemTotal = document.getElementById('lblScoreTotal');
+
+        if (elemConh) elemConh.innerText = `\({pontuacaoConhecimentos.toFixed(2)} pts (Média:\){avgConhecimentos.toFixed(1)})`;
+        if (elemHab) elemHab.innerText = `\({pontuacaoHabilidades.toFixed(2)} pts (Média:\){avgHabilidades.toFixed(1)})`;
+        if (elemMetas) elemMetas.innerText = `\({pontuacaoMetas.toFixed(2)} pts (Média:\){avgMetas.toFixed(1)})`;
+        if (elemComp) elemComp.innerText = `\({pontuacaoComportamentos.toFixed(2)} pts (Média:\){avgComportamentos.toFixed(1)})`;
+        if (elemTotal) elemTotal.innerText = totalPontuacao.toFixed(2);
 
         return {
             isAuto, avgConhecimentos, avgHabilidades, avgMetas, avgComportamentos,
-            pondConhecimentos, pondHabilidades, pondMetas, pondComportamentos, totalPonderado
+            pontuacaoConhecimentos, pontuacaoHabilidades, pontuacaoMetas, pontuacaoComportamentos, totalPontuacao
         };
     }
 
@@ -109,6 +120,7 @@ input.setAttribute('inputmode', 'numeric');
 
     function generateDetailedNotesTable(isAuto) {
         const tbody = document.getElementById('pTableDetailedNotes');
+        if (!tbody) return;
         tbody.innerHTML = '';
 
         const dimBlocks = document.querySelectorAll('.dimensao-block');
@@ -117,24 +129,28 @@ input.setAttribute('inputmode', 'numeric');
 
             const title = block.querySelector('h4').innerText;
             const trTitle = document.createElement('tr');
-            trTitle.innerHTML = `<td colspan="2" class="sub-dim-title">${title}</td>`;
-            tbody.appendChild(trTitle);
+            trTitle.innerHTML = `
 
-            const items = block.querySelectorAll('.question-item');
-            items.forEach(item => {
-                const questionText = item.querySelector('label').innerText;
-                const inputVal = item.querySelector('input').value;
-                const trItem = document.createElement('tr');
-                trItem.innerHTML = `
-                    <td class="cell-desc">${questionText}</td>
-                    <td class="cell-nota">${inputVal !== '' ? parseInt(inputVal, 10) : '-'}</td>
-                `;
-                tbody.appendChild(trItem);
-            });
-        });
-    }
+${title}`;
+tbody.appendChild(trTitle);
 
-   function prepareReportData() {
+        const items = block.querySelectorAll('.question-item');
+        items.forEach(item => {
+            const questionText = item.querySelector('label').innerText;
+            const inputVal = item.querySelector('input').value;
+            const trItem = document.createElement('tr');
+            trItem.innerHTML = `
+
+${questionText}
+
+${inputVal !== '' ? parseInt(inputVal, 10) : '-'}
+`;
+tbody.appendChild(trItem);
+});
+});
+}
+
+function prepareReportData() {
     const scores = calculateScores();
     const dataHoje = new Date().toLocaleDateString('pt-BR');
 
@@ -142,74 +158,96 @@ input.setAttribute('inputmode', 'numeric');
     const nomeChefia = document.getElementById('nomeChefia').value || 'Chefia Imediata';
 
     // Preenchimento dos dados de identificação
-    document.getElementById('pModalidadeBadge').innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
-    document.getElementById('pNomeServidor').innerText = nomeServidor;
-    document.getElementById('pSiape').innerText = document.getElementById('siape').value || 'Não Informado';
-    document.getElementById('pCargoServidor').innerText = document.getElementById('cargoServidor').value || 'Não Informado';
-    document.getElementById('pPeriodo').innerText = document.getElementById('periodoAvaliacao').value || 'Não Informado';
-    document.getElementById('pOrgaoDestino').innerText = document.getElementById('orgaoDestino').value || 'Não Informado';
-    document.getElementById('pNomeChefia').innerText = nomeChefia;
-    document.getElementById('pCargoChefia').innerText = document.getElementById('cargoChefia').value || 'Não Informado';
+    const pModalidadeBadge = document.getElementById('pModalidadeBadge');
+    if (pModalidadeBadge) pModalidadeBadge.innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
+
+    const pNomeServidor = document.getElementById('pNomeServidor');
+    if (pNomeServidor) pNomeServidor.innerText = nomeServidor;
+
+    const pSiape = document.getElementById('pSiape');
+    if (pSiape) pSiape.innerText = document.getElementById('siape').value || 'Não Informado';
+
+    const pCargoServidor = document.getElementById('pCargoServidor');
+    if (pCargoServidor) pCargoServidor.innerText = document.getElementById('cargoServidor').value || 'Não Informado';
+
+    const pPeriodo = document.getElementById('pPeriodo');
+    if (pPeriodo) pPeriodo.innerText = document.getElementById('periodoAvaliacao').value || 'Não Informado';
+
+    const pOrgaoDestino = document.getElementById('pOrgaoDestino');
+    if (pOrgaoDestino) pOrgaoDestino.innerText = document.getElementById('orgaoDestino').value || 'Não Informado';
+
+    const pNomeChefia = document.getElementById('pNomeChefia');
+    if (pNomeChefia) pNomeChefia.innerText = nomeChefia;
+
+    const pCargoChefia = document.getElementById('pCargoChefia');
+    if (pCargoChefia) pCargoChefia.innerText = document.getElementById('cargoChefia').value || 'Não Informado';
 
     generateDetailedNotesTable(scores.isAuto);
 
-    // Preenchimento das médias e pontuações
-    document.getElementById('pMediaConhecimentos').innerText = scores.avgConhecimentos.toFixed(1);
-    document.getElementById('pPondConhecimentos').innerText = scores.pondConhecimentos.toFixed(2);
+    // Preenchimento das Médias e Pontuações (Com verificação defensiva de elementos)
+    const setInnerText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = value;
+    };
 
-    document.getElementById('pMediaHabilidades').innerText = scores.avgHabilidades.toFixed(1);
-    document.getElementById('pPondHabilidades').innerText = scores.pondHabilidades.toFixed(2);
+    setInnerText('pMediaConhecimentos', scores.avgConhecimentos.toFixed(1));
+    setInnerText('pPontuacaoConhecimentos', scores.pontuacaoConhecimentos.toFixed(2));
 
-    document.getElementById('pMediaMetas').innerText = scores.avgMetas.toFixed(1);
-    document.getElementById('pPondMetas').innerText = scores.pondMetas.toFixed(2);
+    setInnerText('pMediaHabilidades', scores.avgHabilidades.toFixed(1));
+    setInnerText('pPontuacaoHabilidades', scores.pontuacaoHabilidades.toFixed(2));
 
-    document.getElementById('pMediaComportamentos').innerText = scores.avgComportamentos.toFixed(1);
-    document.getElementById('pPondComportamentos').innerText = scores.pondComportamentos.toFixed(2);
+    setInnerText('pMediaMetas', scores.avgMetas.toFixed(1));
+    setInnerText('pPontuacaoMetas', scores.pontuacaoMetas.toFixed(2));
 
-    if (scores.isAuto && document.getElementById('pMediaMediadores')) {
-        document.getElementById('pMediaMediadores').innerText = getAverage('input-mediadores').toFixed(1);
+    setInnerText('pMediaComportamentos', scores.avgComportamentos.toFixed(1));
+    setInnerText('pPontuacaoComportamentos', scores.pontuacaoComportamentos.toFixed(2));
+
+    if (scores.isAuto) {
+        setInnerText('pMediaMediadores', getAverage('input-mediadores').toFixed(1));
     }
 
-    document.getElementById('pTotalObtido').innerText = `${scores.totalPonderado.toFixed(2)} / ${scores.isAuto ? '4.25' : '5.75'}`;
-    document.getElementById('pObservacoes').innerText = document.getElementById('observacoes').value || 'Sem observações.';
+    setInnerText('pTotalObtido', `\({scores.totalPontuacao.toFixed(2)} /\){scores.isAuto ? '4.25' : '5.75'}`);
+    setInnerText('pObservacoes', document.getElementById('observacoes').value || 'Sem observações.');
 
-    // LÓGICA DE ASSINATURA ÚNICA
+    // Assinatura
     const sigContainer = document.getElementById('pSignaturesContainer');
-    
-    if (scores.isAuto) {
-        // Exibe apenas a assinatura do Servidor
-        sigContainer.innerHTML = `
-            <div class="signature-box" style="margin: 0 auto;">
-                <div class="line"></div>
-                <p><strong>${nomeServidor}</strong></p>
-                <p>Servidor(a) Avaliado(a)</p>
-                <p>Data: ${dataHoje}</p>
-            </div>
-        `;
-    } else {
-        // Exibe apenas a assinatura da Chefia Imediata
-        sigContainer.innerHTML = `
-            <div class="signature-box" style="margin: 0 auto;">
-                <div class="line"></div>
-                <p><strong>${nomeChefia}</strong></p>
-                <p>Chefia Imediata (Avaliador)</p>
-                <p>Data: ${dataHoje}</p>
-            </div>
-        `;
+    if (sigContainer) {
+        if (scores.isAuto) {
+            sigContainer.innerHTML = `
+
+${nomeServidor}
+
+Servidor(a) Avaliado(a)
+
+Data: ${dataHoje}
+
+`;
+
+} else {
+sigContainer.innerHTML = `
+
+${nomeChefia}
+
+Chefia Imediata (Avaliador)
+
+Data: ${dataHoje}
+
+            `;
+        }
     }
 
     return scores;
 }
 
-    // Função para sanitizar e formatar o nome no arquivo
-    function formatFileName(name) {
-        return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-0]/g, '_');
-    }
+function formatFileName(name) {
+    return name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '_');
+}
 
+if (btnDownloadPDF) {
     btnDownloadPDF.addEventListener('click', async () => {
         const isAuto = document.querySelector('input[name="modalidade"]:checked').value === 'auto';
 
-        // 1. Validação dos campos de identificação obrigatórios do formulário
+        // 1. Validação dos campos obrigatórios
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
@@ -227,15 +265,10 @@ input.setAttribute('inputmode', 'numeric');
         const nomeServidor = document.getElementById('nomeServidor').value || 'servidor';
         const nomeChefia = document.getElementById('nomeChefia').value || 'chefia';
 
-        // Definição do nome do arquivo PDF impresso
-        let filenamePDF = '';
-        if (isAuto) {
-            filenamePDF = `autoavaliacao_${formatFileName(nomeServidor)}.pdf`;
-        } else {
-            filenamePDF = `avaliacao_${formatFileName(nomeChefia)}_${formatFileName(nomeServidor)}.pdf`;
-        }
+        let filenamePDF = isAuto 
+            ? `autoavaliacao_${formatFileName(nomeServidor)}.pdf`
+            : `avaliacao_\({formatFileName(nomeChefia)}_\){formatFileName(nomeServidor)}.pdf`;
 
-        // Clonagem para geração sem falhas
         const clone = printArea.cloneNode(true);
         clone.id = 'pdfTempContainer';
         clone.style.display = 'block';
@@ -258,12 +291,19 @@ input.setAttribute('inputmode', 'numeric');
             await html2pdf().set(opt).from(clone).save();
         } catch (err) {
             console.error('Erro ao gerar PDF:', err);
+            alert('Ocorreu um erro ao gerar o PDF. Verifique os dados e tente novamente.');
         } finally {
-            if (document.getElementById('pdfTempContainer')) {
-                document.body.removeChild(clone);
+            const temp = document.getElementById('pdfTempContainer');
+            if (temp) {
+                document.body.removeChild(temp);
             }
         }
     });
+}
 
-    updateModalidadeUI();
+updateModalidadeUI();
+
 });
+
+
+*Lembre-se apenas de conferir no seu `index.html` se os campos de resultado da tabela do relatório usam os IDs atualizados (ex: `id="pPontuacaoConhecimentos"`, `id="pPontuacaoHabilidades"`, `id="pPontuacaoMetas"`, `id="pPontuacaoComportamentos"`).*
