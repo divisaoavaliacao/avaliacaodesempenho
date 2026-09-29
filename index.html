@@ -53,7 +53,7 @@
 <div class="consolidated-box"><strong>Nota final consolidada:</strong> a nota final da avaliação é a soma da pontuação da autoavaliação (máx. 4,25) com a pontuação da chefia (máx. 5,75), totalizando no máximo 10,00. Este formulário calcula apenas a modalidade selecionada.</div>
 </section>
 
-<div class="actions-area"><button type="button" id="btnDownloadPDF" class="btn-brand-uffs">📄 Gerar PDF para assinatura</button><button type="button" id="btnPrint" class="btn-secondary-action">🖨️ Imprimir / Salvar como PDF</button></div>
+<div class="actions-area"><button type="button" id="btnDownloadPDF" class="btn-brand-uffs">📄 Gerar PDF para assinatura</button></div>
 <div class="pdf-help">Se o download automático não estiver disponível, o sistema abrirá a impressão do navegador. Selecione <strong>Salvar como PDF</strong>.</div>
 </form></main>
 
@@ -238,83 +238,22 @@ function fillPdf(d,calc){
   $("pSignaturesContainer").innerHTML=`<div class="signature-block"><div class="signature-line"></div><div class="name">${esc(d.modalidade==="auto"?d.nome:d.chefia)}</div><div>${d.modalidade==="auto"?"Servidor(a) Avaliado(a)":"Chefia Imediata (Avaliador)"}</div><div>Data: ${new Date().toLocaleDateString("pt-BR")}</div></div>`;
 }
 
-async function generatePdf(){
+function generatePdf(){
   if(!valid()) return;
-
-  const d = data();
-  const calc = calculate();
-  fillPdf(d, calc);
-
-  // O GitHub Pages pode ser aberto com bloqueio de CDN e o arquivo HTML
-  // também pode ser aberto localmente, sem acesso à internet.
-  // Nesse caso não devemos simplesmente falhar: usamos a impressão nativa
-  // do navegador, que permite escolher "Salvar como PDF".
-  if (typeof window.html2pdf !== "function") {
-    alert(
-      "O gerador automático de PDF não está disponível neste navegador.\n\n" +
-      "O documento será aberto na impressão. Na janela de impressão, " +
-      "selecione 'Salvar como PDF' como destino."
-    );
-    window.print();
-    return;
-  }
-
-  const w = $("pdfRenderWrapper");
-  w.style.position = "absolute";
-  w.style.left = "0";
-  w.style.top = "0";
-  w.style.zIndex = "9999";
-  w.style.display = "block";
-
-  try {
-    const clean = d.nome
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-zA-Z0-9]+/g, "_");
-
-    await window.html2pdf().set({
-      margin: [8, 8, 8, 8],
-      filename: `Avaliacao_Desempenho_${clean || "servidor"}_${d.periodo || "avaliacao"}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        logging: false
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-        compress: true
-      },
-      pagebreak: {
-        mode: ["css", "legacy"],
-        avoid: [".signature-block", ".print-table tr"]
-      }
-    }).from($("printArea")).save();
-  } catch (error) {
-    console.error("Falha no html2pdf:", error);
-    alert(
-      "O gerador automático encontrou um problema.\n\n" +
-      "O documento será aberto na impressão para que você possa selecionar " +
-      "'Salvar como PDF'."
-    );
-    window.print();
-  } finally {
-    w.style.position = "fixed";
-    w.style.left = "-100000px";
-    w.style.top = "0";
-    w.style.zIndex = "-1";
-  }
+  const d=data();
+  const calc=calculate();
+  fillPdf(d,calc);
+  // GitHub Pages é estático: usamos a impressão nativa do navegador, sem CDN.
+  // Na janela de impressão, escolha "Salvar como PDF".
+  window.setTimeout(()=>window.print(),100);
 }
-function printPdf(){if(!valid())return;const d=data(),calc=calculate();fillPdf(d,calc);window.print()}
+
 function reset(){ $("evalForm").reset();calculate();window.scrollTo({top:0,behavior:"smooth"})}
 
 document.addEventListener("DOMContentLoaded",()=>{
   renderQuestions();calculate();
   document.querySelectorAll('input[name="modalidade"]').forEach(r=>r.addEventListener("change",()=>{updateMediatorVisibility();calculate();}));
-  $("btnDownloadPDF").addEventListener("click",generatePdf);$("btnPrint").addEventListener("click",printPdf);$("btnReset").addEventListener("click",()=>setTimeout(reset,0));
+  $("btnDownloadPDF").addEventListener("click",generatePdf);$("btnReset").addEventListener("click",()=>setTimeout(reset,0));
 });
 
 </script>
