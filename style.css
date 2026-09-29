@@ -23,64 +23,105 @@ body {
   padding: 0;
 }
 
-/* Header Principal Institucional */
+/* Cabeçalho Institucional idêntico ao RSC */
 .header-uffs-principal {
-  position: relative !important;
-  background: linear-gradient(120deg, var(--uffs-green) 0 42%, #0b833d 42% 54%, var(--uffs-green-darker) 54% 100%) !important;
-  border-bottom: 0 !important;
-  box-shadow: none !important;
-  padding: 14px 24px !important;
+  background: #005a2b !important;
+  padding: 12px 24px !important;
   color: #fff !important;
 }
 
-/* Logo reduzido */
-.header-uffs-principal img {
-  width: 120px !important;
-  height: auto !important;
-  max-height: 38px !important;
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Container Branco do Logo */
+.logo-box-white {
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.logo-box-white img {
+  height: 42px !important;
+  width: auto !important;
   object-fit: contain !important;
 }
 
-@media (max-width: 768px) {
-  .header-uffs-principal img {
-    width: 90px !important;
-  }
-}
-
-.header-uffs-principal h1,
-.header-uffs-principal p {
-  color: #fff !important;
-  margin: 0;
+.divisor-vertical {
+  background: rgba(255, 255, 255, 0.3) !important;
+  width: 1px;
+  height: 38px;
 }
 
 .header-uffs-principal h1 {
-  font-size: 1.35rem !important;
-  letter-spacing: -.02em !important;
-  font-weight: 700;
-}
-
-.header-uffs-principal p {
-  opacity: .92 !important;
-  font-size: 0.85rem;
-}
-
-.header-uffs-principal .divisor-vertical {
-  background: rgba(255, 255, 255, .32) !important;
-  width: 1px;
-  height: 32px;
-}
-
-/* Botões do topo */
-.header-uffs-principal button {
-  border-color: rgba(255, 255, 255, .25) !important;
-  background: rgba(0, 0, 0, .12) !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  margin: 0;
   color: #fff !important;
-  box-shadow: none !important;
-  transition: background 0.2s;
 }
 
-.header-uffs-principal button:hover {
-  background: rgba(0, 0, 0, .22) !important;
+.subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 0.8rem;
+  opacity: 0.95;
+}
+
+/* Tag/Badge do Anexo II */
+.badge-v2 {
+  background: #ffc107;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+/* Botão Topo Direito */
+.btn-top-header {
+  background: rgba(0, 0, 0, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-top-header:hover {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Marca d'água no Card Principal */
+.card-hero-uffs::after {
+  content: 'CEDIDOS';
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: clamp(40px, 6vw, 90px);
+  font-weight: 900;
+  letter-spacing: .02em;
+  color: rgba(0, 82, 40, 0.05);
+  pointer-events: none;
 }
 
 /* Área Hero / Card Principal com watermark dos Cedidos */
