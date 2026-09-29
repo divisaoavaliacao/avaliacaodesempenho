@@ -135,28 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    function generateDetailedNotesTable(isAuto) {
-        const tbody = document.getElementById('pTableDetailedNotes');
-        if (!tbody) return;
-        tbody.innerHTML = '';
+function generateDetailedNotesTable(isAuto) {
+    const tbody = document.getElementById('pTableDetailedNotes');
+    if (!tbody) return;
+    tbody.innerHTML = '';
 
-        const dimBlocks = document.querySelectorAll('.dimensao-block');
-        dimBlocks.forEach(block => {
-            if (!isAuto && block.id === 'blockMediadores') return;
+    const dimBlocks = document.querySelectorAll('.dimensao-block');
+    dimBlocks.forEach(block => {
+        if (!isAuto && block.id === 'blockMediadores') return;
 
-            const titleText = block.querySelector('h4') ? block.querySelector('h4').innerText : '';
-            const trTitle = document.createElement('tr');
-            trTitle.innerHTML = `
+        const titleText = block.querySelector('h4') ? block.querySelector('h4').innerText : '';
+        const trTitle = document.createElement('tr');
+        trTitle.innerHTML = `
 
 ${titleText}`;
 tbody.appendChild(trTitle);
 
-        const items = block.querySelectorAll('.question-item');
-        items.forEach(item => {
-            const questionText = item.querySelector('label') ? item.querySelector('label').innerText : '';
-            const inputVal = item.querySelector('input') ? item.querySelector('input').value : '';
-            const trItem = document.createElement('tr');
-            trItem.innerHTML = `
+    const items = block.querySelectorAll('.question-item');
+    items.forEach(item => {
+        const questionText = item.querySelector('label') ? item.querySelector('label').innerText : '';
+        const inputVal = item.querySelector('input') ? item.querySelector('input').value : '0';
+        const trItem = document.createElement('tr');
+        trItem.innerHTML = `
 
 ${questionText}
 
@@ -168,79 +168,82 @@ tbody.appendChild(trItem);
 }
 
 function prepareReportData() {
-    const scores = calculateScores();
-    const dataHoje = new Date().toLocaleDateString('pt-BR');
+const scores = calculateScores();
+const dataHoje = new Date().toLocaleDateString('pt-BR');
 
-    const nomeServidor = document.getElementById('nomeServidor').value || 'Servidor(a)';
-    const nomeChefia = document.getElementById('nomeChefia').value || 'Chefia Imediata';
+const nomeServidor = document.getElementById('nomeServidor').value || '';
+const nomeChefia = document.getElementById('nomeChefia').value || '';
 
-    // Preenchimento de identificação
-    const pModalidadeBadge = document.getElementById('pModalidadeBadge');
-    if (pModalidadeBadge) pModalidadeBadge.innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
+const pModalidadeBadge = document.getElementById('pModalidadeBadge');
+if (pModalidadeBadge) {
+    pModalidadeBadge.innerText = scores.isAuto ? 'AUTOAVALIAÇÃO' : 'AVALIAÇÃO DA CHEFIA IMEDIATA';
+}
 
-    const setInnerText = (id, value) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = value;
-    };
+const setInnerText = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = value;
+};
 
-    setInnerText('pNomeServidor', nomeServidor);
-    setInnerText('pSiape', document.getElementById('siape').value || 'Não Informado');
-    setInnerText('pCargoServidor', document.getElementById('cargoServidor').value || 'Não Informado');
-    setInnerText('pPeriodo', document.getElementById('periodoAvaliacao').value || 'Não Informado');
-    setInnerText('pOrgaoDestino', document.getElementById('orgaoDestino').value || 'Não Informado');
-    setInnerText('pNomeChefia', nomeChefia);
-    setInnerText('pCargoChefia', document.getElementById('cargoChefia').value || 'Não Informado');
+// 1. Dados de Identificação
+setInnerText('pNomeServidor', nomeServidor);
+setInnerText('pSiape', document.getElementById('siape').value || '');
+setInnerText('pCargoServidor', document.getElementById('cargoServidor').value || '');
+setInnerText('pPeriodo', document.getElementById('periodoAvaliacao').value || '');
+setInnerText('pOrgaoOrigem', document.getElementById('orgaoOrigem')?.value || 'UFFS');
+setInnerText('pOrgaoDestino', document.getElementById('orgaoDestino').value || '');
+setInnerText('pNomeChefia', nomeChefia);
+setInnerText('pCargoChefia', document.getElementById('cargoChefia').value || '');
 
-    generateDetailedNotesTable(scores.isAuto);
+// 2. Tabela Detalhada de Notas
+generateDetailedNotesTable(scores.isAuto);
 
-    // Atualização da Tabela de Resumo no PDF (Compatível com IDs pPond...)
-    setInnerText('pMediaConhecimentos', scores.avgConhecimentos.toFixed(1));
-    setInnerText('pPondConhecimentos', scores.pontuacaoConhecimentos.toFixed(2));
+// 3. Resumo Ponderado das Dimensões
+setInnerText('pMediaConhecimentos', scores.avgConhecimentos.toFixed(1));
+setInnerText('pPondConhecimentos', scores.pontuacaoConhecimentos.toFixed(2));
 
-    setInnerText('pMediaHabilidades', scores.avgHabilidades.toFixed(1));
-    setInnerText('pPondHabilidades', scores.pontuacaoHabilidades.toFixed(2));
+setInnerText('pMediaHabilidades', scores.avgHabilidades.toFixed(1));
+setInnerText('pPondHabilidades', scores.pontuacaoHabilidades.toFixed(2));
 
-    setInnerText('pMediaMetas', scores.avgMetas.toFixed(1));
-    setInnerText('pPondMetas', scores.pontuacaoMetas.toFixed(2));
+setInnerText('pMediaMetas', scores.avgMetas.toFixed(1));
+setInnerText('pPondMetas', scores.pontuacaoMetas.toFixed(2));
 
-    setInnerText('pMediaComportamentos', scores.avgComportamentos.toFixed(1));
-    setInnerText('pPondComportamentos', scores.pontuacaoComportamentos.toFixed(2));
+setInnerText('pMediaComportamentos', scores.avgComportamentos.toFixed(1));
+setInnerText('pPondComportamentos', scores.pontuacaoComportamentos.toFixed(2));
 
+// Exibir/Ocultar linha de Mediadores na Tabela de Resumo
+const rowMediadores = document.getElementById('rowPrintMediadores');
+if (rowMediadores) {
     if (scores.isAuto) {
+        rowMediadores.style.display = 'table-row';
         setInnerText('pMediaMediadores', getAverage('input-mediadores').toFixed(1));
+        setInnerText('pPondMediadores', 'N/A');
+    } else {
+        rowMediadores.style.display = 'none';
     }
+}
 
-    setInnerText('pTotalObtido', `\({scores.totalPontuacao.toFixed(2)} /\){scores.isAuto ? '4.25' : '5.75'}`);
-    setInnerText('pObservacoes', document.getElementById('observacoes').value || 'Sem observações.');
+setInnerText('pTotalObtido', `\({scores.totalPontuacao.toFixed(2)} /\){scores.isAuto ? '4.25' : '5.75'}`);
+setInnerText('pObservacoes', document.getElementById('observacoes').value || 'Sem observações.');
 
-    // Assinaturas
-    const sigContainer = document.getElementById('pSignaturesContainer');
-    if (sigContainer) {
-        if (scores.isAuto) {
-            sigContainer.innerHTML = `
+// Assinatura
+const sigContainer = document.getElementById('pSignaturesContainer');
+if (sigContainer) {
+    const assinadoPor = scores.isAuto ? nomeServidor : nomeChefia;
+    const papel = scores.isAuto ? 'Servidor(a) Avaliado(a)' : 'Chefia Imediata (Avaliador)';
 
-${nomeServidor}
+    sigContainer.innerHTML = `
 
-Servidor(a) Avaliado(a)
+${assinadoPor}
+
+${papel}
 
 Data: ${dataHoje}
 
-`;
+    `;
+}
 
-} else {
-sigContainer.innerHTML = `
+return scores;
 
-${nomeChefia}
-
-Chefia Imediata (Avaliador)
-
-Data: ${dataHoje}
-
-            `;
-        }
-    }
-
-    return scores;
 }
 
 function formatFileName(name) {
