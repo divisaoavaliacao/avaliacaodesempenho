@@ -384,7 +384,7 @@ body {
 .card-hero-uffs::after {
 
     content:
-        "CEDIDOS";
+        "";
 
     position:
         absolute;
